@@ -1,0 +1,21 @@
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\SDL.dll
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\CS 4730 Prototype.exe
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\CS 4730 Prototype.pdb
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Lidgren.Network.dll
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\MonoGame.Framework.dll
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\OpenTK.dll
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Tao.Sdl.dll
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.csprojResolveAssemblyReference.cache
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.exe
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.pdb
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\mario.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\dracula.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\map_tile_border.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\cursor.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\Arial.xnb
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\action_menu_background.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\action_menu_selector.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\unpassable_map_tile.png
+c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\lair_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.exe
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.pdb
