@@ -19,3 +19,20 @@ c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototyp
 c:\users\nick 2012 laptop\documents\visual studio 2013\Projects\CS 4730 Prototype\CS 4730 Prototype\bin\WindowsGL\Debug\Content\lair_map_tile.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.exe
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.pdb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\action_menu_background.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\action_menu_selector.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\cursor.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\dracula.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\lair_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\map_tile_border.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\mario.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\unpassable_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Content\Arial.xnb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\SDL.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\CS 4730 Prototype.exe
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\CS 4730 Prototype.pdb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\CS 4730 Prototype\obj\x86\Debug\CS 4730 Prototype.csprojResolveAssemblyReference.cache
