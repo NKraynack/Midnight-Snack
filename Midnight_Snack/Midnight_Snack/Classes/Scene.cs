@@ -19,17 +19,17 @@ namespace Midnight_Snack
 
         }
 
-        public void LoadContent(ContentManager content)
+        public virtual void LoadContent(ContentManager content)
         {
             
         }
 
-        public void Update()
+        public virtual void Update()
         {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
 
         }

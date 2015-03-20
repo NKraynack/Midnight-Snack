@@ -17,7 +17,7 @@ namespace Midnight_Snack
         private int maxRow; //The Bottom-most row in the grid
         private int maxCol; //The right-most column in the grid
 
-        GameManager gst = GameManager.GetInstance();
+        GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
 
         public Cursor(int x, int y, int width, int height, Map map) : base(x, y, width, height)
@@ -39,15 +39,15 @@ namespace Midnight_Snack
             maxCol = map.GetNumCols() - 1;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("cursor.png");
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             //If not moving player display cursor normally
-            if (!gst.IsMovingPlayer())
+            if (!gameManager.IsMovingPlayer())
             {
                 spriteBatch.Draw(texture, position, Color.White);
             }
@@ -71,17 +71,17 @@ namespace Midnight_Snack
 
         public void Update(Controls controls)
         {
-            if (gst.IsChoosingInteractTarget())
+            if (gameManager.IsChoosingInteractTarget())
             {
                 SelectInteractTile(controls);
             }
             //If not in the action menu, cursor should move around map
-            else if (!gst.IsInActionMenu() && !gst.IsChoosingInteractTarget())
+            else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingInteractTarget())
             {
                 Move(controls);
                 SelectTile(controls);
 
-                if (gst.IsMovingPlayer())
+                if (gameManager.IsMovingPlayer())
                 {
                     MovePlayer(controls);
                 }
@@ -116,7 +116,7 @@ namespace Midnight_Snack
         //Moves the player to a valid tile
         public void MovePlayer(Controls controls)
         {
-            if (controls.onPress(Keys.Space, Buttons.A) && gst.IsMovingPlayer())
+            if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMovingPlayer())
             {
                 //If player chooses a valid tile within their move range, let them move there
                 if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) <= player.GetMoveRange())
@@ -129,8 +129,8 @@ namespace Midnight_Snack
                         player.Move(position, cursorRow, cursorCol);
                         //Update that player has moved this turn
                         player.SetMovedThisTurn(true);
-                        gst.SetMovingPlayer(false);
-                        gst.SetInActionMenu(false);
+                        gameManager.SetMovingPlayer(false);
+                        gameManager.SetInActionMenu(false);
                     }
                 }
             }
@@ -147,7 +147,7 @@ namespace Midnight_Snack
                 && cursorRow == player.GetRow() && cursorCol == player.GetCol())
             {
                 //...open up action menu
-                gst.SetInActionMenu(true);
+                gameManager.SetInActionMenu(true);
             }
         }
 
@@ -191,12 +191,12 @@ namespace Midnight_Snack
                 player.SetHasBlood(true);
                 //Update that player has interacted this turn
                 player.SetUsedAbilityThisTurn(true);
-                gst.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingInteractTarget(false);
             }
             //If player cancels the interact select, exit interact select mode
             else if (controls.onPress(Keys.F, Buttons.B))
             {
-                gst.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingInteractTarget(false);
             }
         }
 

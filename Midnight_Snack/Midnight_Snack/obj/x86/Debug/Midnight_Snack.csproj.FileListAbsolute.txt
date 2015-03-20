@@ -17,3 +17,22 @@ C:\Users\Nick 2012 Laptop\Documents\Visual Studio 2013\Projects\Midnight_Snack\M
 C:\Users\Nick 2012 Laptop\Documents\Visual Studio 2013\Projects\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\mario.png
 C:\Users\Nick 2012 Laptop\Documents\Visual Studio 2013\Projects\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\unpassable_map_tile.png
 C:\Users\Nick 2012 Laptop\Documents\Visual Studio 2013\Projects\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\Arial.xnb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.exe
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.pdb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\action_menu_background.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\action_menu_selector.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cursor.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\dracula.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\lair_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\map_tile_border.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\mario.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\unpassable_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\Arial.xnb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\SDL.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Midnight_Snack.exe
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Midnight_Snack.pdb
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.csprojResolveAssemblyReference.cache

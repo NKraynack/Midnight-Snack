@@ -23,14 +23,11 @@ namespace Midnight_Snack
         Cursor cursor;
         Controls controls;
         Map map;
-        GameManager gst;
-        MiniMenu actionMenu;
+        GameManager gameManager;
         SleepingVillager villager;
-        Text endText;
-        Text turnText;
-        Text goalText;
 
         SelectionScene levelSelectScene;
+        MainGame mainGame;
 
         /*
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
@@ -88,16 +85,9 @@ namespace Midnight_Snack
             villagerTile.SetOccupant(villager);
             map.SetTile(2, 4, villagerTile);
 
-            gst = GameManager.GetInstance();
+            gameManager = GameManager.GetInstance();
 
-            actionMenu = new MiniMenu(player.GetPosition(), 70, 70);
-            
-            turnText = new Text("Turn: 1", new Vector2(700, 20));
-            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, 420));
-            endText = new Text("", new Vector2(700, 60));
-            endText.SetVisible(false);
-
-            //Level Select Screen
+            /**** Initialize Level Select Screen ****/
             Text startText = new Text("Select a Level", new Vector2(300, 250));
             List<Text> levelSelectText = new List<Text>();
             levelSelectText.Add(startText);
@@ -109,9 +99,25 @@ namespace Midnight_Snack
             Menu levelSelectMenu = new Menu(new Vector2(300, 300), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
+            /**** Initialize Main Game Screen ****/
+            List<Unit> units = new List<Unit>();
+            units.Add(player);
+            units.Add(villager);
+            Text moveText = new Text("Move", player.GetPosition());
+            Text interactText = new Text("Interact", player.GetPosition());
+            Text endTurnText = new Text("End Turn", player.GetPosition());
+            List<Text> actionMenuOptions = new List<Text>();
+            actionMenuOptions.Add(moveText);
+            actionMenuOptions.Add(interactText);
+            actionMenuOptions.Add(endTurnText);
+            List<Menu> menus = new List<Menu>();
+            MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
+            menus.Add(actionMenu);
+            mainGame = new MainGame(map, units, cursor, menus);
+
             //Start the game on the level select screen
             //gameState = levelSelect;
-            gst.SetGameState(0);
+            gameManager.SetGameState(0);
 
             base.Initialize();
 
@@ -130,16 +136,8 @@ namespace Midnight_Snack
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            player.LoadContent(this.Content);
-            villager.LoadContent(this.Content);
-            map.LoadContent(this.Content);
-            cursor.LoadContent(this.Content);
-            actionMenu.LoadContent(this.Content);
-            goalText.LoadContent(this.Content);
-            endText.LoadContent(this.Content);
-            turnText.LoadContent(this.Content);
-
             levelSelectScene.LoadContent(this.Content);
+            mainGame.LoadContent(this.Content);
             
         }
 
@@ -168,56 +166,16 @@ namespace Midnight_Snack
             ScreenWidth = GraphicsDevice.Viewport.Width;
             ScreenHeight = GraphicsDevice.Viewport.Height;
 
-            switch(gst.GetGameState())
+            switch(gameManager.GetGameState())
             {
                 //Level Select Screen
                 case 0:
                     levelSelectScene.Update(controls);
-                    if(Keyboard.GetState().IsKeyDown(Keys.Space))
-                    {
-                        //Set gameState to Main Game
-                        //gameState = mainGame;
-                        //gst.SetGameState(1);
-                    }
                 break;
                 
                 //Main Game Screen
                 case 1:
-                    //Update turn counter
-                    turnText.SetMessage("Turn: " + gst.GetTurn());
-
-                    if (!gst.IsInActionMenu())
-                    {
-                        actionMenu.SetVisible(false);
-                        cursor.Update(controls);
-                    }
-                    else
-                    {
-                        actionMenu.SetVisible(true);
-                        actionMenu.Update(controls);
-                    }
-
-                    //Update player win progression status
-                    if (gst.GetTurn() > gst.GetTurnLimit())
-                    {
-                        gst.SetPlayerAlive(false);
-                    }
-                    if (player.HasBlood() && player.GetRow() == map.GetLairRow() && player.GetCol() == map.GetLairCol())
-                    {
-                        gst.SetWon(true);
-                    }
-                    //Check if player has lost
-                    if (!gst.IsPlayerAlive())
-                    {
-                        endText.SetMessage("You Lose!");
-                        endText.SetVisible(true);
-                    }
-                    //Check if player has won
-                    else if (gst.HasWon())
-                    {
-                        endText.SetMessage("You Win!");
-                        endText.SetVisible(true);
-                    }
+                    mainGame.Update(controls);
                 break;
             }
 
@@ -234,24 +192,16 @@ namespace Midnight_Snack
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            switch (gst.GetGameState())
+            switch (gameManager.GetGameState())
             {
                 //Level Select Screen
                 case 0:
                     levelSelectScene.Draw(spriteBatch);
-                    //startText.Draw(spriteBatch);
                 break;
 
                 //Main Game Screen
                 case 1:
-                    map.Draw(spriteBatch);
-                    cursor.Draw(spriteBatch);
-                    player.Draw(spriteBatch);
-                    villager.Draw(spriteBatch);
-                    actionMenu.Draw(spriteBatch);
-                    endText.Draw(spriteBatch);
-                    turnText.Draw(spriteBatch);
-                    goalText.Draw(spriteBatch);
+                    mainGame.Draw(spriteBatch);
                 break;
             }
             spriteBatch.End();

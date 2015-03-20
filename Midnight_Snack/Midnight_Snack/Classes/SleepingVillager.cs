@@ -18,14 +18,14 @@ namespace Midnight_Snack
             drained = false;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("mario.png");
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            if (drained)
+            if(drained)
             {
                 spriteBatch.Draw(texture, position, Color.Gray);
             }

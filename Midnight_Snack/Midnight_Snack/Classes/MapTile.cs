@@ -28,7 +28,7 @@ namespace Midnight_Snack
             modifier = "none";
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             if (passable)
             {

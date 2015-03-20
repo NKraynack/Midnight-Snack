@@ -9,56 +9,56 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    public class MiniMenuSelector : GameObject
+    public class MiniMenuSelector : MenuSelector
     {
-        private int selectorRow;    //Which row of the MiniMenu is the selector in
-        private int maxRow; //Bottom-most row of the MiniMenu
-
-        GameManager gst = GameManager.GetInstance();
+        GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
 
-        public MiniMenuSelector(Vector2 playerPos, int width, int height) : base(playerPos, width, height)
+        public MiniMenuSelector(Vector2 playerPos, int width, int height, int rows)
+            : base(playerPos, width, height, rows)
         {
+            initialPos = playerPos;
+            initialPos.X += 70;
+            initialPos.Y += 15;
+
             position = playerPos;
             position.X += 70;
             position.Y += 15;
 
             selectorRow = 0;
-            maxRow = 2;
+            maxRow = rows - 1;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("action_menu_selector.png");
         }
-
-        public void Update(Controls controls)
+        
+        public override void Update(Controls controls)
         {
             //Update selector location
-            if (selectorRow == 0)
-            {
-                SetX(player.GetX() + 70);
-                SetY(player.GetY() + 15);
-            }
-            else if (selectorRow == 1)
-            {
-                SetX(player.GetX() + 70);
-                SetY(player.GetY() + 40);
-            }
-            else if (selectorRow == 2)
-            {
-                SetX(player.GetX() + 70);
-                SetY(player.GetY() + 65);
-            }
+            position = player.GetPosition();
+            position.X += 70;
+            position.Y += 15;
+            initialPos = player.GetPosition();
+            initialPos.X += 70;
+            initialPos.Y += 15;
+            SetY((int)initialPos.Y + selectorRow * 20);
 
             //If in the action menu, selector should navigate menu
-            if (gst.IsInActionMenu())
+            if (gameManager.IsInActionMenu())
             {
                 Move(controls);
                 SelectAction(controls);
             }
+            //If player wants to cancel out of selecting an action
+            if (controls.onPress(Keys.F, Buttons.B))
+            {
+                gameManager.SetInActionMenu(false);
+            }
         }
-
+        
+        /**
         public void Move(Controls controls)
         {
             if (controls.onPress(Keys.Up, Buttons.DPadUp) && selectorRow != 0)
@@ -70,8 +70,10 @@ namespace Midnight_Snack
                 selectorRow++;
             }
         }
+         * */
 
-        public void SelectAction(Controls controls)
+        /*
+        public override int SelectAction(Controls controls)
         {
             //Select an action
             if (controls.onPress(Keys.Space, Buttons.A))
@@ -115,5 +117,6 @@ namespace Midnight_Snack
                 gst.SetInActionMenu(false);
             }
         }
+         * */
     }
 }

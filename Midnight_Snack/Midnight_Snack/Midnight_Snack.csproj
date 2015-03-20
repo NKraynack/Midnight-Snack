@@ -39,6 +39,7 @@
     <Compile Include="Classes\Cursor.cs" />
     <Compile Include="Classes\GameObject.cs" />
     <Compile Include="Classes\GameManager.cs" />
+    <Compile Include="Classes\MainGame.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\MapTile.cs" />
     <Compile Include="Classes\Menu.cs" />

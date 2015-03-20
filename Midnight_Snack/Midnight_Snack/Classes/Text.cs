@@ -14,12 +14,14 @@ namespace Midnight_Snack
         protected string message;
         protected Vector2 position;
         private bool visible;
+        private bool available;
 
         public Text(string msg, Vector2 pos)
         {
             message = msg;
             position = pos;
             visible = true;
+            available = true;
         }
 
         public void LoadContent(ContentManager content)
@@ -32,8 +34,16 @@ namespace Midnight_Snack
         {
             if (visible)
             {
-                //draws a string, params are your font, your message, position, and color
-                sb.DrawString(font, message, position, Color.White);
+                if (available)
+                {
+                    //draws a string, params are your font, your message, position, and color
+                    sb.DrawString(font, message, position, Color.White);
+                }
+                //Gray out unavailable actions
+                else
+                {
+                    sb.DrawString(font, message, position, Color.Gray);
+                }
             }
         }
 
@@ -65,6 +75,16 @@ namespace Midnight_Snack
         public void SetVisible(bool b)
         {
             visible = b;
+        }
+
+        public bool IsAvailable()
+        {
+            return available;
+        }
+
+        public void SetAvailable(bool b)
+        {
+            available = b;
         }
 
     }

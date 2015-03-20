@@ -42,7 +42,7 @@ namespace Midnight_Snack
             mapCol = col;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
 
         }
@@ -52,7 +52,7 @@ namespace Midnight_Snack
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
         }

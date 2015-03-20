@@ -26,7 +26,7 @@ namespace Midnight_Snack
             return instance;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("dracula.png");
         }
@@ -42,7 +42,7 @@ namespace Midnight_Snack
         }
 
         //Tinge the player red if they have blood
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (hasBlood)
             {

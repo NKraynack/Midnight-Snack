@@ -11,9 +11,9 @@ namespace Midnight_Snack
 {
     public class MenuSelector : GameObject
     {
-        private int selectorRow;    //Which row of the Menu is the selector in
-        private int maxRow; //Bottom-most row of the Menu
-        private Vector2 initialPos;
+        protected int selectorRow;    //Which row of the Menu is the selector in
+        protected int maxRow; //Bottom-most row of the Menu
+        protected Vector2 initialPos;
 
         GameManager gst = GameManager.GetInstance();
         Player player = Player.GetInstance();
@@ -25,12 +25,12 @@ namespace Midnight_Snack
             maxRow = rows - 1;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("action_menu_selector.png");
         }
 
-        public void Update(Controls controls)
+        public virtual void Update(Controls controls)
         {
             SetY((int)initialPos.Y + selectorRow * 20);
 
@@ -59,6 +59,15 @@ namespace Midnight_Snack
                 return selectorRow;
             }
             return -1;
+        }
+
+        public bool SetRow(int row)
+        {
+            if(row <= maxRow)
+            {
+                selectorRow = row;
+            }
+            return false;
         }
     }
 }

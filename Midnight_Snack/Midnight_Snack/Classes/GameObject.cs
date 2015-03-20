@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    public class GameObject
+    public abstract class GameObject
     {
         protected Vector2 position;
         protected Texture2D texture;
@@ -29,7 +31,12 @@ namespace Midnight_Snack
             this.height = height;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void LoadContent(ContentManager content)
+        {
+            
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);
         }

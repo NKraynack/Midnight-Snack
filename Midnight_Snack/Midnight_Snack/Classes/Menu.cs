@@ -10,12 +10,12 @@ namespace Midnight_Snack
 {
     public class Menu : GameObject
     {
-        private bool visible;   //Is the mini menu currently visible?
+        protected bool visible;   //Is the menu currently visible?
         private MenuSelector selector;  //The selector associated with this menu
-        private List<Text> menuOptions; //The options of the menu
+        protected List<Text> menuOptions; //The options of the menu
 
         Player player = Player.GetInstance();
-        GameManager gst = GameManager.GetInstance();
+        GameManager gameManager = GameManager.GetInstance();
 
         public Menu(Vector2 pos, int width, int height, List<Text> options) : base(pos, width, height)
         {
@@ -33,7 +33,7 @@ namespace Midnight_Snack
 
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("action_menu_background.png");
             selector.LoadContent(content);
@@ -43,7 +43,7 @@ namespace Midnight_Snack
             }
         }
 
-        public void Update(Controls controls)
+        public virtual void Update(Controls controls)
         {
             //Update Selector and text
             selector.Update(controls);
@@ -61,11 +61,11 @@ namespace Midnight_Snack
             return "";
         }
 
-        public void PerformAction(string action)
+        public virtual void PerformAction(string action)
         {
             if(action.Equals("Tutorial"))
             {
-                gst.SetGameState(1);
+                gameManager.SetGameState(1);
             }
             if(action.Equals("Level 1"))
             {
@@ -73,7 +73,7 @@ namespace Midnight_Snack
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (visible)
             {
