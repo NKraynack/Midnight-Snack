@@ -33,15 +33,16 @@ namespace Midnight_Snack
         {
             MapTile[,] g = new MapTile[numRows, numCols];
 
-            int offset = 10;
+            int xOffset = 10;
+            int yOffset = 30;
             int tilesize = 100;
 
             for (int r = 0; r < numRows; r++)
             {
                 for (int c = 0; c < numCols; c++)
                 {
-                    int x = offset + (c * tilesize);
-                    int y = offset + (r * tilesize);
+                    int x = xOffset + (c * tilesize);
+                    int y = yOffset + (r * tilesize);
                     MapTile tile = new MapTile(x, y, tilesize, tilesize);
                     g[r, c] = tile;
                 }

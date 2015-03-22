@@ -25,6 +25,8 @@ namespace Midnight_Snack
         GameManager gameManager;
 
         SelectionScene levelSelectScene;
+        SelectionScene gameOverScene;
+        SelectionScene levelCompleteScene;
         MainGame mainGame;
 
         /*
@@ -88,23 +90,26 @@ namespace Midnight_Snack
             map.SetTile(1, 3, obstacle2);
 
             //Set up player stuff
-            cursor = new Cursor(10, 10, 100, 100, map);
+            cursor = new Cursor(10, 30, 100, 100, map);
             player = Player.GetInstance();
             //player.SetMap(map);
             player.SetRow(map.GetLairRow());
             player.SetCol(map.GetLairCol());
-            player.SetPosition(new Vector2(10, 10));
+            player.SetPosition(new Vector2(10, 30));
 
             //Set up villager stuff
-            SleepingVillager villager = new SleepingVillager(new Vector2(410, 210), 100, 100, 2, 4);
+            SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 4);
             //Mark villager tile as occupied
             MapTile villagerTile = map.GetTile(2, 4);
             villagerTile.SetOccupant(villager);
             map.SetTile(2, 4, villagerTile);
+            villager.SetPosition(villagerTile.GetPosition());
 
+            //Create a list of all the units on the map
             List<Unit> units = new List<Unit>();
             units.Add(player);
             units.Add(villager);
+            //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
             Text abilitiesText = new Text("Abilities", player.GetPosition());
             Text endTurnText = new Text("End Turn", player.GetPosition());
@@ -115,7 +120,36 @@ namespace Midnight_Snack
             List<Menu> menus = new List<Menu>();
             MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
             menus.Add(actionMenu);
+            //Create the main game screen
             mainGame = new MainGame(map, units, cursor, menus);
+
+            /**** Initialize Game Over Scene ****/
+            Text gameOverText = new Text("Game Over", new Vector2(300, 100));
+            List<Text> gameOverSceneText = new List<Text>();
+            gameOverSceneText.Add(gameOverText);
+            List<Text> gameOverOptions = new List<Text>();
+            Text gameOverOption1 = new Text("Try Again", new Vector2(0, 0));
+            //Can't currently "Try Again" yet so gray out option
+            gameOverOption1.SetAvailable(false);
+            Text gameOverOption2 = new Text("Level Select", new Vector2(0, 0));
+            gameOverOptions.Add(gameOverOption1);
+            gameOverOptions.Add(gameOverOption2);
+            Menu gameOverMenu = new Menu(new Vector2(300, 300), 100, 100, gameOverOptions);
+            gameOverScene = new SelectionScene(gameOverSceneText, gameOverMenu);
+
+            /**** Initialize Level Complete Scene ****/
+            Text levelCompleteText = new Text("Level Complete!", new Vector2(300, 100));
+            List<Text> levelCompleteSceneText = new List<Text>();
+            levelCompleteSceneText.Add(levelCompleteText);
+            List<Text> levelCompleteOptions = new List<Text>();
+            Text levelCompleteOption1 = new Text("Next Level", new Vector2(0, 0));
+            //Can't currently go to next level yet, so gray out option
+            levelCompleteOption1.SetAvailable(false);
+            Text levelCompleteOption2 = new Text("Level Select", new Vector2(0, 0));
+            levelCompleteOptions.Add(levelCompleteOption1);
+            levelCompleteOptions.Add(levelCompleteOption2);
+            Menu levelCompleteMenu = new Menu(new Vector2(300, 300), 100, 100, levelCompleteOptions);
+            levelCompleteScene = new SelectionScene(levelCompleteSceneText, levelCompleteMenu);
 
             //Start the game on the level select screen
             //gameState = levelSelect;
@@ -140,6 +174,8 @@ namespace Midnight_Snack
             // TODO: use this.Content to load your game content here
             levelSelectScene.LoadContent(this.Content);
             mainGame.LoadContent(this.Content);
+            gameOverScene.LoadContent(this.Content);
+            levelCompleteScene.LoadContent(this.Content);
             
         }
 
@@ -179,6 +215,16 @@ namespace Midnight_Snack
                 case 1:
                     mainGame.Update(controls);
                 break;
+
+                //Game Over Screen
+                case 2:
+                    gameOverScene.Update(controls);
+                break;
+
+                //Level Complete Screen
+                case 3:
+                    levelCompleteScene.Update(controls);
+                break;
             }
 
             base.Update(gameTime);
@@ -204,6 +250,16 @@ namespace Midnight_Snack
                 //Main Game Screen
                 case 1:
                     mainGame.Draw(spriteBatch);
+                break;
+
+                //Game Over Screen
+                case 2:
+                    gameOverScene.Draw(spriteBatch);
+                break;
+
+                //Level Complete Screen
+                case 3:
+                    levelCompleteScene.Draw(spriteBatch);
                 break;
             }
             spriteBatch.End();

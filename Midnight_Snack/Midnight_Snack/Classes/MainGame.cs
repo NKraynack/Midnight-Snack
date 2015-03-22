@@ -42,8 +42,8 @@ namespace Midnight_Snack
             actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
             menus.Add(actionMenu);
 
-            turnText = new Text("Turn: 1", new Vector2(700, 20));
-            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, 420));
+            turnText = new Text("Turn: 1", new Vector2(10, 5));
+            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, 430));
             endText = new Text("", new Vector2(700, 60));
             endText.SetVisible(false);
             text.Add(turnText);
@@ -77,7 +77,7 @@ namespace Midnight_Snack
         public void Update(Controls controls)
         {
             //Update Turn Counter
-            turnText.SetMessage("Turn: " + gameManager.GetTurn());
+            turnText.SetMessage("Turns Remaining: " + (gameManager.GetTurnLimit() - gameManager.GetTurn()));
 
             //Only display the action menu when using it
             if (gameManager.IsInActionMenu())
@@ -103,12 +103,14 @@ namespace Midnight_Snack
             //Check if player has lost
             if (!gameManager.IsPlayerAlive())
             {
+                gameManager.SetGameState(2);
                 endText.SetMessage("You Lose!");
                 endText.SetVisible(true);
             }
             //Check if player has won
             else if (gameManager.HasWon())
             {
+                gameManager.SetGameState(3);
                 endText.SetMessage("You Win!");
                 endText.SetVisible(true);
             }
@@ -184,5 +186,6 @@ namespace Midnight_Snack
         {
             this.map = map;
         }
+
     }
 }

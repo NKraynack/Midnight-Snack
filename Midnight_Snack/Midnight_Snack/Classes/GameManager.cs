@@ -17,7 +17,7 @@ namespace Midnight_Snack
 
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
         int gameState;
-        const int levelSelect = 0, mainGame = 1;
+        const int levelSelect = 0, mainGame = 1, gameOver = 2, levelComplete = 3;
 
         private static GameManager instance = new GameManager();
 
@@ -115,6 +115,18 @@ namespace Midnight_Snack
         public void SetGameState(int state)
         {
             gameState = state;
+        }
+
+        //Resets the GameManager back to it's initial state
+        public void ResetGameState()
+        {
+            inActionMenu = false;
+            movingPlayer = false;
+            choosingAbilityTarget = false;
+            playerAlive = true;
+            playerWin = false;
+            currentTurn = 1;
+            turnLimit = 5;
         }
     }
 }
