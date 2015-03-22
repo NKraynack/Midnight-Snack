@@ -33,11 +33,11 @@ namespace Midnight_Snack
             this.text = new List<Text>();
 
             Text moveText = new Text("Move", player.GetPosition());
-            Text interactText = new Text("Interact", player.GetPosition());
+            Text abilitiesText = new Text("Abilities", player.GetPosition());
             Text endTurnText = new Text("End Turn", player.GetPosition());
             List<Text> actionMenuOptions = new List<Text>();
             actionMenuOptions.Add(moveText);
-            actionMenuOptions.Add(interactText);
+            actionMenuOptions.Add(abilitiesText);
             actionMenuOptions.Add(endTurnText);
             actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
             menus.Add(actionMenu);

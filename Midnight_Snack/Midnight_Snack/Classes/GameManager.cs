@@ -9,7 +9,7 @@ namespace Midnight_Snack
     {
         private bool inActionMenu;  //Is the player currently navigating the action menu
         private bool movingPlayer;  //Is the player trying to move their character
-        private bool choosingInteractTarget;    //Is the player trying to choose their interact target
+        private bool choosingAbilityTarget;    //Is the player trying to choose their interact target
         private bool playerAlive;   //Is the player still alive
         private bool playerWin; //Has the player won the level
         private int currentTurn;    //Keeps track of the number of turns
@@ -25,7 +25,7 @@ namespace Midnight_Snack
         {
             inActionMenu = false;
             movingPlayer = false;
-            choosingInteractTarget = false;
+            choosingAbilityTarget = false;
             playerAlive = true;
             playerWin = false;
             currentTurn = 1;
@@ -67,14 +67,14 @@ namespace Midnight_Snack
             playerAlive = b;
         }
 
-        public bool IsChoosingInteractTarget()
+        public bool IsChoosingAbilityTarget()
         {
-            return choosingInteractTarget;
+            return choosingAbilityTarget;
         }
 
-        public void SetChoosingInteractTarget(bool b)
+        public void SetChoosingAbilityTarget(bool b)
         {
-            choosingInteractTarget = b;
+            choosingAbilityTarget = b;
         }
 
         public bool HasWon()

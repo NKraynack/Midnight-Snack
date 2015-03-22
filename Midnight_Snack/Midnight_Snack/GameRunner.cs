@@ -22,9 +22,7 @@ namespace Midnight_Snack
         Player player;
         Cursor cursor;
         Controls controls;
-        Map map;
         GameManager gameManager;
-        SleepingVillager villager;
 
         SelectionScene levelSelectScene;
         MainGame mainGame;
@@ -60,8 +58,27 @@ namespace Midnight_Snack
             IsMouseVisible = true;
             this.Window.Title = "Midnight Snack";
 
+            gameManager = GameManager.GetInstance();
+
+            /**** Initialize Level Select Screen ****/
+            Text titleText = new Text("Midnight Snack", new Vector2(300, 100));
+            Text startText = new Text("Select a Level", new Vector2(300, 250));
+            List<Text> levelSelectText = new List<Text>();
+            levelSelectText.Add(titleText);
+            levelSelectText.Add(startText);
+            List<Text> levelSelectOptions = new List<Text>();
+            Text option1 = new Text("Tutorial", new Vector2(0, 0));
+            Text option2 = new Text("Level 1", new Vector2(0, 0));
+            //Level 1 not available right now so display it as unavailable
+            option2.SetAvailable(false);
+            levelSelectOptions.Add(option1);
+            levelSelectOptions.Add(option2);
+            Menu levelSelectMenu = new Menu(new Vector2(300, 300), 100, 100, levelSelectOptions);
+            levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
+
+            /**** Initialize Main Game Screen ****/
             //Create map
-            map = new Map(4, 6, 0, 0);
+            Map map = new Map(4, 6, 0, 0);
             //Create test obstacles
             MapTile obstacle1 = map.GetTile(2, 1);
             obstacle1.SetPassable(false);
@@ -77,38 +94,23 @@ namespace Midnight_Snack
             player.SetRow(map.GetLairRow());
             player.SetCol(map.GetLairCol());
             player.SetPosition(new Vector2(10, 10));
-            
+
             //Set up villager stuff
-            villager = new SleepingVillager(new Vector2(410, 210), 100, 100, 2, 4);
+            SleepingVillager villager = new SleepingVillager(new Vector2(410, 210), 100, 100, 2, 4);
             //Mark villager tile as occupied
             MapTile villagerTile = map.GetTile(2, 4);
             villagerTile.SetOccupant(villager);
             map.SetTile(2, 4, villagerTile);
 
-            gameManager = GameManager.GetInstance();
-
-            /**** Initialize Level Select Screen ****/
-            Text startText = new Text("Select a Level", new Vector2(300, 250));
-            List<Text> levelSelectText = new List<Text>();
-            levelSelectText.Add(startText);
-            List<Text> levelSelectOptions = new List<Text>();
-            Text option1 = new Text("Tutorial", new Vector2(0, 0));
-            Text option2 = new Text("Level 1", new Vector2(0, 0));
-            levelSelectOptions.Add(option1);
-            levelSelectOptions.Add(option2);
-            Menu levelSelectMenu = new Menu(new Vector2(300, 300), 100, 100, levelSelectOptions);
-            levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
-
-            /**** Initialize Main Game Screen ****/
             List<Unit> units = new List<Unit>();
             units.Add(player);
             units.Add(villager);
             Text moveText = new Text("Move", player.GetPosition());
-            Text interactText = new Text("Interact", player.GetPosition());
+            Text abilitiesText = new Text("Abilities", player.GetPosition());
             Text endTurnText = new Text("End Turn", player.GetPosition());
             List<Text> actionMenuOptions = new List<Text>();
             actionMenuOptions.Add(moveText);
-            actionMenuOptions.Add(interactText);
+            actionMenuOptions.Add(abilitiesText);
             actionMenuOptions.Add(endTurnText);
             List<Menu> menus = new List<Menu>();
             MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);

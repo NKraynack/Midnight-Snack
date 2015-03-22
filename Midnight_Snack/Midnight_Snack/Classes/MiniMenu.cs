@@ -12,10 +12,6 @@ namespace Midnight_Snack
     {
         private MiniMenuSelector selector;  //The selector associated with this menu
 
-        private PlayerActionText moveText;    //The text which displays the move action
-        private PlayerActionText interactText;    //The text which displays the interact action
-        private PlayerActionText endTurnText;    //The text which displays the end turn action
-
         Player player = Player.GetInstance();
         GameManager gameManager = GameManager.GetInstance();
 
@@ -30,11 +26,6 @@ namespace Midnight_Snack
                 
             menuOptions = options;
             UpdateMenuText();
-                
-
-            moveText = new PlayerActionText("Move", position, 0, 0);
-            interactText = new PlayerActionText("Interact", position, 0, 20);
-            endTurnText = new PlayerActionText("End Turn", position, 0, 45);
         }
 
         public override void LoadContent(ContentManager content)
@@ -71,9 +62,9 @@ namespace Midnight_Snack
                         menuOptions[i].SetAvailable(true);
                     }
                 }
-                if(menuOptions[i].GetMessage().Equals("Interact"))
+                if(menuOptions[i].GetMessage().Equals("Abilities"))
                 {
-                    //Gray out interact option if already used this turn
+                    //Gray out abilities option if already used this turn
                     if (player.HasUsedAbilityThisTurn())
                     {
                         menuOptions[i].SetAvailable(false);
@@ -111,16 +102,16 @@ namespace Midnight_Snack
                 {
                     gameManager.SetMovingPlayer(true);
                     gameManager.SetInActionMenu(false);
-                    gameManager.SetChoosingInteractTarget(false);
+                    gameManager.SetChoosingAbilityTarget(false);
                 }
             }
-            else if(action.Equals("Interact"))
+            else if(action.Equals("Abilities"))
             {
                 //Go into interact mode
                 //Interact if haven't already interacted this turn
                 if(!player.HasUsedAbilityThisTurn())
                 {
-                    gameManager.SetChoosingInteractTarget(true);
+                    gameManager.SetChoosingAbilityTarget(true);
                     gameManager.SetMovingPlayer(false);
                     gameManager.SetInActionMenu(false);
                 }
@@ -135,7 +126,7 @@ namespace Midnight_Snack
                 player.SetMovedThisTurn(false);
                 player.SetUsedAbilityThisTurn(false);
 
-                gameManager.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingAbilityTarget(false);
                 gameManager.SetMovingPlayer(false);
                 gameManager.SetInActionMenu(false);
 

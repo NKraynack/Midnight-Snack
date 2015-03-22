@@ -71,12 +71,12 @@ namespace Midnight_Snack
 
         public void Update(Controls controls)
         {
-            if (gameManager.IsChoosingInteractTarget())
+            if (gameManager.IsChoosingAbilityTarget())
             {
                 SelectInteractTile(controls);
             }
             //If not in the action menu, cursor should move around map
-            else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingInteractTarget())
+            else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
             {
                 Move(controls);
                 SelectTile(controls);
@@ -191,12 +191,12 @@ namespace Midnight_Snack
                 player.SetHasBlood(true);
                 //Update that player has interacted this turn
                 player.SetUsedAbilityThisTurn(true);
-                gameManager.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingAbilityTarget(false);
             }
             //If player cancels the interact select, exit interact select mode
             else if (controls.onPress(Keys.F, Buttons.B))
             {
-                gameManager.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingAbilityTarget(false);
             }
         }
 
