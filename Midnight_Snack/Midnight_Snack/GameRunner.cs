@@ -23,6 +23,7 @@ namespace Midnight_Snack
         Cursor cursor;
         Controls controls;
         GameManager gameManager;
+        Enemy[] enemies;
 
         SelectionScene levelSelectScene;
         SelectionScene gameOverScene;
@@ -124,10 +125,24 @@ namespace Midnight_Snack
             map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
             villager.SetPosition(villagerTile.GetPosition());
 
+            //enemy stuff
+            /**enemies = new Enemy[map.GetEnemyCount()];
+            int[] enemyX = new int[map.GetEnemyCount()];
+            int[] enemyY = new int[map.GetEnemyCount()];
+            for (int i = 0; i < map.GetEnemyCount(); i++)
+            {
+                map.SetEnemyLoc(enemyX, enemyY, i);
+            }
+            */
             //Create a list of all the units on the map
             List<Unit> units = new List<Unit>();
             units.Add(player);
             units.Add(villager);
+            /**foreach (Enemy e in enemies)
+            {
+                units.Add(e);
+            }
+             * /
             //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
             Text abilitiesText = new Text("Abilities", player.GetPosition());
