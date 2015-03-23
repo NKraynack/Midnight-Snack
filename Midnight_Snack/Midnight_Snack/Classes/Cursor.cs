@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,64 +9,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    public struct GridPoint : IEquatable<GridPoint>
-    {
-        private int x;
-        private int y;
-
-        public GridPoint(int x, int y) 
-        {
-            this.x = x;
-            this.y = y;
-        }
-        public override string ToString()
-        {
-            return "(" + x + "," + y + ")";
-        }
-        public int getX()
-        {
-            return x;
-        }
-        public int getY()
-        {
-            return y;
-        }
-        public static bool operator ==(GridPoint p1, GridPoint p2)
-        {
-            return p1.x == p2.x && p1.y == p2.y;
-        }
-
-        public static bool operator !=(GridPoint p1, GridPoint p2)
-        {
-            return !(p1.x == p2.x && p1.y == p2.y);
-        }
-
-        public bool Equals(GridPoint other)
-        {
-            if (other == null)
-                return false;
-
-            return this.x == other.x && this.y == other.y;
-        }
-
-        public override int GetHashCode()
-        {
-            int hash = 17;
-            // Suitable nullity checks etc, of course :)
-            hash = hash * 23 + x.GetHashCode();
-            hash = hash * 23 + y.GetHashCode();
-            return hash;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is GridPoint))
-                return false;
-            var p = (GridPoint)obj;
-            return this.x == p.x && this.y == p.y;
-        }
-    }
-    
     public class Cursor : GameObject
     {
         private int cursorRow;  //The row of the grid which the cursor is currently on
@@ -75,11 +16,8 @@ namespace Midnight_Snack
         private Map map;    //The map the cursor is on
         private int maxRow; //The Bottom-most row in the grid
         private int maxCol; //The right-most column in the grid
-        private char[,] map_grid; //The grid for the map to generate shortest path
-        private int max_columns;
-        private int max_rows;
 
-        GameManager gst = GameManager.GetInstance();
+        GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
 
         public Cursor(int x, int y, int width, int height, Map map) : base(x, y, width, height)
@@ -89,9 +27,6 @@ namespace Midnight_Snack
             cursorCol = map.GetLairCol();
             maxRow = map.GetNumRows() - 1;
             maxCol = map.GetNumCols() - 1;
-            this.map_grid = map.generateMapGrid();
-            max_columns = map.GetNumCols();
-            max_rows = map.GetNumRows();
 
         }
 
@@ -104,15 +39,15 @@ namespace Midnight_Snack
             maxCol = map.GetNumCols() - 1;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("cursor.png");
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             //If not moving player display cursor normally
-            if (!gst.IsMovingPlayer())
+            if (!gameManager.IsMovingPlayer())
             {
                 spriteBatch.Draw(texture, position, Color.White);
             }
@@ -136,17 +71,17 @@ namespace Midnight_Snack
 
         public void Update(Controls controls)
         {
-            if (gst.IsChoosingInteractTarget())
+            if (gameManager.IsChoosingAbilityTarget())
             {
-                SelectInteractTile(controls);
+                SelectAbilityTarget(controls);
             }
             //If not in the action menu, cursor should move around map
-            else if (!gst.IsInActionMenu() && !gst.IsChoosingInteractTarget())
+            else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
             {
                 Move(controls);
                 SelectTile(controls);
 
-                if (gst.IsMovingPlayer())
+                if (gameManager.IsMovingPlayer())
                 {
                     MovePlayer(controls);
                 }
@@ -181,123 +116,24 @@ namespace Midnight_Snack
         //Moves the player to a valid tile
         public void MovePlayer(Controls controls)
         {
-            if (controls.onPress(Keys.Space, Buttons.A) && gst.IsMovingPlayer())
+            if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMovingPlayer())
             {
                 //If player chooses a valid tile within their move range, let them move there
                 if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) <= player.GetMoveRange())
                 {
                     //Check if tile is unoccupied and passable
                     MapTile tile = map.GetTile(cursorRow, cursorCol);
-                    if (tile.GetOccupant() == null && tile.IsPassable() && this.NoObstacles(cursorCol, cursorRow))
+                    if (tile.GetOccupant() == null && tile.IsPassable())
                     {
                         //Move player to tile
                         player.Move(position, cursorRow, cursorCol);
                         //Update that player has moved this turn
                         player.SetMovedThisTurn(true);
-                        gst.SetMovingPlayer(false);
-                        gst.SetInActionMenu(false);
+                        gameManager.SetMovingPlayer(false);
+                        gameManager.SetInActionMenu(false);
                     }
                 }
             }
-        }
-
-        private bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
-        {
-            Queue<GridPoint> q = new Queue<GridPoint>();
-            List<GridPoint> solution = new List<GridPoint>();
-            HashSet<GridPoint> discovered = new HashSet<GridPoint>();
-            Dictionary<GridPoint, GridPoint> prev = new Dictionary<GridPoint, GridPoint>();
-            GridPoint player_pos = new GridPoint(player.GetCol(), player.GetRow());
-            GridPoint current = player_pos;
-            GridPoint cursor_pos = new GridPoint(mov_x, mov_y);
-            q.Enqueue(current);
-            discovered.Add(current);
-            while (q.Count != 0)
-            {
-                current = q.Dequeue();
-                if (current.Equals(cursor_pos))
-                {
-                    break;
-                }
-                else
-                {
-                    foreach (GridPoint node in getNeighbors(max_columns, max_rows, current, map_grid))
-                    {
-                        if (!discovered.Contains(node))
-                        {
-                            q.Enqueue(node);
-                            prev.Add(node, current);
-                            discovered.Add(node);
-                        }
-                    }
-                }
-            }
-            if (!current.Equals(cursor_pos))
-            {
-                return false;
-            }
-            for (GridPoint node = cursor_pos; node != player_pos; prev.TryGetValue(node, out node))
-            {
-                solution.Add(node);
-            }
-            return solution.Count <= player.GetMoveRange();
-        }
-
-        private List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
-        {
-            List<GridPoint> neighbors = new List<GridPoint>();
-            int player_x = cur_point.getX();
-            int player_y = cur_point.getY();
-            
-            //bottom right
-            if ((player_x + 1 < x_limit) && (player_y + 1 < y_limit) && (player_x + 1 >= 0) && (player_y + 1 >= 0) && 
-                grid[player_x + 1, player_y + 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x + 1, player_y + 1));
-            }
-            //bottom
-            if ((player_x < x_limit) && (player_y + 1 < y_limit) && (player_x >= 0) && (player_y + 1 >= 0) &&
-                grid[player_x, player_y + 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x, player_y + 1));
-            }
-            //bottom left
-            if ((player_x - 1 < x_limit) && (player_y + 1 < y_limit) && (player_x - 1 >= 0) && (player_y + 1 >= 0) &&
-                grid[player_x - 1, player_y + 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x - 1, player_y + 1));
-            }
-            //left
-            if ((player_x - 1 < x_limit) && (player_y < y_limit) && (player_x - 1 >= 0) && (player_y >= 0) &&
-                grid[player_x - 1, player_y] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x - 1, player_y));
-            }
-            //upper left
-            if ((player_x - 1 < x_limit) && (player_y - 1 < y_limit) && (player_x - 1 >= 0) && (player_y - 1 >= 0) &&
-                grid[player_x - 1, player_y - 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x - 1, player_y - 1));
-            }
-            //top
-            if ((player_x < x_limit) && (player_y - 1 < y_limit) && (player_x >= 0) && (player_y - 1 >= 0) &&
-                grid[player_x, player_y - 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x, player_y - 1));
-            }
-            //top right
-            if ((player_x + 1 < x_limit) && (player_y - 1 < y_limit) && (player_x + 1 >= 0) && (player_y - 1 >= 0) &&
-                grid[player_x + 1, player_y - 1] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x + 1, player_y - 1));
-            }
-            //right
-            if ((player_x + 1 < x_limit) && (player_y < y_limit) && (player_x + 1 >= 0) && (player_y >= 0) &&
-                grid[player_x + 1, player_y] != 'x')
-            {
-                neighbors.Add(new GridPoint(player_x + 1, player_y));
-            }
-            return neighbors;
         }
 
         public void SelectTile(Controls controls)
@@ -311,12 +147,12 @@ namespace Midnight_Snack
                 && cursorRow == player.GetRow() && cursorCol == player.GetCol())
             {
                 //...open up action menu
-                gst.SetInActionMenu(true);
+                gameManager.SetInActionMenu(true);
             }
         }
 
-        //Can only choose to interact with a tile directly adjacent to player
-        public void SelectInteractTile(Controls controls)
+        //Can only choose to use ability on a tile directly adjacent to player
+        public void SelectAbilityTarget(Controls controls)
         {
             int maxRight = player.GetCol() + 1;
             int maxLeft = player.GetCol() - 1;
@@ -346,21 +182,35 @@ namespace Midnight_Snack
 
             //Get the occupant of the selected tile
             MapTile tile = map.GetTile(cursorRow, cursorCol);
-            GameObject occupant = tile.GetOccupant();
+            Unit occupant = tile.GetOccupant();
 
-            //If the player chooses a tile and there is a valid interact target...
+            //If the player chooses a tile and there is a valid ability target...
             if (controls.onPress(Keys.Space, Buttons.A) && occupant != null)
             {
-                //...interact with that target
-                player.SetHasBlood(true);
-                //Update that player has interacted this turn
+                //...use ability on that target
+                //Can only feed on sleeping villagers
+                if(occupant.GetType() == typeof(SleepingVillager))
+                {
+                    SleepingVillager villager = (SleepingVillager)occupant;
+                    //Villager must not already have been drained
+                    if(!villager.IsDrained())
+                    {
+                        //Give the player blood
+                        player.SetHasBlood(true);
+                        //Update the villager as drained
+                        villager.SetDrained(true);
+                        tile.SetOccupant(villager);
+                    }
+                    
+                }
+                //Update that player has used an ability this turn
                 player.SetUsedAbilityThisTurn(true);
-                gst.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingAbilityTarget(false);
             }
-            //If player cancels the interact select, exit interact select mode
+            //If player cancels the ability select, exit ability select mode
             else if (controls.onPress(Keys.F, Buttons.B))
             {
-                gst.SetChoosingInteractTarget(false);
+                gameManager.SetChoosingAbilityTarget(false);
             }
         }
 
