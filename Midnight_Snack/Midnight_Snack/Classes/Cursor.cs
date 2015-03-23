@@ -89,7 +89,7 @@ namespace Midnight_Snack
             cursorCol = map.GetLairCol();
             maxRow = map.GetNumRows() - 1;
             maxCol = map.GetNumCols() - 1;
-            this.map_grid = map.generateMapGrid();
+            this.map_grid = map.GenerateMapGrid();
             max_columns = map.GetNumCols();
             max_rows = map.GetNumRows();
 
