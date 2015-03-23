@@ -47,7 +47,7 @@ namespace Midnight_Snack
 
         }
 
-        public void Update()
+        public virtual void Update()
         {
 
         }

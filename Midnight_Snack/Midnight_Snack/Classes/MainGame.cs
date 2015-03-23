@@ -79,6 +79,25 @@ namespace Midnight_Snack
             //Update Turn Counter
             turnText.SetMessage("Turns Remaining: " + (gameManager.GetTurnLimit() - gameManager.GetTurn()));
 
+            //Temporary HealthBar tester
+            if(controls.onPress(Keys.J, Buttons.X))
+            {
+                player.SetCurrentHealth(player.GetCurrentHealth() - 1);
+            }
+            if (controls.onPress(Keys.K, Buttons.Y))
+            {
+                player.SetCurrentHealth(player.GetCurrentHealth() + 1);
+            }
+
+            //Update units
+            for (int i = 0; i < units.Count; i++)
+            {
+                if (units[i] != null)
+                {
+                    units[i].Update();
+                }
+            }
+
             //Only display the action menu when using it
             if (gameManager.IsInActionMenu())
             {

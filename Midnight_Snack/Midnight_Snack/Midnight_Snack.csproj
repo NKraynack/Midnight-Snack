@@ -39,6 +39,8 @@
     <Compile Include="Classes\Cursor.cs" />
     <Compile Include="Classes\GameObject.cs" />
     <Compile Include="Classes\GameManager.cs" />
+    <Compile Include="Classes\HealthBar.cs" />
+    <Compile Include="Classes\HealthPiece.cs" />
     <Compile Include="Classes\MainGame.cs" />
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\MapTile.cs" />
@@ -90,6 +92,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\dracula.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\empty_health_pip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\health_pip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\lair_map_tile.png">

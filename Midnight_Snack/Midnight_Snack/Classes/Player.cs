@@ -29,6 +29,17 @@ namespace Midnight_Snack
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("dracula.png");
+            healthBar.LoadContent(content);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if(!alive)
+            {
+                GameManager.GetInstance().SetPlayerAlive(false);
+            }
         }
 
         public bool HasBlood()
@@ -44,6 +55,8 @@ namespace Midnight_Snack
         //Tinge the player red if they have blood
         public override void Draw(SpriteBatch spriteBatch)
         {
+            healthBar.Draw(spriteBatch);
+
             if (hasBlood)
             {
                 spriteBatch.Draw(texture, position, Color.Red);

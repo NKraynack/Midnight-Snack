@@ -11,12 +11,13 @@ namespace Midnight_Snack
 {
     public class MobileUnit : Unit
     {
-        private int moveRange;  //Number of tiles the unit can move in one turn
-        private int maxHealth;  //The greatest amount of health this unit can have
-        private int currentHealth;  //The current amount of health this unit has
-        private bool movedThisTurn; //Has the unit moved this turn?
-        private bool usedAbilityThisTurn;   //Has the unit used an ability this turn?
-        private bool alive; //Is the unit alive?
+        protected int moveRange;  //Number of tiles the unit can move in one turn
+        protected int maxHealth;  //The greatest amount of health this unit can have
+        protected int currentHealth;  //The current amount of health this unit has
+        protected bool movedThisTurn; //Has the unit moved this turn?
+        protected bool usedAbilityThisTurn;   //Has the unit used an ability this turn?
+        protected bool alive; //Is the unit alive?
+        public HealthBar healthBar; //The unit's health bar
 
         public MobileUnit(Vector2 pos, int width, int height, int row, int col, int range, int health) : base(pos, width, height, row, col)
         {
@@ -26,6 +27,7 @@ namespace Midnight_Snack
             movedThisTurn = false;
             usedAbilityThisTurn = false;
             alive = true;
+            healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
         }
 
         //Moves the unit to the given position
@@ -101,6 +103,21 @@ namespace Midnight_Snack
         public void SetAlive(bool b)
         {
             alive = b;
+        }
+
+        public override void Update()
+        {
+            healthBar.Update(position, currentHealth);
+
+            if(currentHealth <= 0)
+            {
+                alive = false;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            healthBar.Draw(spriteBatch);
         }
     }
 }
