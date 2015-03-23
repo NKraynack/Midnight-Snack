@@ -78,16 +78,6 @@ namespace Midnight_Snack
             }
         }
 
-        public char[,] GenerateMapGrid()
-        {
-            char[,] grid = new char[cols, rows];
-            for(int i = 0; i < cols; i++) {
-                for (int j = 0; j < rows; j++) {
-                    grid[i,j] = GetTile(j,i).IsPassable() ? 'o' : 'x';
-                }
-            }
-            return grid;
-        }
         //Returns the number of rows in the grid
         public int GetNumRows()
         {
