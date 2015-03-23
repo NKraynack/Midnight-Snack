@@ -15,19 +15,15 @@ namespace Midnight_Snack
         private MapTile[,] grid;    //2D array representing the map
         private int lairRow;    //The row in which the lair is located
         private int lairCol;    //The column in which the lair is located
-        private int[] enemyRow;
-        private int[] enemyCol;
 
         //Creates a map of the given number of rows and columns
         //with a starting position at [startRow, startCol]
-        public Map(int numRows, int numCols, int startRow, int startCol, int noEnemies)
+        public Map(int numRows, int numCols, int startRow, int startCol)
         {
             rows = numRows;
             cols = numCols;
             this.grid = FillGrid(numRows, numCols);
             SetLair(startRow, startCol);
-            enemyRow = new int[noEnemies];
-            enemyCol = new int[noEnemies];
         }
 
         //Returns a grid with the given number of rows and cols
@@ -159,17 +155,6 @@ namespace Midnight_Snack
         public void SetGrid(MapTile[,] g)
         {
             this.grid = g;
-        }
-        
-        public void SetEnemyLoc(int[] enemyX, int[] enemyY, int index)
-        {
-            enemyRow[index] = enemyX[index];
-            enemyCol[index] = enemyY[index];
-        }
-
-        public int GetEnemyCount()
-        {
-            return enemyRow.Length;
         }
     }
 }

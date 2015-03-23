@@ -138,11 +138,7 @@ namespace Midnight_Snack
             List<Unit> units = new List<Unit>();
             units.Add(player);
             units.Add(villager);
-            /**foreach (Enemy e in enemies)
-            {
-                units.Add(e);
-            }
-             * /
+            
             //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
             Text abilitiesText = new Text("Abilities", player.GetPosition());
