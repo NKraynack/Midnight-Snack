@@ -10,7 +10,7 @@ namespace Midnight_Snack
 {
     public class MapTile : GameObject
     {
-        private GameObject occupant;  //The object currently occupying this tile
+        private Unit occupant;  //The object currently occupying this tile
         private bool passable;  //Is this tile passable
         private string modifier;    //The modifier on this tile (i.e. lair, consecrated, etc.)
 
@@ -47,12 +47,12 @@ namespace Midnight_Snack
             }
         }
 
-        public GameObject GetOccupant()
+        public Unit GetOccupant()
         {
             return occupant;
         }
 
-        public void SetOccupant(GameObject o)
+        public void SetOccupant(Unit o)
         {
             occupant = o;
         }

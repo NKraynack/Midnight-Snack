@@ -38,8 +38,7 @@ namespace Midnight_Snack
         public static int ScreenWidth;
         public static int ScreenHeight;
 
-        public GameRunner()
-            : base()
+        public GameRunner() : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -54,17 +53,23 @@ namespace Midnight_Snack
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            ScreenWidth = GraphicsDevice.Viewport.Width;
-            ScreenHeight = GraphicsDevice.Viewport.Height;
 
-            IsMouseVisible = true;
+            //Full Screen
+            ScreenWidth = GraphicsDevice.DisplayMode.Width;
+            ScreenHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.PreferredBackBufferWidth = ScreenWidth;
+            graphics.PreferredBackBufferHeight = ScreenHeight;
+            graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
+
+            IsMouseVisible = false;
             this.Window.Title = "Midnight Snack";
 
             gameManager = GameManager.GetInstance();
 
             /**** Initialize Level Select Screen ****/
-            Text titleText = new Text("Midnight Snack", new Vector2(300, 100));
-            Text startText = new Text("Select a Level", new Vector2(300, 250));
+            Text titleText = new Text("Midnight Snack", new Vector2(ScreenWidth/2, ScreenHeight/4));
+            Text startText = new Text("Select a Level", new Vector2(ScreenWidth/2, ScreenHeight/3));
             List<Text> levelSelectText = new List<Text>();
             levelSelectText.Add(titleText);
             levelSelectText.Add(startText);
@@ -75,34 +80,48 @@ namespace Midnight_Snack
             option2.SetAvailable(false);
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
-            Menu levelSelectMenu = new Menu(new Vector2(300, 300), 100, 100, levelSelectOptions);
+            Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
             /**** Initialize Main Game Screen ****/
+            //Set number of turns
+            gameManager.SetTurnLimit(8);
             //Create map
-            Map map = new Map(4, 6, 0, 0);
-            //Create test obstacles
-            MapTile obstacle1 = map.GetTile(2, 1);
-            obstacle1.SetPassable(false);
-            map.SetTile(2, 1, obstacle1);
-            MapTile obstacle2 = map.GetTile(1, 3);
-            obstacle2.SetPassable(false);
-            map.SetTile(1, 3, obstacle2);
+            Map map = new Map(6, 8, 3, 0);
+            //Set up obstacles
+            for(int c = 2; c < 8; c++)
+            {
+                MapTile obstacle = map.GetTile(4, c);
+                obstacle.SetPassable(false);
+                map.SetTile(4, c, obstacle);
+            }
+            for (int r = 2; r < 5; r++)
+            {
+                MapTile obstacle = map.GetTile(r, 3);
+                obstacle.SetPassable(false);
+                map.SetTile(r, 3, obstacle);
+            }
+            for (int r = 0; r < 3; r++)
+            {
+                MapTile obstacle = map.GetTile(r, 5);
+                obstacle.SetPassable(false);
+                map.SetTile(r, 5, obstacle);
+            }
 
             //Set up player stuff
-            cursor = new Cursor(10, 30, 100, 100, map);
+            cursor = new Cursor(map.GetLairPos(), 100, 100, map);
             player = Player.GetInstance();
             //player.SetMap(map);
             player.SetRow(map.GetLairRow());
             player.SetCol(map.GetLairCol());
-            player.SetPosition(new Vector2(10, 30));
+            player.SetPosition(map.GetLairPos());
 
             //Set up villager stuff
-            SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 4);
+            SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
             //Mark villager tile as occupied
-            MapTile villagerTile = map.GetTile(2, 4);
+            MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
             villagerTile.SetOccupant(villager);
-            map.SetTile(2, 4, villagerTile);
+            map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
             villager.SetPosition(villagerTile.GetPosition());
 
             //Create a list of all the units on the map
@@ -124,7 +143,7 @@ namespace Midnight_Snack
             mainGame = new MainGame(map, units, cursor, menus);
 
             /**** Initialize Game Over Scene ****/
-            Text gameOverText = new Text("Game Over", new Vector2(300, 100));
+            Text gameOverText = new Text("Game Over", new Vector2(ScreenWidth/2, ScreenHeight/3));
             List<Text> gameOverSceneText = new List<Text>();
             gameOverSceneText.Add(gameOverText);
             List<Text> gameOverOptions = new List<Text>();
@@ -134,11 +153,11 @@ namespace Midnight_Snack
             Text gameOverOption2 = new Text("Level Select", new Vector2(0, 0));
             gameOverOptions.Add(gameOverOption1);
             gameOverOptions.Add(gameOverOption2);
-            Menu gameOverMenu = new Menu(new Vector2(300, 300), 100, 100, gameOverOptions);
+            Menu gameOverMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, gameOverOptions);
             gameOverScene = new SelectionScene(gameOverSceneText, gameOverMenu);
 
             /**** Initialize Level Complete Scene ****/
-            Text levelCompleteText = new Text("Level Complete!", new Vector2(300, 100));
+            Text levelCompleteText = new Text("Level Complete!", new Vector2(ScreenWidth/2, ScreenHeight/3));
             List<Text> levelCompleteSceneText = new List<Text>();
             levelCompleteSceneText.Add(levelCompleteText);
             List<Text> levelCompleteOptions = new List<Text>();
@@ -148,7 +167,7 @@ namespace Midnight_Snack
             Text levelCompleteOption2 = new Text("Level Select", new Vector2(0, 0));
             levelCompleteOptions.Add(levelCompleteOption1);
             levelCompleteOptions.Add(levelCompleteOption2);
-            Menu levelCompleteMenu = new Menu(new Vector2(300, 300), 100, 100, levelCompleteOptions);
+            Menu levelCompleteMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, levelCompleteOptions);
             levelCompleteScene = new SelectionScene(levelCompleteSceneText, levelCompleteMenu);
 
             //Start the game on the level select screen
@@ -201,8 +220,8 @@ namespace Midnight_Snack
                 Exit();
 
             // TODO: Add your update logic here
-            ScreenWidth = GraphicsDevice.Viewport.Width;
-            ScreenHeight = GraphicsDevice.Viewport.Height;
+            //ScreenWidth = GraphicsDevice.Viewport.Width;
+            //ScreenHeight = GraphicsDevice.Viewport.Height;
 
             switch(gameManager.GetGameState())
             {

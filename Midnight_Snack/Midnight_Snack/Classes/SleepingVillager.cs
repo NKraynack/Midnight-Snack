@@ -35,6 +35,11 @@ namespace Midnight_Snack
             }
         }
 
+        public bool IsDrained()
+        {
+            return drained;
+        }
+
         public void SetDrained(bool b)
         {
             drained = b;

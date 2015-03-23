@@ -18,9 +18,9 @@ namespace Midnight_Snack
             this.formation = formation;
         }
 
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
-            
+            texture = content.Load<Texture2D>("unpassable_map_tile.png");
         }
     }
 }

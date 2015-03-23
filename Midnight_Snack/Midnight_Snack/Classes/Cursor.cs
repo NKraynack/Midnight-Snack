@@ -73,7 +73,7 @@ namespace Midnight_Snack
         {
             if (gameManager.IsChoosingAbilityTarget())
             {
-                SelectInteractTile(controls);
+                SelectAbilityTarget(controls);
             }
             //If not in the action menu, cursor should move around map
             else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
@@ -151,8 +151,8 @@ namespace Midnight_Snack
             }
         }
 
-        //Can only choose to interact with a tile directly adjacent to player
-        public void SelectInteractTile(Controls controls)
+        //Can only choose to use ability on a tile directly adjacent to player
+        public void SelectAbilityTarget(Controls controls)
         {
             int maxRight = player.GetCol() + 1;
             int maxLeft = player.GetCol() - 1;
@@ -182,18 +182,32 @@ namespace Midnight_Snack
 
             //Get the occupant of the selected tile
             MapTile tile = map.GetTile(cursorRow, cursorCol);
-            GameObject occupant = tile.GetOccupant();
+            Unit occupant = tile.GetOccupant();
 
-            //If the player chooses a tile and there is a valid interact target...
+            //If the player chooses a tile and there is a valid ability target...
             if (controls.onPress(Keys.Space, Buttons.A) && occupant != null)
             {
-                //...interact with that target
-                player.SetHasBlood(true);
-                //Update that player has interacted this turn
+                //...use ability on that target
+                //Can only feed on sleeping villagers
+                if(occupant.GetType() == typeof(SleepingVillager))
+                {
+                    SleepingVillager villager = (SleepingVillager)occupant;
+                    //Villager must not already have been drained
+                    if(!villager.IsDrained())
+                    {
+                        //Give the player blood
+                        player.SetHasBlood(true);
+                        //Update the villager as drained
+                        villager.SetDrained(true);
+                        tile.SetOccupant(villager);
+                    }
+                    
+                }
+                //Update that player has used an ability this turn
                 player.SetUsedAbilityThisTurn(true);
                 gameManager.SetChoosingAbilityTarget(false);
             }
-            //If player cancels the interact select, exit interact select mode
+            //If player cancels the ability select, exit ability select mode
             else if (controls.onPress(Keys.F, Buttons.B))
             {
                 gameManager.SetChoosingAbilityTarget(false);

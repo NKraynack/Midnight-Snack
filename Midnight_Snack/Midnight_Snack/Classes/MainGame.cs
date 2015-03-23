@@ -43,7 +43,7 @@ namespace Midnight_Snack
             menus.Add(actionMenu);
 
             turnText = new Text("Turn: 1", new Vector2(10, 5));
-            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, 430));
+            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
             endText = new Text("", new Vector2(700, 60));
             endText.SetVisible(false);
             text.Add(turnText);

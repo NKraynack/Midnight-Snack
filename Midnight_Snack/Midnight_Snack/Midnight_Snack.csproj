@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Classes\Controls.cs" />
     <Compile Include="Classes\Cursor.cs" />
+    <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\GameObject.cs" />
     <Compile Include="Classes\GameManager.cs" />
     <Compile Include="Classes\HealthBar.cs" />
