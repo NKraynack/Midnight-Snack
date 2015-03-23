@@ -54,6 +54,18 @@ namespace Midnight_Snack
             return g;
         }
 
+        //Generate map for movement
+        public char[,] GenerateMapGrid()
+        {
+            char[,] grid = new char[cols, rows];
+            for(int i = 0; i < cols; i++) {
+                for (int j = 0; j < rows; j++) {
+                    grid[i,j] = GetTile(j,i).IsPassable() ? 'o' : 'x';
+                }
+            }
+            return grid;
+        }
+
         //Loads the content for all the MapTiles of the Map
         public void LoadContent(ContentManager content)
         {

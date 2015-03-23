@@ -9,6 +9,64 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
+    public struct GridPoint : IEquatable<GridPoint>
+    {
+        private int x;
+        private int y;
+
+        public GridPoint(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        public override string ToString()
+        {
+            return "(" + x + "," + y + ")";
+        }
+        public int getX()
+        {
+            return x;
+        }
+        public int getY()
+        {
+            return y;
+        }
+        public static bool operator ==(GridPoint p1, GridPoint p2)
+        {
+            return p1.x == p2.x && p1.y == p2.y;
+        }
+
+        public static bool operator !=(GridPoint p1, GridPoint p2)
+        {
+            return !(p1.x == p2.x && p1.y == p2.y);
+        }
+
+        public bool Equals(GridPoint other)
+        {
+            if (other == null)
+                return false;
+
+            return this.x == other.x && this.y == other.y;
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            // Suitable nullity checks etc, of course :)
+            hash = hash * 23 + x.GetHashCode();
+            hash = hash * 23 + y.GetHashCode();
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is GridPoint))
+                return false;
+            var p = (GridPoint)obj;
+            return this.x == p.x && this.y == p.y;
+        }
+    }
+
     public class Cursor : GameObject
     {
         private int cursorRow;  //The row of the grid which the cursor is currently on
@@ -16,6 +74,9 @@ namespace Midnight_Snack
         private Map map;    //The map the cursor is on
         private int maxRow; //The Bottom-most row in the grid
         private int maxCol; //The right-most column in the grid
+        private char[,] map_grid; //The grid for the map to generate shortest path
+        private int max_columns;
+        private int max_rows;
 
         GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
@@ -27,7 +88,9 @@ namespace Midnight_Snack
             cursorCol = map.GetLairCol();
             maxRow = map.GetNumRows() - 1;
             maxCol = map.GetNumCols() - 1;
-
+            this.map_grid = map.GenerateMapGrid();
+            max_columns = map.GetNumCols();
+            max_rows = map.GetNumRows();
         }
 
         public Cursor(Vector2 pos, int width, int height, Map map) : base(pos, width, height)
@@ -123,7 +186,7 @@ namespace Midnight_Snack
                 {
                     //Check if tile is unoccupied and passable
                     MapTile tile = map.GetTile(cursorRow, cursorCol);
-                    if (tile.GetOccupant() == null && tile.IsPassable())
+                    if (tile.GetOccupant() == null && tile.IsPassable() && NoObstacles(cursorCol, cursorRow))
                     {
                         //Move player to tile
                         player.Move(position, cursorRow, cursorCol);
@@ -136,6 +199,104 @@ namespace Midnight_Snack
             }
         }
 
+        private bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
+        {
+            Queue<GridPoint> q = new Queue<GridPoint>();
+            List<GridPoint> solution = new List<GridPoint>();
+            HashSet<GridPoint> discovered = new HashSet<GridPoint>();
+            Dictionary<GridPoint, GridPoint> prev = new Dictionary<GridPoint, GridPoint>();
+            GridPoint player_pos = new GridPoint(player.GetCol(), player.GetRow());
+            GridPoint current = player_pos;
+            GridPoint cursor_pos = new GridPoint(mov_x, mov_y);
+            q.Enqueue(current);
+            discovered.Add(current);
+            while (q.Count != 0)
+            {
+                current = q.Dequeue();
+                if (current.Equals(cursor_pos))
+                {
+                    break;
+                }
+                else
+                {
+                    foreach (GridPoint node in getNeighbors(max_columns, max_rows, current, map_grid))
+                    {
+                        if (!discovered.Contains(node))
+                        {
+                            q.Enqueue(node);
+                            prev.Add(node, current);
+                            discovered.Add(node);
+                        }
+                    }
+                }
+            }
+            if (!current.Equals(cursor_pos))
+            {
+                return false;
+            }
+            for (GridPoint node = cursor_pos; node != player_pos; prev.TryGetValue(node, out node))
+            {
+                solution.Add(node);
+            }
+            return solution.Count <= player.GetMoveRange();
+        }
+
+        private List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
+        {
+            List<GridPoint> neighbors = new List<GridPoint>();
+            int player_x = cur_point.getX();
+            int player_y = cur_point.getY();
+
+            //bottom right
+            if ((player_x + 1 < x_limit) && (player_y + 1 < y_limit) && (player_x + 1 >= 0) && (player_y + 1 >= 0) &&
+                grid[player_x + 1, player_y + 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x + 1, player_y + 1));
+            }
+            //bottom
+            if ((player_x < x_limit) && (player_y + 1 < y_limit) && (player_x >= 0) && (player_y + 1 >= 0) &&
+                grid[player_x, player_y + 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x, player_y + 1));
+            }
+            //bottom left
+            if ((player_x - 1 < x_limit) && (player_y + 1 < y_limit) && (player_x - 1 >= 0) && (player_y + 1 >= 0) &&
+                grid[player_x - 1, player_y + 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x - 1, player_y + 1));
+            }
+            //left
+            if ((player_x - 1 < x_limit) && (player_y < y_limit) && (player_x - 1 >= 0) && (player_y >= 0) &&
+                grid[player_x - 1, player_y] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x - 1, player_y));
+            }
+            //upper left
+            if ((player_x - 1 < x_limit) && (player_y - 1 < y_limit) && (player_x - 1 >= 0) && (player_y - 1 >= 0) &&
+                grid[player_x - 1, player_y - 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x - 1, player_y - 1));
+            }
+            //top
+            if ((player_x < x_limit) && (player_y - 1 < y_limit) && (player_x >= 0) && (player_y - 1 >= 0) &&
+                grid[player_x, player_y - 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x, player_y - 1));
+            }
+            //top right
+            if ((player_x + 1 < x_limit) && (player_y - 1 < y_limit) && (player_x + 1 >= 0) && (player_y - 1 >= 0) &&
+                grid[player_x + 1, player_y - 1] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x + 1, player_y - 1));
+            }
+            //right
+            if ((player_x + 1 < x_limit) && (player_y < y_limit) && (player_x + 1 >= 0) && (player_y >= 0) &&
+                grid[player_x + 1, player_y] != 'x')
+            {
+                neighbors.Add(new GridPoint(player_x + 1, player_y));
+            }
+            return neighbors;
+        }
         public void SelectTile(Controls controls)
         {
             //Get the occupant of the selected tile
