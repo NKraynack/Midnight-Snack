@@ -107,8 +107,8 @@ namespace Midnight_Snack
             }
             else if(action.Equals("Abilities"))
             {
-                //Go into interact mode
-                //Interact if haven't already interacted this turn
+                //Go into use ability mode
+                //Use ability if haven't already done so this turn
                 if(!player.HasUsedAbilityThisTurn())
                 {
                     gameManager.SetChoosingAbilityTarget(true);
@@ -123,6 +123,7 @@ namespace Midnight_Snack
                 gameManager.SetTurn(nextTurnNum);
                     
                 //Update player status
+                player.SetHasEndedTurn(true);
                 player.SetMovedThisTurn(false);
                 player.SetUsedAbilityThisTurn(false);
 

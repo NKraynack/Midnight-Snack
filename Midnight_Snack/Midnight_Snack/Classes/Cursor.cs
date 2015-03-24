@@ -138,19 +138,24 @@ namespace Midnight_Snack
 
         public void Update(Controls controls)
         {
-            if (gameManager.IsChoosingAbilityTarget())
+            //Cursor should only move if it's the player's turn
+            if(player.IsUnitsTurn())
             {
-                SelectAbilityTarget(controls);
-            }
-            //If not in the action menu, cursor should move around map
-            else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
-            {
-                Move(controls);
-                SelectTile(controls);
-
-                if (gameManager.IsMovingPlayer())
+                //If choosing an ability target, cursor should only select adjacent tiles
+                if (gameManager.IsChoosingAbilityTarget())
                 {
-                    MovePlayer(controls);
+                    SelectAbilityTarget(controls);
+                }
+                //If not in the action menu, cursor should move around map
+                else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
+                {
+                    Move(controls);
+                    SelectTile(controls);
+
+                    if (gameManager.IsMovingPlayer())
+                    {
+                        MovePlayer(controls);
+                    }
                 }
             }
         }

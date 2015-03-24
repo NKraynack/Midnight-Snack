@@ -21,6 +21,8 @@ namespace Midnight_Snack
         private Text turnText;
         private Text goalText;
 
+        private int activeUnit;
+
         GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
 
@@ -43,13 +45,14 @@ namespace Midnight_Snack
             menus.Add(actionMenu);
 
             turnText = new Text("Turn: 1", new Vector2(10, 5));
-            goalText = new Text("Goal: Get blood from villager and get back to start in 5 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
+            goalText = new Text("Goal: Get blood from villager and get back to start in 8 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
             endText = new Text("", new Vector2(700, 60));
             endText.SetVisible(false);
             text.Add(turnText);
             text.Add(goalText);
             text.Add(endText);
-            
+
+            activeUnit = 0;
         }
 
         public override void LoadContent(ContentManager content)
@@ -94,6 +97,55 @@ namespace Midnight_Snack
             {
                 if (units[i] != null)
                 {
+                    //System.Diagnostics.Debug.WriteLine("activeUnitIndex = " + activeUnit + "; activeUnit is " + units[i].GetType());
+
+                    //If it is the player's turn
+                    if (i == activeUnit && units[i].Equals(player))
+                    {
+                        //If player has not already ended their turn
+                        if(!units[i].GetHasEndedTurn())
+                        {
+                            //Set that it's their turn
+                            units[i].SetUnitsTurn(true);
+                        }
+                        //If the player has already ended their turn
+                        else
+                        {
+                            //Set that it's not player's turn
+                            units[i].SetUnitsTurn(false);
+                            //Go to the next unit's turn
+                            NextActiveUnit();
+                        }
+                    }
+                    else
+                    {
+                        //If it's this unit's turn, set it
+                        if (i == activeUnit)
+                        {
+                            //If unit does not act, just skip it
+                            if (units[i].GetType() != typeof(MobileUnit))
+                            {
+                                NextActiveUnit();
+                            }
+                            else
+                            {
+                                //If unit has not already ended it's turn
+                                if (!units[i].GetHasEndedTurn())
+                                {
+                                    //Set that it's their turn
+                                    units[i].SetUnitsTurn(true);
+                                }
+                                //If unit has already ended it's turn
+                                else
+                                {
+                                    //Set that it's not it's turn
+                                    units[i].SetUnitsTurn(false);
+                                    //Go to the next unit's turn
+                                    NextActiveUnit();
+                                }
+                            }
+                        }
+                    }
                     units[i].Update();
                 }
             }
@@ -206,5 +258,26 @@ namespace Midnight_Snack
             this.map = map;
         }
 
+        //Gets the index of the next unit whose turn it should be
+        public void NextActiveUnit()
+        {
+            //If all units have had a turn,
+            //go back to start of unit list
+            if (activeUnit >= units.Count - 1)
+            {
+                //Reset index
+                activeUnit = 0;
+                //Reset all units' ended turns
+                for (int i = 0; i < units.Count; i++)
+                {
+                    units[i].SetHasEndedTurn(false);
+                }
+            }
+            //Otherwise go to next unit in the list
+            else
+            {
+                activeUnit++;
+            }
+        }
     }
 }

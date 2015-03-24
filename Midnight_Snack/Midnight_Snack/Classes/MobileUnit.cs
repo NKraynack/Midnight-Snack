@@ -27,6 +27,7 @@ namespace Midnight_Snack
             movedThisTurn = false;
             usedAbilityThisTurn = false;
             alive = true;
+            unitsTurn = false;
             healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
         }
 

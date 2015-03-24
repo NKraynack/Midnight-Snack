@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    class Enemy : MobileUnit 
+    public class Enemy : MobileUnit 
     {
         
         public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health) 
@@ -36,7 +36,17 @@ namespace Midnight_Snack
 
             if (!alive)
             {
-                GameManager.GetInstance().SetPlayerAlive(false);
+                //Remove enemy from play
+            }
+
+            //If it's this enemy's turn, have it move and use an ability (if possible)
+            if(unitsTurn)
+            {
+                //For testing purposes enemy just moves one tile to the left each turn
+
+
+                //End enemy's turn
+                hasEndedTurn = true;
             }
         }
     }
