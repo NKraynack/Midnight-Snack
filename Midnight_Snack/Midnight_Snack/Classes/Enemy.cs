@@ -27,6 +27,8 @@ namespace Midnight_Snack
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
+
             spriteBatch.Draw(texture, position, Color.White);   
         }
 
