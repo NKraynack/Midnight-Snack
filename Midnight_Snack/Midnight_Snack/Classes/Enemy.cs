@@ -20,12 +20,24 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("");
+            //temp until I either draw one or find one
+            texture = content.Load<Texture2D>("dracula.png");
+            healthBar.LoadContent(content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.White);   
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (!alive)
+            {
+                GameManager.GetInstance().SetPlayerAlive(false);
+            }
         }
     }
 }

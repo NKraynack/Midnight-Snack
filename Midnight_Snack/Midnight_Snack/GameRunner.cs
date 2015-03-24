@@ -126,19 +126,27 @@ namespace Midnight_Snack
             villager.SetPosition(villagerTile.GetPosition());
 
             //enemy stuff
-            /**enemies = new Enemy[map.GetEnemyCount()];
-            int[] enemyX = new int[map.GetEnemyCount()];
-            int[] enemyY = new int[map.GetEnemyCount()];
-            for (int i = 0; i < map.GetEnemyCount(); i++)
-            {
-                map.SetEnemyLoc(enemyX, enemyY, i);
-            }
-            */
+            //later on replace the 1 with some dynamic way of storing number of enemies
+            enemies = new Enemy[1];
+            int[] enemyX = new int[1];
+            int[] enemyY = new int[1];
+            int[] enemyRange = new int[1];
+            enemyX[0] = 3;
+            enemyY[0] = 5;
+            enemyRange[0] = 2;
+            enemies[0] = new Enemy(new Vector2(0, 0), 100, 100, enemyX[0], enemyY[0], enemyRange[0], 5);
+            MapTile[] enemyTiles = new MapTile[1];
+            enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
+            enemyTiles[0].SetOccupant(enemies[0]);
+            map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
+            enemies[0].SetPosition(enemyTiles[0].GetPosition());
             //Create a list of all the units on the map
             List<Unit> units = new List<Unit>();
             units.Add(player);
             units.Add(villager);
-            
+            //for enemies later on a loop will be needed but ehh
+            units.Add(enemies[0]);
+
             //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
             Text abilitiesText = new Text("Abilities", player.GetPosition());
