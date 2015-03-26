@@ -55,6 +55,7 @@ namespace Midnight_Snack
                     //player.SetAlive(false);
                 }
                 
+                //this.Move(new Vector2(this.GetX() - width, this.GetY()), this.GetRow() - 1, this.GetCol());                
                 //End enemy's turn
                 hasEndedTurn = true;
             }
