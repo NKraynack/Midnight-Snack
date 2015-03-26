@@ -60,7 +60,7 @@ namespace Midnight_Snack
             ScreenHeight = GraphicsDevice.DisplayMode.Height;
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
-            graphics.IsFullScreen = true;
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
@@ -134,7 +134,7 @@ namespace Midnight_Snack
             enemyX[0] = 3;
             enemyY[0] = 5;
             enemyRange[0] = 2;
-            enemies[0] = new Enemy(new Vector2(0, 0), 100, 100, enemyX[0], enemyY[0], enemyRange[0], 5);
+            enemies[0] = new Enemy(new Vector2(0, 0), 100, 100, enemyX[0], enemyY[0], enemyRange[0], 5, player, map);
             MapTile[] enemyTiles = new MapTile[1];
             enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
             enemyTiles[0].SetOccupant(enemies[0]);

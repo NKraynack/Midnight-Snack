@@ -42,3 +42,22 @@ C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.pdb
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.csprojResolveAssemblyReference.cache
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\goomba.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\action_menu_background.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\action_menu_selector.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cursor.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\dracula.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\empty_health_pip.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\goomba.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\health_pip.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\lair_map_tile.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\map_tile_border.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\mario.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\unpassable_map_tile.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\Arial.xnb
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\SDL.dll
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Midnight_Snack.exe
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Midnight_Snack.pdb
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Tao.Sdl.dll

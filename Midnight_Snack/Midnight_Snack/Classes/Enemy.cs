@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -11,11 +12,13 @@ namespace Midnight_Snack
 {
     public class Enemy : MobileUnit 
     {
-        
-        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health) 
+        Map map;
+        Player player;
+        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Player p, Map m) 
             : base(pos, width, height, row, col, range, health)
         {
-            
+            player = p;
+            map = m;
         }
 
         public override void LoadContent(ContentManager content)
@@ -40,15 +43,49 @@ namespace Midnight_Snack
             {
                 //Remove enemy from play
             }
-
+            //Debug.WriteLine("Check check check");
             //If it's this enemy's turn, have it move and use an ability (if possible)
             if(unitsTurn)
             {
                 //For testing purposes enemy just moves one tile to the left each turn
-
-
+                //atm the enemy's turn isn't even registering...
+                Debug.WriteLine("is this even working?");
+                if (this.AdjacentToPlayer()) {
+                    //insert attack method
+                    player.SetAlive(false);
+                }
+                
                 //End enemy's turn
                 hasEndedTurn = true;
+            }
+        }
+
+        public bool AdjacentToPlayer()
+        {
+            Debug.WriteLine("Is this even registering?");
+            if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() == player)
+            {
+                Debug.WriteLine("Enemy next to player");
+                return true;
+            }
+            else if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() == player)
+            {
+                Debug.WriteLine("Enemy next to player");
+                return true;
+            }
+            else if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() == player)
+            {
+                Debug.WriteLine("Enemy next to player");
+                return true;
+            }
+            else if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() == player)
+            {
+                Debug.WriteLine("Enemy next to player");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

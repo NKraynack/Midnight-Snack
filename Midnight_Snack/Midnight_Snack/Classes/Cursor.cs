@@ -228,15 +228,15 @@ namespace Midnight_Snack
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine("starting");
+                    /*System.Diagnostics.Debug.WriteLine("starting");
                     System.Diagnostics.Debug.WriteLine("cols:" + max_columns);
-                    System.Diagnostics.Debug.WriteLine("rows:" + max_rows);
+                    System.Diagnostics.Debug.WriteLine("rows:" + max_rows);*/
                     foreach (GridPoint node in getNeighbors(max_columns, max_rows, current, map_grid))
                     {
-                        System.Diagnostics.Debug.WriteLine("looking: " + node.ToString());
+                        //System.Diagnostics.Debug.WriteLine("looking: " + node.ToString());
                         if (!discovered.Contains(node))
                         {
-                            System.Diagnostics.Debug.WriteLine("adding: " + node.ToString());
+                            //System.Diagnostics.Debug.WriteLine("adding: " + node.ToString());
                             q.Enqueue(node);
                             prev.Add(node, current);
                             discovered.Add(node);
@@ -257,10 +257,12 @@ namespace Midnight_Snack
 
         private List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
         {
+            /*
             System.Diagnostics.Debug.WriteLine("getting neighbors");
             System.Diagnostics.Debug.WriteLine("xlimit:" + x_limit);
             System.Diagnostics.Debug.WriteLine("ylimit" + y_limit);
             System.Diagnostics.Debug.WriteLine(cur_point.ToString());
+             * */
             List<GridPoint> neighbors = new List<GridPoint>();
             int player_x = cur_point.getX();
             int player_y = cur_point.getY();
@@ -313,7 +315,7 @@ namespace Midnight_Snack
             {
                 neighbors.Add(new GridPoint(player_x + 1, player_y));
             }
-            System.Diagnostics.Debug.WriteLine("neighbors: " + neighbors.Count);
+            //System.Diagnostics.Debug.WriteLine("neighbors: " + neighbors.Count);
             return neighbors;
         }
         public void SelectTile(Controls controls)

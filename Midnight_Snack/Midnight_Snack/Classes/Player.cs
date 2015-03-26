@@ -40,6 +40,7 @@ namespace Midnight_Snack
             {
                 GameManager.GetInstance().SetPlayerAlive(false);
             }
+
         }
 
         public bool HasBlood()
