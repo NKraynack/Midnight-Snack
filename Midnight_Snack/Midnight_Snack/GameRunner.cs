@@ -109,6 +109,8 @@ namespace Midnight_Snack
                 map.SetTile(r, 5, obstacle);
             }
 
+            char[,] mapGrid = map.GenerateMapGrid();
+
             //Set up player stuff
             cursor = new Cursor(map.GetLairPos(), 100, 100, map);
             player = Player.GetInstance();
@@ -116,6 +118,7 @@ namespace Midnight_Snack
             player.SetRow(map.GetLairRow());
             player.SetCol(map.GetLairCol());
             player.SetPosition(map.GetLairPos());
+            player.SetMapGrid(mapGrid);
 
             //Set up villager stuff
             SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
