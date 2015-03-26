@@ -44,12 +44,12 @@ namespace Midnight_Snack
                 //Remove enemy from play
             }
             //Debug.WriteLine("Check check check");
+
             //If it's this enemy's turn, have it move and use an ability (if possible)
             if(unitsTurn)
             {
                 //For testing purposes enemy just moves one tile to the left each turn
-                //atm the enemy's turn isn't even registering...
-                Debug.WriteLine("is this even working?");
+                
                 if (this.AdjacentToPlayer()) {
                     //insert attack method
                     player.SetAlive(false);

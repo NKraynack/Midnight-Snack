@@ -123,7 +123,7 @@ namespace Midnight_Snack
                         if (i == activeUnit)
                         {
                             //If unit does not act, just skip it
-                            if (units[i].GetType() != typeof(MobileUnit))
+                            if (!(units[i].GetType()).IsSubclassOf(typeof(MobileUnit)))
                             {
                                 NextActiveUnit();
                             }

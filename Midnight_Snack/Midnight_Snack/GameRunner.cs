@@ -60,7 +60,7 @@ namespace Midnight_Snack
             ScreenHeight = GraphicsDevice.DisplayMode.Height;
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             IsMouseVisible = false;
