@@ -12,13 +12,13 @@ namespace Midnight_Snack
 {
     public class Enemy : MobileUnit 
     {
-        Map map;
         Player player;
+        bool movedLeft;
         public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Player p, Map m) 
-            : base(pos, width, height, row, col, range, health)
+            : base(pos, width, height, row, col, range, health, m)
         {
             player = p;
-            map = m;
+            movedLeft = false;
         }
 
         public override void LoadContent(ContentManager content)
@@ -54,8 +54,18 @@ namespace Midnight_Snack
                     //insert attack method
                     //player.SetAlive(false);
                 }
-                
-                //this.Move(new Vector2(this.GetX() - width, this.GetY()), this.GetRow() - 1, this.GetCol());                
+                if (!movedLeft)
+                {
+                    this.Move(new Vector2(this.GetX() - width, this.GetY()), this.GetRow(), this.GetCol() - 1);
+                 
+                    movedLeft = true;
+                }
+                else
+                {
+                    this.Move(new Vector2(this.GetX() + width, this.GetY()), this.GetRow(), this.GetCol() + 1);
+                    
+                    movedLeft = false;
+                }                
                 //End enemy's turn
                 hasEndedTurn = true;
             }

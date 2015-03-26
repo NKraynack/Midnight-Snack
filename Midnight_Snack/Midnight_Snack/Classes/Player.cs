@@ -13,12 +13,17 @@ namespace Midnight_Snack
     {
         private bool hasBlood;   //Has the player collected blood
 
-        private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10);
+        private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10, null);
 
-        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health) 
-            : base(pos, width, height, row, col, range, health)
+        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health, Map m) 
+            : base(pos, width, height, row, col, range, health, m)
         {
             hasBlood = false;
+        }
+
+        public void SetMap(Map ma)
+        {
+            this.map = ma;
         }
 
         public static Player GetInstance()

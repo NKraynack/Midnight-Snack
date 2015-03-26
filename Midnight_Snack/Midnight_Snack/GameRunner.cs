@@ -29,7 +29,8 @@ namespace Midnight_Snack
         SelectionScene gameOverScene;
         SelectionScene levelCompleteScene;
         MainGame mainGame;
-
+        char[,] mapGrid;
+        Map map;
         /*
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
         int gameState;
@@ -88,7 +89,7 @@ namespace Midnight_Snack
             //Set number of turns
             gameManager.SetTurnLimit(8);
             //Create map
-            Map map = new Map(6, 8, 3, 0);
+            map = new Map(6, 8, 3, 0);
             //Set up obstacles
             for(int c = 2; c < 8; c++)
             {
@@ -109,7 +110,7 @@ namespace Midnight_Snack
                 map.SetTile(r, 5, obstacle);
             }
 
-            char[,] mapGrid = map.GenerateMapGrid();
+            mapGrid = map.GenerateMapGrid();
 
             //Set up player stuff
             cursor = new Cursor(map.GetLairPos(), 100, 100, map);
@@ -119,6 +120,7 @@ namespace Midnight_Snack
             player.SetCol(map.GetLairCol());
             player.SetPosition(map.GetLairPos());
             player.SetMapGrid(mapGrid);
+            player.SetMap(map);
 
             //Set up villager stuff
             SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
@@ -143,6 +145,7 @@ namespace Midnight_Snack
             enemyTiles[0].SetOccupant(enemies[0]);
             map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
             enemies[0].SetPosition(enemyTiles[0].GetPosition());
+            enemies[0].SetMapGrid(mapGrid);
             //Create a list of all the units on the map
             List<Unit> units = new List<Unit>();
             units.Add(player);
@@ -244,7 +247,7 @@ namespace Midnight_Snack
             // TODO: Add your update logic here
             //ScreenWidth = GraphicsDevice.Viewport.Width;
             //ScreenHeight = GraphicsDevice.Viewport.Height;
-
+            
             switch(gameManager.GetGameState())
             {
                 //Level Select Screen
@@ -267,7 +270,9 @@ namespace Midnight_Snack
                     levelCompleteScene.Update(controls);
                 break;
             }
-
+            mapGrid = map.GenerateMapGrid();
+            player.SetMapGrid(mapGrid);
+            enemies[0].SetMapGrid(mapGrid);
             base.Update(gameTime);
         }
 

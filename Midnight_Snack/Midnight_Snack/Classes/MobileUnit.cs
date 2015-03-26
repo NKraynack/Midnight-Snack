@@ -80,8 +80,9 @@ namespace Midnight_Snack
         private char[,] map_grid; //The grid for the map to generate shortest path
         private int max_columns;
         private int max_rows;
+        protected Map map;
 
-        public MobileUnit(Vector2 pos, int width, int height, int row, int col, int range, int health) : base(pos, width, height, row, col)
+        public MobileUnit(Vector2 pos, int width, int height, int row, int col, int range, int health, Map m) : base(pos, width, height, row, col)
         {
             moveRange = range;
             maxHealth = health;
@@ -91,6 +92,7 @@ namespace Midnight_Snack
             alive = true;
             unitsTurn = false;
             healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
+            map = m;
         }
 
         //Moves the unit to the given position
@@ -98,10 +100,19 @@ namespace Midnight_Snack
         {
             if (NoObstacles(col, row)) //check if can move
             {
+                MapTile prev = map.GetTile(this.GetRow(), this.GetCol());
+                prev.SetPassable(true);
+                map.SetTile(this.GetRow(), this.GetCol(), prev);
+
                 SetPosition(pos);
                 SetRow(row);
                 SetCol(col);
                 movedThisTurn = true;
+
+                MapTile obstacle = map.GetTile(this.GetRow(), this.GetCol());
+                obstacle.SetPassable(false);
+                map.SetTile(this.GetRow(), this.GetCol(), obstacle);
+
                 return true;
             }
             return false;
