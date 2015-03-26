@@ -111,10 +111,26 @@ namespace Midnight_Snack
                 //Use ability if haven't already done so this turn
                 if(!player.HasUsedAbilityThisTurn())
                 {
+                    gameManager.SetInAbilitiesMenu(true);
+
+                    /*
                     gameManager.SetChoosingAbilityTarget(true);
                     gameManager.SetMovingPlayer(false);
                     gameManager.SetInActionMenu(false);
+                     * */
                 }
+            }
+            else if (action.Equals("Feed"))
+            {
+                gameManager.SetChoosingAbilityTarget(true);
+                gameManager.SetMovingPlayer(false);
+                gameManager.SetInActionMenu(false);
+                gameManager.SetInAbilitiesMenu(false);
+            }
+            else if (action.Equals("End Ability"))
+            {
+                gameManager.SetInAbilitiesMenu(false);
+                gameManager.SetInActionMenu(true);
             }
             else if(action.Equals("End Turn"))
             {
