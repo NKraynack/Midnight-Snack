@@ -8,6 +8,7 @@ namespace Midnight_Snack
     public class GameManager
     {
         private bool inActionMenu;  //Is the player currently navigating the action menu
+        private bool inAbilitiesMenu;
         private bool movingPlayer;  //Is the player trying to move their character
         private bool choosingAbilityTarget;    //Is the player trying to choose their interact target
         private bool playerAlive;   //Is the player still alive
@@ -45,6 +46,16 @@ namespace Midnight_Snack
         public void SetInActionMenu(bool b)
         {
             inActionMenu = b;
+        }
+
+        public bool IsInAbilitiesMenu()
+        {
+            return inAbilitiesMenu;
+        }
+
+        public void SetInAbilitiesMenu(bool b)
+        {
+            inAbilitiesMenu = b;
         }
 
         public bool IsMovingPlayer()

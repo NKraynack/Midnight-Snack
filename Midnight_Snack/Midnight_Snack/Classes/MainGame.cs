@@ -16,6 +16,7 @@ namespace Midnight_Snack
         private Cursor cursor;
         private List<Menu> menus;
         private MiniMenu actionMenu;
+        private MiniMenu abilitiesMenu;
  
         private Text endText;
         private Text turnText;
@@ -43,6 +44,16 @@ namespace Midnight_Snack
             actionMenuOptions.Add(endTurnText);
             actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
             menus.Add(actionMenu);
+
+            Text feedText = new Text("Feed", player.GetPosition());
+            Text mistText = new Text("Mist", player.GetPosition());
+            Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
+            List<Text> abilitiesMenuOptions = new List<Text>();
+            abilitiesMenuOptions.Add(feedText);
+            abilitiesMenuOptions.Add(mistText);
+            abilitiesMenuOptions.Add(endAbilityTurnText);
+            abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
+            menus.Add(abilitiesMenu);
 
             turnText = new Text("Turn: 1", new Vector2(10, 5));
             goalText = new Text("Goal: Get blood from villager and get back to start in 8 turns \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
@@ -154,11 +165,21 @@ namespace Midnight_Snack
             if (gameManager.IsInActionMenu())
             {
                 actionMenu.SetVisible(true);
-                actionMenu.Update(controls);
+                if (gameManager.IsInAbilitiesMenu())
+                {
+                    abilitiesMenu.SetVisible(true);
+                    abilitiesMenu.Update(controls);
+                }
+                else
+                {
+                    abilitiesMenu.SetVisible(false);
+                    actionMenu.Update(controls);
+                }
             }
             else
             {
                 actionMenu.SetVisible(false);
+                abilitiesMenu.SetVisible(false);
                 cursor.Update(controls);
             }
 
@@ -203,6 +224,7 @@ namespace Midnight_Snack
             }
             //Draw menus
             actionMenu.Draw(spriteBatch);
+            abilitiesMenu.Draw(spriteBatch);
             for (int i = 0; i < menus.Count; i++)
             {
                 if(menus[i] != null)

@@ -382,11 +382,11 @@ namespace Midnight_Snack
                         //Update the villager as drained
                         villager.SetDrained(true);
                         tile.SetOccupant(villager);
-                    }
-                    
+
+                        //Update that player has used an ability this turn
+                        player.SetUsedAbilityThisTurn(true);
+                    }        
                 }
-                //Update that player has used an ability this turn
-                player.SetUsedAbilityThisTurn(true);
                 gameManager.SetChoosingAbilityTarget(false);
             }
             //If player cancels the ability select, exit ability select mode
