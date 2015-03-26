@@ -52,7 +52,7 @@ namespace Midnight_Snack
                 
                 if (this.AdjacentToPlayer()) {
                     //insert attack method
-                    player.SetAlive(false);
+                    //player.SetAlive(false);
                 }
                 
                 //End enemy's turn
@@ -62,25 +62,25 @@ namespace Midnight_Snack
 
         public bool AdjacentToPlayer()
         {
-            Debug.WriteLine("Is this even registering?");
-            if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() == player)
+            
+            if (player.GetCol() == this.GetCol() - 1 && player.GetRow() == this.GetRow())
             {
-                Debug.WriteLine("Enemy next to player");
+                //Debug.WriteLine("Enemy next to player");
                 return true;
             }
-            else if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() == player)
+            else if (player.GetCol() == this.GetCol() + 1 && player.GetRow() == this.GetRow())
             {
-                Debug.WriteLine("Enemy next to player");
+                //Debug.WriteLine("Enemy next to player");
                 return true;
             }
-            else if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() == player)
+            else if (player.GetCol() == this.GetCol() && player.GetRow() == this.GetRow() - 1)
             {
-                Debug.WriteLine("Enemy next to player");
+                //Debug.WriteLine("Enemy next to player");
                 return true;
             }
-            else if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() == player)
+            else if (player.GetCol() == this.GetCol() && player.GetRow() == this.GetRow() + 1)
             {
-                Debug.WriteLine("Enemy next to player");
+                //Debug.WriteLine("Enemy next to player");
                 return true;
             }
             else
