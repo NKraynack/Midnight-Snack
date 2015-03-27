@@ -127,6 +127,13 @@ namespace Midnight_Snack
                 gameManager.SetInActionMenu(false);
                 gameManager.SetInAbilitiesMenu(false);
             }
+            else if (action.Equals("Attack"))
+            {
+                gameManager.SetChoosingAbilityTarget(true);
+                gameManager.SetMovingPlayer(false);
+                gameManager.SetInActionMenu(false);
+                gameManager.SetInAbilitiesMenu(false);
+            }
             else if (action.Equals("End Ability"))
             {
                 gameManager.SetInAbilitiesMenu(false);

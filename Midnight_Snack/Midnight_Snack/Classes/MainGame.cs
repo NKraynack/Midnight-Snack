@@ -46,11 +46,11 @@ namespace Midnight_Snack
             menus.Add(actionMenu);
 
             Text feedText = new Text("Feed", player.GetPosition());
-            Text mistText = new Text("Mist", player.GetPosition());
+            Text attackText = new Text("Attack", player.GetPosition());
             Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
             List<Text> abilitiesMenuOptions = new List<Text>();
             abilitiesMenuOptions.Add(feedText);
-            abilitiesMenuOptions.Add(mistText);
+            abilitiesMenuOptions.Add(attackText);
             abilitiesMenuOptions.Add(endAbilityTurnText);
             abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
             menus.Add(abilitiesMenu);
