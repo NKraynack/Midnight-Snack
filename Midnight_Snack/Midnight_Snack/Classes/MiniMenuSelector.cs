@@ -54,7 +54,17 @@ namespace Midnight_Snack
             //If player wants to cancel out of selecting an action
             if (controls.onPress(Keys.F, Buttons.B))
             {
-                gameManager.SetInActionMenu(false);
+                if (gameManager.IsInActionMenu())
+                {
+                    if (gameManager.IsInAbilitiesMenu())
+                    {
+                        gameManager.SetInAbilitiesMenu(false);
+                    }
+                    else
+                    {
+                        gameManager.SetInActionMenu(false);
+                    }
+                }
             }
         }
         

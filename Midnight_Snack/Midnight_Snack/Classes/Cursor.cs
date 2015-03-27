@@ -206,7 +206,8 @@ namespace Midnight_Snack
                         //Update that player has moved this turn
                         player.SetMovedThisTurn(true);
                         gameManager.SetMovingPlayer(false);
-                        gameManager.SetInActionMenu(false);
+                        //Open action menu again
+                        gameManager.SetInActionMenu(true);
                     }
                 }
             }
@@ -413,6 +414,8 @@ namespace Midnight_Snack
                     }
                 }
                 gameManager.SetChoosingAbilityTarget(false);
+                //Go back to action menu
+                gameManager.SetInActionMenu(true);
                 //Reset what ability the player is using back to empty
                 gameManager.SetPlayerAbility("");
             }
@@ -420,6 +423,8 @@ namespace Midnight_Snack
             else if (controls.onPress(Keys.F, Buttons.B))
             {
                 gameManager.SetChoosingAbilityTarget(false);
+                //Go back to action menu
+                gameManager.SetInActionMenu(true);
             }
         }
 
