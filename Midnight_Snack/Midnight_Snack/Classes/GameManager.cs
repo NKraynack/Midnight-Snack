@@ -8,9 +8,10 @@ namespace Midnight_Snack
     public class GameManager
     {
         private bool inActionMenu;  //Is the player currently navigating the action menu
-        private bool inAbilitiesMenu;
+        private bool inAbilitiesMenu;   //Is the player currently navigating the ability menu
         private bool movingPlayer;  //Is the player trying to move their character
-        private bool choosingAbilityTarget;    //Is the player trying to choose their interact target
+        private bool choosingAbilityTarget;    //Is the player trying to choose their ability target
+        private string playerAbility; //What ability is the player trying to use right now (empty string if none)
         private bool playerAlive;   //Is the player still alive
         private bool playerWin; //Has the player won the level
         private int currentTurn;    //Keeps track of the number of turns
@@ -25,8 +26,10 @@ namespace Midnight_Snack
         private GameManager()
         {
             inActionMenu = false;
+            inAbilitiesMenu = false;
             movingPlayer = false;
             choosingAbilityTarget = false;
+            playerAbility = "";
             playerAlive = true;
             playerWin = false;
             currentTurn = 1;
@@ -88,6 +91,16 @@ namespace Midnight_Snack
             choosingAbilityTarget = b;
         }
 
+        public string GetPlayerAbility()
+        {
+            return playerAbility;
+        }
+
+        public void SetPlayerAbility(string ability)
+        {
+            playerAbility = ability;
+        }
+
         public bool HasWon()
         {
             return playerWin;
@@ -132,8 +145,10 @@ namespace Midnight_Snack
         public void ResetGameState()
         {
             inActionMenu = false;
+            inAbilitiesMenu = false;
             movingPlayer = false;
             choosingAbilityTarget = false;
+            playerAbility = "";
             playerAlive = true;
             playerWin = false;
             currentTurn = 1;

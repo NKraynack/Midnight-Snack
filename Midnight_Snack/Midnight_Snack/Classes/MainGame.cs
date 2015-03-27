@@ -49,8 +49,8 @@ namespace Midnight_Snack
             Text attackText = new Text("Attack", player.GetPosition());
             Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
             List<Text> abilitiesMenuOptions = new List<Text>();
-            abilitiesMenuOptions.Add(feedText);
             abilitiesMenuOptions.Add(attackText);
+            abilitiesMenuOptions.Add(feedText);
             abilitiesMenuOptions.Add(endAbilityTurnText);
             abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
             menus.Add(abilitiesMenu);
@@ -108,7 +108,7 @@ namespace Midnight_Snack
             {
                 if (units[i] != null)
                 {
-                    //System.Diagnostics.Debug.WriteLine("activeUnitIndex = " + activeUnit + "; activeUnit is " + units[i].GetType());
+                    //System.Diagnostics.Debug.WriteLine("activeUnitIndex = " + activeUnit + "; activeUnit is " + units[activeUnit].GetType());
 
                     //If it is the player's turn
                     if (i == activeUnit && units[i].Equals(player))

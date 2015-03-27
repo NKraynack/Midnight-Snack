@@ -94,6 +94,9 @@ namespace Midnight_Snack
 
         public override void PerformAction(string action)
         {
+            //Tell the gameManager what ability the player is using
+            gameManager.SetPlayerAbility(action);
+
             if(action.Equals("Move"))
             {
                 //Go into move mode

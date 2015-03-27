@@ -30,62 +30,100 @@ namespace Midnight_Snack
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            if (alive)
+            {
+                base.Draw(spriteBatch);
 
-            spriteBatch.Draw(texture, position, Color.White);   
+                spriteBatch.Draw(texture, position, Color.White);
+            }
         }
 
         public override void Update()
         {
             base.Update();
-
+            
             if (!alive)
             {
                 //Remove enemy from play
-            }
-            //Debug.WriteLine("Check check check");
-
-            //If it's this enemy's turn, have it move and use an ability (if possible)
-            if(unitsTurn)
-            {
-                //For testing purposes enemy just moves one tile to the left each turn
-                
-                if (this.AdjacentToPlayer()) {
-                    //insert attack method
-                    player.SetAlive(false);
-                }
-                
+                map.GetTile(this.GetRow(), this.GetCol()).SetOccupant(null);
                 //End enemy's turn
                 hasEndedTurn = true;
             }
+            else
+            {
+                //If it's this enemy's turn, have it move and use an ability (if possible)
+                if (unitsTurn)
+                {
+                    //For testing purposes enemy just moves one tile to the left each turn
+                    Debug.WriteLine("Enemy Turn");
+                    if (this.AdjacentToPlayer())
+                    {
+                        Debug.WriteLine("Attacking player!");
+                        //insert attack method
+                        Attack(player);
+                    }
+                    //End enemy's turn
+                    hasEndedTurn = true;
+                }
+            }
+ 
         }
 
         public bool AdjacentToPlayer()
         {
-            Debug.WriteLine("Is this even registering?");
-            if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() == player)
+            if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() != null)
             {
-                Debug.WriteLine("Enemy next to player");
-                return true;
+                Debug.WriteLine("Enemy below something");
+                if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                {
+                    Debug.WriteLine("Enemy below player");
+                    return true;
+                }
             }
-            else if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() == player)
+            else if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() != null)
             {
-                Debug.WriteLine("Enemy next to player");
-                return true;
+                Debug.WriteLine("Enemy above something");
+                if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                {
+                    Debug.WriteLine("Enemy above player");
+                    return true;
+                }
             }
-            else if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() == player)
+            else if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() != null)
             {
-                Debug.WriteLine("Enemy next to player");
-                return true;
+                Debug.WriteLine("Enemy right of something");
+                if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant().GetType() == typeof(Player))
+                {
+                    Debug.WriteLine("Enemy right of player");
+                    return true;
+                }
             }
-            else if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() == player)
+            else if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
             {
-                Debug.WriteLine("Enemy next to player");
-                return true;
+                Debug.WriteLine("Enemy left of something");
+                if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant().GetType() == typeof(Player))
+                {
+                    Debug.WriteLine("Enemy left of player");
+                    return true;
+                }
             }
-            else
+
+            return false;
+        }
+
+        public override void Attack(MobileUnit target)
+        {
+            //Target must still be alive
+            if (target.IsAlive())
             {
-                return false;
+                //Update the target's health
+                int targetHealth = target.GetCurrentHealth() - 3;
+                target.SetCurrentHealth(targetHealth);
+                //Updated map tile of target
+                MapTile tile = map.GetTile(target.GetRow(), target.GetCol());
+                tile.SetOccupant(target);
+                //Update that unit has used an ability this turn
+                this.SetUsedAbilityThisTurn(true);
             }
         }
     }

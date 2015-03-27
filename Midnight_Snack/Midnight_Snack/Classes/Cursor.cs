@@ -144,8 +144,7 @@ namespace Midnight_Snack
                 //If choosing an ability target, cursor should only select adjacent tiles
                 if (gameManager.IsChoosingAbilityTarget())
                 {
-                    SelectAbilityTarget(controls);
-                    SelectAttackAbilityTarget(controls);
+                    SelectAbilityTarget(controls, gameManager.GetPlayerAbility());
                 }
                 //If not in the action menu, cursor should move around map
                 else if (!gameManager.IsInActionMenu() && !gameManager.IsChoosingAbilityTarget())
@@ -198,8 +197,12 @@ namespace Midnight_Snack
                     MapTile tile = map.GetTile(cursorRow, cursorCol);
                     if (tile.GetOccupant() == null && tile.IsPassable() && NoObstacles(cursorCol, cursorRow))
                     {
-                        //Move player to tile
+                        //Remove player from old map tile
+                        map.GetTile(player.GetRow(), player.GetCol()).SetOccupant(null);
+                        //Move player to new tile
                         player.Move(position, cursorRow, cursorCol);
+                        //Update new map tile
+                        map.GetTile(cursorRow, cursorCol).SetOccupant(player);
                         //Update that player has moved this turn
                         player.SetMovedThisTurn(true);
                         gameManager.SetMovingPlayer(false);
@@ -335,7 +338,7 @@ namespace Midnight_Snack
         }
 
         //Can only choose to use ability on a tile directly adjacent to player
-        public void SelectAbilityTarget(Controls controls)
+        public void SelectAbilityTarget(Controls controls, string ability)
         {
             int maxRight = player.GetCol() + 1;
             int maxLeft = player.GetCol() - 1;
@@ -371,23 +374,47 @@ namespace Midnight_Snack
             if (controls.onPress(Keys.Space, Buttons.A) && occupant != null)
             {
                 //...use ability on that target
-                //Can only feed on sleeping villagers
-                if(occupant.GetType() == typeof(SleepingVillager))
+                //Use feed ability
+                if (ability.Equals("Feed"))
                 {
-                    SleepingVillager villager = (SleepingVillager)occupant;
-                    //Villager must not already have been drained
-                    if(!villager.IsDrained())
+                    //Can only feed on sleeping villagers
+                    if (occupant.GetType() == typeof(SleepingVillager))
                     {
-                        //Give the player blood
-                        player.SetHasBlood(true);
-                        //Update the villager as drained
-                        villager.SetDrained(true);
-                        tile.SetOccupant(villager);
-                        //Update that player has used an ability this turn
-                        player.SetUsedAbilityThisTurn(true);
-                    }  
+                        SleepingVillager villager = (SleepingVillager)occupant;
+                        //Villager must not already have been drained
+                        if (!villager.IsDrained())
+                        {
+                            //Give the player blood
+                            player.SetHasBlood(true);
+                            //Update the villager as drained
+                            villager.SetDrained(true);
+                            tile.SetOccupant(villager);
+                            //Update that player has used an ability this turn
+                            player.SetUsedAbilityThisTurn(true);
+                        }
+                    }
+                }
+                //Use attack ability
+                else if (ability.Equals("Attack"))
+                {
+                    if (occupant.GetType() == typeof(Enemy))
+                    {
+                        Enemy enemy = (Enemy)occupant;
+                        //Enemy object must still be alive
+                        if (enemy.IsAlive())
+                        {
+                            //Update the enemy health bar
+                            int enemyHealth = enemy.GetCurrentHealth() - 3;
+                            enemy.SetCurrentHealth(enemyHealth);
+                            tile.SetOccupant(enemy);
+                            //Update that player has used an ability this turn
+                            player.SetUsedAbilityThisTurn(true);
+                        }
+                    }
                 }
                 gameManager.SetChoosingAbilityTarget(false);
+                //Reset what ability the player is using back to empty
+                gameManager.SetPlayerAbility("");
             }
             //If player cancels the ability select, exit ability select mode
             else if (controls.onPress(Keys.F, Buttons.B))
@@ -413,66 +440,5 @@ namespace Midnight_Snack
         }
          * */
 
-
-        //Can only choose to use attack ability on a tile directly adjacent to player
-        public void SelectAttackAbilityTarget(Controls controls)
-        {
-            int maxRight = player.GetCol() + 1;
-            int maxLeft = player.GetCol() - 1;
-            int maxUp = player.GetRow() - 1;
-            int maxDown = player.GetRow() + 1;
-            int enemyHealth = 0;
-
-            if (controls.onPress(Keys.Right, Buttons.DPadRight) && cursorCol != maxCol && cursorCol < maxRight)
-            {
-                SetX(GetX() + width);
-                cursorCol++;
-            }
-            else if (controls.onPress(Keys.Left, Buttons.DPadLeft) && cursorCol != 0 && cursorCol > maxLeft)
-            {
-                SetX(GetX() - width);
-                cursorCol--;
-            }
-            else if (controls.onPress(Keys.Up, Buttons.DPadUp) && cursorRow != 0 && cursorRow > maxUp)
-            {
-                SetY(GetY() - height);
-                cursorRow--;
-            }
-            else if (controls.onPress(Keys.Down, Buttons.DPadDown) && cursorRow != maxRow && cursorRow < maxDown)
-            {
-                SetY(GetY() + height);
-                cursorRow++;
-            }
-
-            //Get the occupant of the selected tile
-            MapTile tile = map.GetTile(cursorRow, cursorCol);
-            Unit occupant = tile.GetOccupant();
-
-            //If the player chooses a tile and there is a valid ability target...
-            if (controls.onPress(Keys.Space, Buttons.A) && occupant != null)
-            {
-                //...use ability on that target
-                if (occupant.GetType() == typeof(Enemy))
-                {
-                    Enemy enemy = (Enemy)occupant;
-                    //Enemy object must still be alive
-                    if (enemy.IsAlive())
-                    {
-                        //Update the enemy heatlh bar
-                        enemyHealth = enemy.GetCurrentHealth() - 3;
-                        enemy.SetCurrentHealth(enemyHealth);
-                        tile.SetOccupant(enemy);
-                        //Update that player has used an ability this turn
-                        player.SetUsedAbilityThisTurn(true);
-                    }
-                }
-                gameManager.SetChoosingAbilityTarget(false);
-            }
-            //If player cancels the attack ability select, exit ability select mode
-            else if (controls.onPress(Keys.F, Buttons.B))
-            {
-                gameManager.SetChoosingAbilityTarget(false);
-            }
-        }
     }
 }

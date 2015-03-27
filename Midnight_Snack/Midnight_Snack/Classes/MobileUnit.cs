@@ -120,5 +120,19 @@ namespace Midnight_Snack
         {
             healthBar.Draw(spriteBatch);
         }
+
+        public virtual void Attack(MobileUnit target)
+        {
+            //Target must still be alive
+            if (target.IsAlive())
+            {
+                //Update the target's health
+                int targetHealth = target.GetCurrentHealth() - 3;
+                target.SetCurrentHealth(targetHealth);
+
+                //Update that unit has used an ability this turn
+                this.SetUsedAbilityThisTurn(true);
+            }
+        }
     }
 }
