@@ -111,6 +111,10 @@ namespace Midnight_Snack
                 obstacle.SetPassable(false);
                 map.SetTile(r, 5, obstacle);
             }
+            //Add consecrated tile for testing
+            MapTile consTile = map.GetTile(5, 1);
+            consTile.SetModifier("consecrated");
+            map.SetTile(5, 1, consTile);
 
             //Set up player stuff
             cursor = new Cursor(map.GetLairPos(), 100, 100, map);

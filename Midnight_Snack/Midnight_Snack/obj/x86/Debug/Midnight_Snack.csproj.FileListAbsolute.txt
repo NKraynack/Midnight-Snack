@@ -83,3 +83,4 @@ C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin
 C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.csprojResolveAssemblyReference.cache
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\obj\x86\Debug\Midnight_Snack.csprojResolveAssemblyReference.cache
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\consecrated_ground_map_tile.png

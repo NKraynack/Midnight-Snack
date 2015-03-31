@@ -122,6 +122,13 @@ namespace Midnight_Snack
                         //If the player has already ended their turn
                         else
                         {
+                            //If player ends their turn on consecrated tile, take damage
+                            if(map.GetTile(player.GetRow(), player.GetCol()).GetModifier().Equals("consecrated"))
+                            {
+                                //Take 1 damage
+                                player.SetCurrentHealth(player.GetCurrentHealth() - 1);
+                            }
+
                             //Set that it's not player's turn
                             units[i].SetUnitsTurn(false);
                             //Go to the next unit's turn
