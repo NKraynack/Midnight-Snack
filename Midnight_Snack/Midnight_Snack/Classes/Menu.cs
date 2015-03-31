@@ -75,7 +75,7 @@ namespace Midnight_Snack
             else if(action.Equals("Try Again"))
             {
                 gameManager.ResetGameState();
-                //gameManager.SetGameState(1);
+                gameManager.SetGameState(4);
             }
             else if(action.Equals("Level Select"))
             {

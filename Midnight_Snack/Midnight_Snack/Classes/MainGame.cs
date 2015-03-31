@@ -199,6 +199,10 @@ namespace Midnight_Snack
                 endText.SetMessage("You Lose!");
                 endText.SetVisible(true);
             }
+            else if (gameManager.IsPlayerAlive())
+            {
+                endText.SetVisible(false);
+            }
             //Check if player has won
             else if (gameManager.HasWon())
             {

@@ -24,6 +24,7 @@ namespace Midnight_Snack
         Controls controls;
         GameManager gameManager;
         Enemy[] enemies;
+        SleepingVillager villager;
 
         SelectionScene levelSelectScene;
         SelectionScene gameOverScene;
@@ -86,7 +87,7 @@ namespace Midnight_Snack
 
             /**** Initialize Main Game Screen ****/
             //Set number of turns
-            gameManager.SetTurnLimit(8);
+            gameManager.SetTurnLimit(4);
             //Create map
             Map map = new Map(6, 8, 3, 0);
             //Set up obstacles
@@ -118,7 +119,7 @@ namespace Midnight_Snack
             player.SetPosition(map.GetLairPos());
 
             //Set up villager stuff
-            SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
+            villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
             //Mark villager tile as occupied
             MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
             villagerTile.SetOccupant(villager);
@@ -168,7 +169,7 @@ namespace Midnight_Snack
             List<Text> gameOverOptions = new List<Text>();
             Text gameOverOption1 = new Text("Try Again", new Vector2(0, 0));
             //Can't currently "Try Again" yet so gray out option
-            gameOverOption1.SetAvailable(false);
+            gameOverOption1.SetAvailable(true);
             Text gameOverOption2 = new Text("Level Select", new Vector2(0, 0));
             gameOverOptions.Add(gameOverOption1);
             gameOverOptions.Add(gameOverOption2);
@@ -262,6 +263,9 @@ namespace Midnight_Snack
                 //Level Complete Screen
                 case 3:
                     levelCompleteScene.Update(controls);
+                    break;
+                case 4:
+                    reInit();
                 break;
             }
 
@@ -303,6 +307,34 @@ namespace Midnight_Snack
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void reInit()
+        {
+            /**** Initialize Main Game Screen ****/
+            //Set number of turns
+            gameManager.SetTurnLimit(4);
+            //Create map
+            Map map = new Map(6, 8, 3, 0);
+
+            //Set up player stuff
+            cursor = new Cursor(map.GetLairPos(), 100, 100, map);
+            player = Player.GetInstance();
+            //player.SetMap(map);
+            player.SetRow(map.GetLairRow());
+            player.SetCol(map.GetLairCol());
+            player.SetPosition(map.GetLairPos());
+            player.SetCurrentHealth(player.GetMaxHealth());
+            player.SetHasBlood(false);
+
+            villager.SetDrained(false);
+            //enemy stuff
+            //later on replace the 1 with some dynamic way of storing number of enemies
+            foreach (Enemy e in enemies) {
+                e.SetAlive(true);
+                e.SetCurrentHealth(e.GetMaxHealth());
+            }
+            gameManager.SetGameState(1);
         }
     }
 }
