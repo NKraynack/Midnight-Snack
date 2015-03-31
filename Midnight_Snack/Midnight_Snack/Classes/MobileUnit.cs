@@ -17,9 +17,10 @@ namespace Midnight_Snack
         protected bool movedThisTurn; //Has the unit moved this turn?
         protected bool usedAbilityThisTurn;   //Has the unit used an ability this turn?
         protected bool alive; //Is the unit alive?
+        protected Map map;  //The map the unit is on
         public HealthBar healthBar; //The unit's health bar
 
-        public MobileUnit(Vector2 pos, int width, int height, int row, int col, int range, int health) : base(pos, width, height, row, col)
+        public MobileUnit(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map) : base(pos, width, height, row, col)
         {
             moveRange = range;
             maxHealth = health;
@@ -28,6 +29,7 @@ namespace Midnight_Snack
             usedAbilityThisTurn = false;
             alive = true;
             unitsTurn = false;
+            this.map = map;
             healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
         }
 
@@ -104,6 +106,16 @@ namespace Midnight_Snack
         public void SetAlive(bool b)
         {
             alive = b;
+        }
+
+        public Map GetMap()
+        {
+            return map;
+        }
+
+        public void SetMap(Map m)
+        {
+            this.map = m;
         }
 
         public override void Update()

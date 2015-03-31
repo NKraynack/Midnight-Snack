@@ -13,10 +13,10 @@ namespace Midnight_Snack
     {
         private bool hasBlood;   //Has the player collected blood
 
-        private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10);
+        private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10, new Map(1, 1, 0, 0));
 
-        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health) 
-            : base(pos, width, height, row, col, range, health)
+        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map) 
+            : base(pos, width, height, row, col, range, health, map)
         {
             hasBlood = false;
         }
@@ -67,19 +67,6 @@ namespace Midnight_Snack
                 spriteBatch.Draw(texture, position, Color.White);
             }
         }
-
-        /*
-        public Map GetMap()
-        {
-            return map;
-        }
-
-        public void SetMap(Map m)
-        {
-           this.map = m;
-        }
-         * */
-
 
     }
 }

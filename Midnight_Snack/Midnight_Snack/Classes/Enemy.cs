@@ -12,13 +12,13 @@ namespace Midnight_Snack
 {
     public class Enemy : MobileUnit 
     {
-        Map map;
-        Player player;
-        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Player p, Map m) 
-            : base(pos, width, height, row, col, range, health)
+
+        Player player = Player.GetInstance();
+
+        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map) 
+            : base(pos, width, height, row, col, range, health, map)
         {
-            player = p;
-            map = m;
+            
         }
 
         public override void LoadContent(ContentManager content)
