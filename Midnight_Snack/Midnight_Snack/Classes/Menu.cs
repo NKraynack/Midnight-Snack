@@ -63,14 +63,24 @@ namespace Midnight_Snack
 
         public virtual void PerformAction(string action)
         {
-            if(action.Equals("Tutorial"))
+            if(action.Equals("Start"))
             {
-                //Load the Tutorial Level 
+                //Load the level 
                 gameManager.SetGameState(1);
+            }
+            else if(action.Equals("Tutorial"))
+            {
+                //Show the Tutorial's level briefing
+                gameManager.SetCurrentLevel(0);
+                gameManager.SetGameState(4);
             }
             else if(action.Equals("Level 1"))
             {
                 //Load level 1
+                /*
+                gameManager.SetCurrentLevel(1);
+                gameManager.SetGameState(4);
+                 * */
             }
             else if(action.Equals("Try Again"))
             {
@@ -92,7 +102,7 @@ namespace Midnight_Snack
         {
             if (visible)
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                //spriteBatch.Draw(texture, position, Color.White);
                 selector.Draw(spriteBatch);
                 for (int i = 0; i < menuOptions.Count; i++)
                 {

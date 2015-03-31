@@ -16,10 +16,11 @@ namespace Midnight_Snack
         private bool playerWin; //Has the player won the level
         private int currentTurn;    //Keeps track of the number of turns
         private int turnLimit;  //The most amount of turns the player is allowed to complete objective in
+        private int currentLevel;   //What level is the player currently on? (defaults to 0; the tutorial)
 
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
         int gameState;
-        const int levelSelect = 0, mainGame = 1, gameOver = 2, levelComplete = 3;
+        const int levelSelect = 0, mainGame = 1, gameOver = 2, levelComplete = 3, levelBriefing = 4;
 
         private static GameManager instance = new GameManager();
 
@@ -34,6 +35,7 @@ namespace Midnight_Snack
             playerWin = false;
             currentTurn = 1;
             turnLimit = 5;
+            currentLevel = 0;
         }
 
         public static GameManager GetInstance()
@@ -139,6 +141,16 @@ namespace Midnight_Snack
         public void SetGameState(int state)
         {
             gameState = state;
+        }
+
+        public int GetCurrentLevel()
+        {
+            return currentLevel;
+        }
+
+        public void SetCurrentLevel(int level)
+        {
+            currentLevel = level;
         }
 
         //Resets the GameManager back to it's initial state

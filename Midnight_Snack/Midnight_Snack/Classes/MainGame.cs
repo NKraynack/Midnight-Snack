@@ -91,7 +91,7 @@ namespace Midnight_Snack
         public void Update(Controls controls)
         {
             //Update Turn Counter
-            turnText.SetMessage("Turns Remaining: " + (gameManager.GetTurnLimit() - gameManager.GetTurn()));
+            turnText.SetMessage("Turns Until Sunrise: " + (gameManager.GetTurnLimit() - gameManager.GetTurn()));
 
             //Temporary HealthBar tester
             if(controls.onPress(Keys.J, Buttons.X))

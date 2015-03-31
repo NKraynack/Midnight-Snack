@@ -16,22 +16,30 @@ namespace Midnight_Snack
 
         public Scene()
         {
-
+            text = new List<Text>();
         }
 
         public virtual void LoadContent(ContentManager content)
         {
-            
+            //Load all text content
+            for (int i = 0; i < text.Count; i++)
+            {
+                text[i].LoadContent(content);
+            }
         }
 
-        public virtual void Update()
+        public virtual void Update(Controls controls)
         {
 
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-
+            //Draw all text content
+            for (int i = 0; i < text.Count; i++)
+            {
+                text[i].Draw(spriteBatch);
+            }
         }
     }
 }
