@@ -30,6 +30,7 @@ namespace Midnight_Snack
         SelectionScene gameOverScene;
         SelectionScene levelCompleteScene;
         MainGame mainGame;
+        XMLMapLoader loader;
 
         /*
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
@@ -54,6 +55,8 @@ namespace Midnight_Snack
         /// </summary>
         protected override void Initialize()
         {
+            loader = XMLMapLoader.GetInstance();
+            loader.read();
             // TODO: Add your initialization logic here
 
             //Full Screen

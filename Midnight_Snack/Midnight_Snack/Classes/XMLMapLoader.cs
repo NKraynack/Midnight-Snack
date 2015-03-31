@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
-using System.Text;
 
-namespace Midnight_Snack.Classes
+namespace Midnight_Snack
 {
     class XMLMapLoader
     {
@@ -14,11 +13,17 @@ namespace Midnight_Snack.Classes
         StringBuilder output = new StringBuilder();
 
         String xmlString =
-                @"<?xml version='1.0'?>
-        <!-- This is a sample XML document -->
-        <Items>
-          <Item>test with a child element <more/> stuff</Item>
-        </Items>";
+            @"<bookstore>
+        <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
+            <title>The Autobiography of Benjamin Franklin</title>
+            <author>
+                <first-name>Benjamin</first-name>
+                <last-name>Franklin</last-name>
+            </author>
+            <price>8.99</price>
+        </book>
+    </bookstore>";
+        String contentDir = Directory.GetCurrentDirectory() + "\\Content\\testmap.xml";
 
         private XMLMapLoader()
         {
@@ -32,16 +37,67 @@ namespace Midnight_Snack.Classes
 
         public void read()
         {
-            // Create an XmlReader
-            using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
-            {
-                reader.ReadToFollowing("book");
-                reader.MoveToFirstAttribute();
-                string genre = reader.Value;
-                output.AppendLine("The genre value: " + genre);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(contentDir);
+            string xmlcontents = doc.InnerXml;
 
-                reader.ReadToFollowing("title");
-                output.AppendLine("Content of the title element: " + reader.ReadElementContentAsString());
+            //Create an XmlReader
+            using (XmlReader reader = XmlReader.Create(new StringReader(xmlcontents)))
+            {
+                reader.ReadToFollowing("map");
+                int rows = Convert.ToInt32(reader.GetAttribute("rows"));
+                int cols = Convert.ToInt32(reader.GetAttribute("col"));
+                int startRow = Convert.ToInt32(reader.GetAttribute("startRow"));
+                int startCol = Convert.ToInt32(reader.GetAttribute("startRow"));
+
+                reader.ReadStartElement(); //get turn limit
+                int turnLim = Convert.ToInt32(reader.GetAttribute("limit"));
+
+                reader.ReadToNextSibling("cursor");
+                int cw = Convert.ToInt32(reader.GetAttribute("width"));
+                int ch = Convert.ToInt32(reader.GetAttribute("height"));
+                output.AppendLine("The cursor dimensions: ");
+                output.AppendLine("\t width: " + cw);
+                output.AppendLine("\t height: " + ch);
+
+                reader.ReadToNextSibling("villager");
+                int vw = Convert.ToInt32(reader.GetAttribute("width"));
+                int vh = Convert.ToInt32(reader.GetAttribute("height"));
+                int vrow = Convert.ToInt32(reader.GetAttribute("row"));
+                int vcol = Convert.ToInt32(reader.GetAttribute("col"));
+                output.AppendLine("The villager dimensions: ");
+                output.AppendLine("\t rows: " + vrow);
+                output.AppendLine("\t cols: " + vcol);
+                output.AppendLine("\t width: " + vw);
+                output.AppendLine("\t height: " + vh);
+
+                reader.ReadToNextSibling("enemy");
+                int ew = Convert.ToInt32(reader.GetAttribute("width"));
+                int eh = Convert.ToInt32(reader.GetAttribute("height"));
+                int erow = Convert.ToInt32(reader.GetAttribute("row"));
+                int ecol = Convert.ToInt32(reader.GetAttribute("col"));
+                output.AppendLine("The enemy dimensions: ");
+                output.AppendLine("\t rows: " + erow);
+                output.AppendLine("\t cols: " + ecol);
+                output.AppendLine("\t width: " + ew);
+                output.AppendLine("\t height: " + eh);
+
+                output.AppendLine("The map dimensions: ");
+                output.AppendLine("\t rows: " + rows);
+                output.AppendLine("\t cols: " + cols);
+                output.AppendLine("\t startRow: " + startRow);
+                output.AppendLine("\t startCol: " + startCol);
+
+                while (reader.ReadToNextSibling("obstacle"))
+                {
+                    int orows = Convert.ToInt32(reader.GetAttribute("row"));
+                    int ocols = Convert.ToInt32(reader.GetAttribute("col"));
+                    output.AppendLine("Obstacle at: " + ocols + " " + orows);
+                }
+
+                
+
+                
                 Console.WriteLine(output);
             }
         }
