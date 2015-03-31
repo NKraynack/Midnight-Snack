@@ -65,7 +65,8 @@ namespace Midnight_Snack
                 if(menuOptions[i].GetMessage().Equals("Abilities"))
                 {
                     //Gray out abilities option if already used this turn
-                    if (player.HasUsedAbilityThisTurn())
+                    //or if player is on a garlic tile
+                    if (player.HasUsedAbilityThisTurn() || player.GetCurrentMapTile().GetModifier().Equals("garlic"))
                     {
                         menuOptions[i].SetAvailable(false);
                     }
@@ -108,7 +109,8 @@ namespace Midnight_Snack
                     gameManager.SetChoosingAbilityTarget(false);
                 }
             }
-            else if(action.Equals("Abilities"))
+            //Can only use abilities if not on a garlic tile
+            else if(action.Equals("Abilities") && !player.GetCurrentMapTile().GetModifier().Equals("garlic"))
             {
                 //Go into use ability mode
                 //Use ability if haven't already done so this turn

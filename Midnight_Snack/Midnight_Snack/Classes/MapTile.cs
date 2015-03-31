@@ -36,9 +36,13 @@ namespace Midnight_Snack
                 {
                     texture = content.Load<Texture2D>("lair_map_tile.png");
                 }
-                else if(modifier.Equals("consecrated"))
+                else if (modifier.Equals("consecrated"))
                 {
                     texture = content.Load<Texture2D>("consecrated_ground_map_tile");
+                }
+                else if (modifier.Equals("garlic"))
+                {
+                    texture = content.Load<Texture2D>("garlic_map_tile");
                 }
                 else
                 {

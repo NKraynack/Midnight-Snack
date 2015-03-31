@@ -111,9 +111,9 @@ namespace Midnight_Snack
                 obstacle.SetPassable(false);
                 map.SetTile(r, 5, obstacle);
             }
-            //Add consecrated tile for testing
+            //Add garlic tile for testing
             MapTile consTile = map.GetTile(5, 1);
-            consTile.SetModifier("consecrated");
+            consTile.SetModifier("garlic");
             map.SetTile(5, 1, consTile);
 
             //Set up player stuff

@@ -118,6 +118,11 @@ namespace Midnight_Snack
             this.map = m;
         }
 
+        public MapTile GetCurrentMapTile()
+        {
+            return map.GetTile(this.GetRow(), this.GetCol());
+        }
+
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
