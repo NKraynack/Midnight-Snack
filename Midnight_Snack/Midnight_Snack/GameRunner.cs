@@ -92,69 +92,7 @@ namespace Midnight_Snack
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
             /**** Initialize Main Game Screen ****/
-            //Set number of turns
-            //gameManager.SetTurnLimit(4);
-            read();
-            //Create map
-            //map = new Map(6, 8, 3, 0);
-            //Set up obstacles
-            //for (int c = 2; c < 8; c++)
-            //{
-            //    MapTile obstacle = map.GetTile(4, c);
-            //    obstacle.SetPassable(false);
-            //    map.SetTile(4, c, obstacle);
-            //}
-            //for (int r = 2; r < 5; r++)
-            //{
-            //    MapTile obstacle = map.GetTile(r, 3);
-            //    obstacle.SetPassable(false);
-            //    map.SetTile(r, 3, obstacle);
-            //}
-            //for (int r = 0; r < 3; r++)
-            //{
-            //    MapTile obstacle = map.GetTile(r, 5);
-            //    obstacle.SetPassable(false);
-            //    map.SetTile(r, 5, obstacle);
-            //}
-
-            //Set up player stuff
-            //cursor = new Cursor(map.GetLairPos(), 100, 100, map);
-            //player = Player.GetInstance();
-
-            ////player.SetMap(map);
-            //player.SetRow(map.GetLairRow());
-            //player.SetCol(map.GetLairCol());
-            //player.SetPosition(map.GetLairPos());
-
-            ////Set up villager stuff
-            //villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
-            ////Mark villager tile as occupied
-            //MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
-            //villagerTile.SetOccupant(villager);
-            //map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
-            //villager.SetPosition(villagerTile.GetPosition());
-
-            ////enemy stuff
-            ////later on replace the 1 with some dynamic way of storing number of enemies
-            //enemies = new Enemy[1];
-            //int[] enemyX = new int[1];
-            //int[] enemyY = new int[1];
-            //int[] enemyRange = new int[1];
-            //enemyX[0] = 3;
-            //enemyY[0] = 5;
-            //enemyRange[0] = 2;
-            //enemies[0] = new Enemy(new Vector2(0, 0), 100, 100, enemyX[0], enemyY[0], enemyRange[0], 5, player, map);
-            //MapTile[] enemyTiles = new MapTile[1];
-            //enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
-            //enemyTiles[0].SetOccupant(enemies[0]);
-            //map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
-            //enemies[0].SetPosition(enemyTiles[0].GetPosition());
-            ////Create a list of all the units on the map
-            //List<Unit> units = new List<Unit>();
-            //units.Add(player);
-            //units.Add(villager);
-            ////for enemies later on a loop will be needed but ehh
-            //units.Add(enemies[0]);
+            LoadXmlMap();
 
             //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
@@ -272,8 +210,6 @@ namespace Midnight_Snack
                 case 3:
                     levelCompleteScene.Update(controls);
                     break;
-                case 4:
-                    reInit();
                 break;
             }
 
@@ -317,35 +253,7 @@ namespace Midnight_Snack
             base.Draw(gameTime);
         }
 
-        public void reInit()
-        {
-            /**** Initialize Main Game Screen ****/
-            //Set number of turns
-            gameManager.SetTurnLimit(4);
-            //Create map
-            Map map = new Map(6, 8, 3, 0);
-
-            //Set up player stuff
-            cursor = new Cursor(map.GetLairPos(), 100, 100, map);
-            player = Player.GetInstance();
-            //player.SetMap(map);
-            player.SetRow(map.GetLairRow());
-            player.SetCol(map.GetLairCol());
-            player.SetPosition(map.GetLairPos());
-            player.SetCurrentHealth(player.GetMaxHealth());
-            player.SetHasBlood(false);
-
-            villager.SetDrained(false);
-            //enemy stuff
-            //later on replace the 1 with some dynamic way of storing number of enemies
-            foreach (Enemy e in enemies) {
-                e.SetAlive(true);
-                e.SetCurrentHealth(e.GetMaxHealth());
-            }
-            gameManager.SetGameState(1);
-        }
-
-        public void read()
+        public void LoadXmlMap()
         {
             XmlDocument doc = new XmlDocument();
             String contentDir = Directory.GetCurrentDirectory() + "\\Content\\testmap.xml";
