@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Tao.Sdl;
 using System.Xml;
 using System.IO;
+using System.Text;
 #endregion
 
 namespace Midnight_Snack
@@ -299,6 +300,7 @@ namespace Midnight_Snack
             XmlDocument doc = new XmlDocument();
             String contentDir = Directory.GetCurrentDirectory() + "\\Content\\" + levelFile + ".xml";
             doc.Load(contentDir);
+            StringBuilder output = new StringBuilder();
             string xmlcontents = doc.InnerXml;
 
             //Create an XmlReader
@@ -310,15 +312,18 @@ namespace Midnight_Snack
                 int startRow = Convert.ToInt32(reader.GetAttribute("startRow"));
                 int startCol = Convert.ToInt32(reader.GetAttribute("startCol"));
 
-                reader.ReadStartElement(); //get turn limit
+                reader.ReadToDescendant("turnLim"); //get turn limit
                 int turnLim = Convert.ToInt32(reader.GetAttribute("limit"));
 
                 reader.ReadToNextSibling("cursor");
                 int cw = Convert.ToInt32(reader.GetAttribute("width"));
                 int ch = Convert.ToInt32(reader.GetAttribute("height"));
-                //output.AppendLine("The cursor dimensions: ");
-                //output.AppendLine("\t width: " + cw);
-                //output.AppendLine("\t height: " + ch);
+                output.AppendLine("The cursor dimensions: ");
+                output.AppendLine("\t width: " + cw);
+                output.AppendLine("\t height: " + ch);
+
+                gameManager.SetTurnLimit(turnLim);
+                map = new Map(rows, cols, startRow, startCol);
 
                 reader.ReadToNextSibling("villager");
                 int vw = Convert.ToInt32(reader.GetAttribute("width"));
@@ -331,28 +336,58 @@ namespace Midnight_Snack
                 //output.AppendLine("\t width: " + vw);
                 //output.AppendLine("\t height: " + vh);
 
-                reader.ReadToNextSibling("enemy");
-                int ew = Convert.ToInt32(reader.GetAttribute("width"));
-                int eh = Convert.ToInt32(reader.GetAttribute("height"));
-                int erow = Convert.ToInt32(reader.GetAttribute("row"));
-                int ecol = Convert.ToInt32(reader.GetAttribute("col"));
-                int erange = Convert.ToInt32(reader.GetAttribute("range"));
-                int ehealth = Convert.ToInt32(reader.GetAttribute("health"));
-                //output.AppendLine("The enemy dimensions: ");
-                //output.AppendLine("\t rows: " + erow);
-                //output.AppendLine("\t cols: " + ecol);
-                //output.AppendLine("\t width: " + ew);
-                //output.AppendLine("\t height: " + eh);
+                reader.ReadToNextSibling("enemies");
+                int num_enemies = Convert.ToInt32(reader.GetAttribute("numEnemies"));
+                reader.ReadStartElement();
+                enemies = new Enemy[num_enemies];
+                int[] enemyX = new int[num_enemies];
+                int[] enemyY = new int[num_enemies];
+                int[] enemyRange = new int[num_enemies];
+                MapTile[] enemyTiles = new MapTile[num_enemies];
+                units = new List<Unit>();
 
-                //output.AppendLine("The map dimensions: ");
-                //output.AppendLine("\t rows: " + rows);
-                //output.AppendLine("\t cols: " + cols);
-                //output.AppendLine("\t startRow: " + startRow);
-                //output.AppendLine("\t startCol: " + startCol);
-                gameManager.SetTurnLimit(turnLim);
-                map = new Map(rows, cols, startRow, startCol);
+                for (int i = 0; i < num_enemies; i++ )
+                {
+                    
+                    int ew = Convert.ToInt32(reader.GetAttribute("width"));
+                    int eh = Convert.ToInt32(reader.GetAttribute("height"));
+                    int erow = Convert.ToInt32(reader.GetAttribute("row"));
+                    int ecol = Convert.ToInt32(reader.GetAttribute("col"));
+                    int erange = Convert.ToInt32(reader.GetAttribute("range"));
+                    int ehealth = Convert.ToInt32(reader.GetAttribute("health"));
+                    //Console.WriteLine("pos: enemy: " + ecol + ":" + erow);
+
+                    enemyX[i] = erow;
+                    enemyY[i] = ecol;
+                    enemyRange[i] = erange;
+                    enemies[i] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[i],
+                        enemyY[i], enemyRange[i], ehealth, map);
+
+                    enemyTiles[i] = map.GetTile(enemies[i].GetRow(), enemies[i].GetCol());
+                    enemyTiles[i].SetOccupant(enemies[i]);
+                    map.SetTile(enemies[i].GetRow(), enemies[i].GetCol(), enemyTiles[i]);
+                    enemies[i].SetPosition(enemyTiles[i].GetPosition());
+                    //Create a list of all the units on the map
+                    
+                    //units.Add(player);
+                    //units.Add(villager);
+                    //for enemies later on a loop will be needed but ehh
+                    units.Add(enemies[i]);
+                    reader.ReadToNextSibling("enemy");
+                }
+
+                output.AppendLine("The map dimensions: ");
+                output.AppendLine("\t rows: " + rows);
+                output.AppendLine("\t cols: " + cols);
+                output.AppendLine("\t startRow: " + startRow);
+                output.AppendLine("\t startCol: " + startCol);
+                Console.WriteLine(output);
+
+                reader.ReadToNextSibling("obstacles");
+                int num_obs = Convert.ToInt32(reader.GetAttribute("numObs"));
+                reader.ReadStartElement();
                 //Console.WriteLine("loar: " + map.GetLairCol() + " " + map.GetLairRow());
-                while (reader.ReadToNextSibling("obstacle"))
+                for (int i = 0; i < num_obs; i++)
                 {
                     int orows = Convert.ToInt32(reader.GetAttribute("row"));
                     int ocols = Convert.ToInt32(reader.GetAttribute("col"));
@@ -361,7 +396,26 @@ namespace Midnight_Snack
                     MapTile obstacle = map.GetTile(orows, ocols);
                     obstacle.SetPassable(false);
                     map.SetTile(orows, ocols, obstacle);
+                    reader.ReadToNextSibling("obstacle");
                 }
+
+                reader.ReadToNextSibling("tiles");
+                int num_tiles = Convert.ToInt32(reader.GetAttribute("numTiles"));
+                reader.ReadStartElement();
+                //Console.WriteLine("loar: " + map.GetLairCol() + " " + map.GetLairRow());
+                for (int i = 0; i < num_tiles; i++)
+                {
+                    int trows = Convert.ToInt32(reader.GetAttribute("row"));
+                    int tcols = Convert.ToInt32(reader.GetAttribute("col"));
+                    string modifier = reader.GetAttribute("mod");
+                    //output.AppendLine("Obstacle at: " + ocols + " " + orows);
+
+                    MapTile obstacle = map.GetTile(trows, tcols);
+                    obstacle.SetModifier(modifier);
+                    map.SetTile(trows, tcols, obstacle);
+                    reader.ReadToNextSibling("tile");
+                }
+
                 cursor = new Cursor(map.GetLairPos(), cw, ch, map);
 
                 player = Player.GetInstance();
@@ -369,6 +423,7 @@ namespace Midnight_Snack
                 player.SetCol(map.GetLairCol());
                 player.SetPosition(map.GetLairPos());
                 player.SetMap(map);
+                player.SetCurrentHealth(player.GetMaxHealth());
 
 
                 //Set up villager stuff
@@ -378,28 +433,6 @@ namespace Midnight_Snack
                 villagerTile.SetOccupant(villager);
                 map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
                 villager.SetPosition(villagerTile.GetPosition());
-
-                //enemy stuff
-                //later on replace the 1 with some dynamic way of storing number of enemies
-                enemies = new Enemy[1];
-                int[] enemyX = new int[1];
-                int[] enemyY = new int[1];
-                int[] enemyRange = new int[1];
-                enemyX[0] = erow;
-                enemyY[0] = ecol;
-                enemyRange[0] = erange;
-                enemies[0] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[0], enemyY[0], enemyRange[0], ehealth, map);
-                MapTile[] enemyTiles = new MapTile[1];
-                enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
-                enemyTiles[0].SetOccupant(enemies[0]);
-                map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
-                enemies[0].SetPosition(enemyTiles[0].GetPosition());
-                //Create a list of all the units on the map
-                units = new List<Unit>();
-                units.Add(player);
-                units.Add(villager);
-                //for enemies later on a loop will be needed but ehh
-                units.Add(enemies[0]);
 
                 //Set up menus
                 Text moveText = new Text("Move", player.GetPosition());
@@ -413,6 +446,8 @@ namespace Midnight_Snack
                 MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
                 menus.Add(actionMenu);
                 //Create the main game screen
+                units.Add(player);
+                units.Add(villager);
                 mainGame = new MainGame(map, units, cursor, menus);
             }
         }
