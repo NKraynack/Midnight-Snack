@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Tao.Sdl;
+using System.Xml;
+using System.IO;
 #endregion
 
 namespace Midnight_Snack
@@ -24,17 +26,26 @@ namespace Midnight_Snack
         Controls controls;
         GameManager gameManager;
         Enemy[] enemies;
+        SleepingVillager villager;
 
         SelectionScene levelSelectScene;
         SelectionScene gameOverScene;
         SelectionScene levelCompleteScene;
-        SelectionScene levelBriefingScene;
         MainGame mainGame;
+        Map map;
+        List<Unit> units;
+
+        /*
+        //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
+        int gameState;
+        const int levelSelect = 0, mainGame = 1;
+         * */
 
         public static int ScreenWidth;
         public static int ScreenHeight;
 
-        public GameRunner() : base()
+        public GameRunner()
+            : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -48,6 +59,7 @@ namespace Midnight_Snack
         /// </summary>
         protected override void Initialize()
         {
+
             // TODO: Add your initialization logic here
 
             //Full Screen
@@ -63,9 +75,10 @@ namespace Midnight_Snack
 
             gameManager = GameManager.GetInstance();
 
+
             /**** Initialize Level Select Screen ****/
-            Text titleText = new Text("Midnight Snack", new Vector2(ScreenWidth/2, ScreenHeight/4));
-            Text startText = new Text("Select a Level", new Vector2(ScreenWidth/2, ScreenHeight * 2/5));
+            Text titleText = new Text("Midnight Snack", new Vector2(ScreenWidth / 2, ScreenHeight / 4));
+            Text startText = new Text("Select a Level", new Vector2(ScreenWidth / 2, ScreenHeight / 3));
             List<Text> levelSelectText = new List<Text>();
             levelSelectText.Add(titleText);
             levelSelectText.Add(startText);
@@ -76,83 +89,12 @@ namespace Midnight_Snack
             option2.SetAvailable(false);
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
-            Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, levelSelectOptions);
+            Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
-            /***** Initialize Level Briefing Screen ****/
-            List<Text> levelBriefingText = new List<Text>();
-            List<Text> levelBriefingOptions = new List<Text>();
-            Text levelBriefingOption1 = new Text("Start", new Vector2(0, 0));
-            levelBriefingOptions.Add(levelBriefingOption1);
-            Menu levelBriefingMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight - ScreenWidth/6), 100, 100, levelBriefingOptions);
-            levelBriefingScene = new SelectionScene(levelBriefingText, levelBriefingMenu);
-
             /**** Initialize Main Game Screen ****/
-            //Set number of turns
-            gameManager.SetTurnLimit(8);
-            //Create map
-            Map map = new Map(6, 8, 3, 0);
-            //Set up obstacles
-            for(int c = 2; c < 8; c++)
-            {
-                MapTile obstacle = map.GetTile(4, c);
-                obstacle.SetPassable(false);
-                map.SetTile(4, c, obstacle);
-            }
-            for (int r = 2; r < 5; r++)
-            {
-                MapTile obstacle = map.GetTile(r, 3);
-                obstacle.SetPassable(false);
-                map.SetTile(r, 3, obstacle);
-            }
-            for (int r = 0; r < 3; r++)
-            {
-                MapTile obstacle = map.GetTile(r, 5);
-                obstacle.SetPassable(false);
-                map.SetTile(r, 5, obstacle);
-            }
-            //Add garlic tile for testing
-            MapTile consTile = map.GetTile(5, 1);
-            consTile.SetModifier("garlic");
-            map.SetTile(5, 1, consTile);
 
-            //Set up player stuff
-            cursor = new Cursor(map.GetLairPos(), 100, 100, map);
-            player = Player.GetInstance();
-            player.SetMap(map);
-            player.SetRow(map.GetLairRow());
-            player.SetCol(map.GetLairCol());
-            player.SetPosition(map.GetLairPos());
-
-            //Set up villager stuff
-            SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), 100, 100, 2, 6);
-            //Mark villager tile as occupied
-            MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
-            villagerTile.SetOccupant(villager);
-            map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
-            villager.SetPosition(villagerTile.GetPosition());
-
-            //enemy stuff
-            //later on replace the 1 with some dynamic way of storing number of enemies
-            enemies = new Enemy[1];
-            int[] enemyX = new int[1];
-            int[] enemyY = new int[1];
-            int[] enemyRange = new int[1];
-            enemyX[0] = 3;
-            enemyY[0] = 5;
-            enemyRange[0] = 2;
-            enemies[0] = new Enemy(new Vector2(0, 0), 100, 100, enemyX[0], enemyY[0], enemyRange[0], 5, map);
-            MapTile[] enemyTiles = new MapTile[1];
-            enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
-            enemyTiles[0].SetOccupant(enemies[0]);
-            map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
-            enemies[0].SetPosition(enemyTiles[0].GetPosition());
-            //Create a list of all the units on the map
-            List<Unit> units = new List<Unit>();
-            units.Add(player);
-            units.Add(villager);
-            //for enemies later on a loop will be needed but ehh
-            units.Add(enemies[0]);
+            LoadXmlMap();
 
             //Set up menus
             Text moveText = new Text("Move", player.GetPosition());
@@ -169,21 +111,21 @@ namespace Midnight_Snack
             mainGame = new MainGame(map, units, cursor, menus);
 
             /**** Initialize Game Over Scene ****/
-            Text gameOverText = new Text("Game Over", new Vector2(ScreenWidth/2, ScreenHeight/3));
+            Text gameOverText = new Text("Game Over", new Vector2(ScreenWidth / 2, ScreenHeight / 3));
             List<Text> gameOverSceneText = new List<Text>();
             gameOverSceneText.Add(gameOverText);
             List<Text> gameOverOptions = new List<Text>();
             Text gameOverOption1 = new Text("Try Again", new Vector2(0, 0));
             //Can't currently "Try Again" yet so gray out option
-            gameOverOption1.SetAvailable(false);
+            gameOverOption1.SetAvailable(true);
             Text gameOverOption2 = new Text("Level Select", new Vector2(0, 0));
             gameOverOptions.Add(gameOverOption1);
             gameOverOptions.Add(gameOverOption2);
-            Menu gameOverMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, gameOverOptions);
+            Menu gameOverMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, gameOverOptions);
             gameOverScene = new SelectionScene(gameOverSceneText, gameOverMenu);
 
             /**** Initialize Level Complete Scene ****/
-            Text levelCompleteText = new Text("Level Complete!", new Vector2(ScreenWidth/2, ScreenHeight/3));
+            Text levelCompleteText = new Text("Level Complete!", new Vector2(ScreenWidth / 2, ScreenHeight / 3));
             List<Text> levelCompleteSceneText = new List<Text>();
             levelCompleteSceneText.Add(levelCompleteText);
             List<Text> levelCompleteOptions = new List<Text>();
@@ -193,7 +135,7 @@ namespace Midnight_Snack
             Text levelCompleteOption2 = new Text("Level Select", new Vector2(0, 0));
             levelCompleteOptions.Add(levelCompleteOption1);
             levelCompleteOptions.Add(levelCompleteOption2);
-            Menu levelCompleteMenu = new Menu(new Vector2(ScreenWidth/2, ScreenHeight/2), 100, 100, levelCompleteOptions);
+            Menu levelCompleteMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, levelCompleteOptions);
             levelCompleteScene = new SelectionScene(levelCompleteSceneText, levelCompleteMenu);
 
             //Start the game on the level select screen
@@ -221,8 +163,7 @@ namespace Midnight_Snack
             mainGame.LoadContent(this.Content);
             gameOverScene.LoadContent(this.Content);
             levelCompleteScene.LoadContent(this.Content);
-            levelBriefingScene.LoadContent(this.Content);
-            
+
         }
 
         /// <summary>
@@ -238,7 +179,7 @@ namespace Midnight_Snack
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// <param name=gameTime>Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             controls.Update();
@@ -250,32 +191,28 @@ namespace Midnight_Snack
             //ScreenWidth = GraphicsDevice.Viewport.Width;
             //ScreenHeight = GraphicsDevice.Viewport.Height;
 
-            switch(gameManager.GetGameState())
+            switch (gameManager.GetGameState())
             {
                 //Level Select Screen
                 case 0:
                     levelSelectScene.Update(controls);
-                break;
-                
+                    break;
+
                 //Main Game Screen
                 case 1:
                     mainGame.Update(controls);
-                break;
+                    break;
 
                 //Game Over Screen
                 case 2:
                     gameOverScene.Update(controls);
-                break;
+                    break;
 
                 //Level Complete Screen
                 case 3:
                     levelCompleteScene.Update(controls);
-                break;
-
-                //Level Briefing Screen
-                case 4:
-                    levelBriefingScene.Update(controls);
-                break;
+                    break;
+                    break;
             }
 
             base.Update(gameTime);
@@ -296,31 +233,137 @@ namespace Midnight_Snack
                 //Level Select Screen
                 case 0:
                     levelSelectScene.Draw(spriteBatch);
-                break;
+                    break;
 
                 //Main Game Screen
                 case 1:
                     mainGame.Draw(spriteBatch);
-                break;
+                    break;
 
                 //Game Over Screen
                 case 2:
                     gameOverScene.Draw(spriteBatch);
-                break;
+                    break;
 
                 //Level Complete Screen
                 case 3:
                     levelCompleteScene.Draw(spriteBatch);
-                break;
-
-                //Level Briefing Screen
-                case 4:
-                    levelBriefingScene.Draw(spriteBatch);
-                break;
+                    break;
             }
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+
+        public void LoadXmlMap()
+        {
+            XmlDocument doc = new XmlDocument();
+            String contentDir = Directory.GetCurrentDirectory() + "\\Content\\testmap.xml";
+            doc.Load(contentDir);
+            string xmlcontents = doc.InnerXml;
+
+            //Create an XmlReader
+            using (XmlReader reader = XmlReader.Create(new StringReader(xmlcontents)))
+            {
+                reader.ReadToFollowing("map");
+                int rows = Convert.ToInt32(reader.GetAttribute("rows"));
+                int cols = Convert.ToInt32(reader.GetAttribute("cols"));
+                int startRow = Convert.ToInt32(reader.GetAttribute("startRow"));
+                int startCol = Convert.ToInt32(reader.GetAttribute("startCol"));
+
+                reader.ReadStartElement(); //get turn limit
+                int turnLim = Convert.ToInt32(reader.GetAttribute("limit"));
+
+                reader.ReadToNextSibling("cursor");
+                int cw = Convert.ToInt32(reader.GetAttribute("width"));
+                int ch = Convert.ToInt32(reader.GetAttribute("height"));
+                //output.AppendLine("The cursor dimensions: ");
+                //output.AppendLine("\t width: " + cw);
+                //output.AppendLine("\t height: " + ch);
+
+                reader.ReadToNextSibling("villager");
+                int vw = Convert.ToInt32(reader.GetAttribute("width"));
+                int vh = Convert.ToInt32(reader.GetAttribute("height"));
+                int vrow = Convert.ToInt32(reader.GetAttribute("row"));
+                int vcol = Convert.ToInt32(reader.GetAttribute("col"));
+                //output.AppendLine("The villager dimensions: ");
+                //output.AppendLine("\t rows: " + vrow);
+                //output.AppendLine("\t cols: " + vcol);
+                //output.AppendLine("\t width: " + vw);
+                //output.AppendLine("\t height: " + vh);
+
+                reader.ReadToNextSibling("enemy");
+                int ew = Convert.ToInt32(reader.GetAttribute("width"));
+                int eh = Convert.ToInt32(reader.GetAttribute("height"));
+                int erow = Convert.ToInt32(reader.GetAttribute("row"));
+                int ecol = Convert.ToInt32(reader.GetAttribute("col"));
+                int erange = Convert.ToInt32(reader.GetAttribute("range"));
+                int ehealth = Convert.ToInt32(reader.GetAttribute("health"));
+                //output.AppendLine("The enemy dimensions: ");
+                //output.AppendLine("\t rows: " + erow);
+                //output.AppendLine("\t cols: " + ecol);
+                //output.AppendLine("\t width: " + ew);
+                //output.AppendLine("\t height: " + eh);
+
+                //output.AppendLine("The map dimensions: ");
+                //output.AppendLine("\t rows: " + rows);
+                //output.AppendLine("\t cols: " + cols);
+                //output.AppendLine("\t startRow: " + startRow);
+                //output.AppendLine("\t startCol: " + startCol);
+                gameManager.SetTurnLimit(turnLim);
+                map = new Map(rows, cols, startRow, startCol);
+                //Console.WriteLine("loar: " + map.GetLairCol() + " " + map.GetLairRow());
+                while (reader.ReadToNextSibling("obstacle"))
+                {
+                    int orows = Convert.ToInt32(reader.GetAttribute("row"));
+                    int ocols = Convert.ToInt32(reader.GetAttribute("col"));
+                    //output.AppendLine("Obstacle at: " + ocols + " " + orows);
+
+                    MapTile obstacle = map.GetTile(orows, ocols);
+                    obstacle.SetPassable(false);
+                    map.SetTile(orows, ocols, obstacle);
+                }
+                cursor = new Cursor(map.GetLairPos(), cw, ch, map);
+
+                player = Player.GetInstance();
+                player.SetRow(map.GetLairRow());
+                player.SetCol(map.GetLairCol());
+                player.SetPosition(map.GetLairPos());
+                player.SetMap(map);
+
+
+                //Set up villager stuff
+                villager = new SleepingVillager(new Vector2(0, 0), vw, vh, vrow, vcol);
+                //Mark villager tile as occupied
+                MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
+                villagerTile.SetOccupant(villager);
+                map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
+                villager.SetPosition(villagerTile.GetPosition());
+
+                //enemy stuff
+                //later on replace the 1 with some dynamic way of storing number of enemies
+                enemies = new Enemy[1];
+                int[] enemyX = new int[1];
+                int[] enemyY = new int[1];
+                int[] enemyRange = new int[1];
+                enemyX[0] = erow;
+                enemyY[0] = ecol;
+                enemyRange[0] = erange;
+                enemies[0] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[0], enemyY[0], enemyRange[0], ehealth, map);
+                MapTile[] enemyTiles = new MapTile[1];
+                enemyTiles[0] = map.GetTile(enemies[0].GetRow(), enemies[0].GetCol());
+                enemyTiles[0].SetOccupant(enemies[0]);
+                map.SetTile(enemies[0].GetRow(), enemies[0].GetCol(), enemyTiles[0]);
+                enemies[0].SetPosition(enemyTiles[0].GetPosition());
+                //Create a list of all the units on the map
+                units = new List<Unit>();
+                units.Add(player);
+                units.Add(villager);
+                //for enemies later on a loop will be needed but ehh
+                units.Add(enemies[0]);
+            }
+        }
+
     }
 }
