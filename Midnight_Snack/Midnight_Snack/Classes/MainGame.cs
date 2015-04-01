@@ -47,11 +47,11 @@ namespace Midnight_Snack
 
             Text feedText = new Text("Feed", player.GetPosition());
             Text attackText = new Text("Attack", player.GetPosition());
-            Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
+            //Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
             List<Text> abilitiesMenuOptions = new List<Text>();
             abilitiesMenuOptions.Add(attackText);
             abilitiesMenuOptions.Add(feedText);
-            abilitiesMenuOptions.Add(endAbilityTurnText);
+            //abilitiesMenuOptions.Add(endAbilityTurnText);
             abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
             menus.Add(abilitiesMenu);
 
@@ -171,14 +171,15 @@ namespace Midnight_Snack
             //Only display the action menu when using it
             if (gameManager.IsInActionMenu())
             {
-                actionMenu.SetVisible(true);
                 if (gameManager.IsInAbilitiesMenu())
                 {
                     abilitiesMenu.SetVisible(true);
+                    actionMenu.SetVisible(false);
                     abilitiesMenu.Update(controls);
                 }
                 else
                 {
+                    actionMenu.SetVisible(true);
                     abilitiesMenu.SetVisible(false);
                     actionMenu.Update(controls);
                 }

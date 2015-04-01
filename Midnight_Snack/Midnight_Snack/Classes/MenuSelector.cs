@@ -27,7 +27,7 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("action_menu_selector.png");
+            texture = content.Load<Texture2D>("selector");
         }
 
         public virtual void Update(Controls controls)

@@ -30,7 +30,7 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("action_menu_background.png");
+            texture = content.Load<Texture2D>("minimenu_background");
             selector.LoadContent(content);
 
             for (int i = 0; i < menuOptions.Count; i++)
@@ -42,7 +42,7 @@ namespace Midnight_Snack
         public void UpdateMenuText()
         {
             //Update text position
-            int xOffset = 0;
+            int xOffset = 10;
             int yOffset = 0;
             for (int i = 0; i < menuOptions.Count; i++)
             {
@@ -139,11 +139,6 @@ namespace Midnight_Snack
                 gameManager.SetInActionMenu(false);
                 gameManager.SetInAbilitiesMenu(false);
             }
-            else if (action.Equals("End Ability"))
-            {
-                gameManager.SetInAbilitiesMenu(false);
-                gameManager.SetInActionMenu(true);
-            }
             else if(action.Equals("End Turn"))
             {
                 //Increment turn counter
@@ -168,7 +163,14 @@ namespace Midnight_Snack
         {
             if(visible)
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                //Draw menu background of appropriate size for options
+                Vector2 backgroundPos = position;
+                for (int i = 0; i < menuOptions.Count; i++)
+                {
+                    spriteBatch.Draw(texture, backgroundPos, Color.White);
+                    backgroundPos.Y += 20;
+                }
+
                 selector.Draw(spriteBatch);
                 
                 for(int i = 0; i < menuOptions.Count; i++)

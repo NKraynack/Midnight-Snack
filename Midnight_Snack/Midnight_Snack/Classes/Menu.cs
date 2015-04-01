@@ -23,7 +23,7 @@ namespace Midnight_Snack
             selector = new MenuSelector(pos, width, 15, options.Count);
 
             menuOptions = options;
-            int xOffset = 0;
+            int xOffset = 10;
             int yOffset = 0;
             for(int i = 0; i < menuOptions.Count; i++)
             {
