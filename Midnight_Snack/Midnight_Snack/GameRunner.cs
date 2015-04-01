@@ -227,6 +227,12 @@ namespace Midnight_Snack
                     mainGame.LoadContent(this.Content);
                     gameManager.SetGameState(4);
                     break;
+                case 6:
+                    LoadXmlMap();
+                    mainGame.LoadContent(this.Content);
+                    gameManager.SetGameState(1);
+                    break;
+
             }
 
             base.Update(gameTime);
