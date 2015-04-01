@@ -31,15 +31,10 @@ namespace Midnight_Snack
         SelectionScene levelSelectScene;
         SelectionScene gameOverScene;
         SelectionScene levelCompleteScene;
+        SelectionScene levelBriefingScene;
         MainGame mainGame;
         Map map;
         List<Unit> units;
-
-        /*
-        //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
-        int gameState;
-        const int levelSelect = 0, mainGame = 1;
-         * */
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -78,7 +73,7 @@ namespace Midnight_Snack
 
             /**** Initialize Level Select Screen ****/
             Text titleText = new Text("Midnight Snack", new Vector2(ScreenWidth / 2, ScreenHeight / 4));
-            Text startText = new Text("Select a Level", new Vector2(ScreenWidth / 2, ScreenHeight / 3));
+            Text startText = new Text("Select a Level", new Vector2(ScreenWidth / 2, ScreenHeight * 2/5));
             List<Text> levelSelectText = new List<Text>();
             levelSelectText.Add(titleText);
             levelSelectText.Add(startText);
@@ -91,6 +86,14 @@ namespace Midnight_Snack
             levelSelectOptions.Add(option2);
             Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
+
+            /***** Initialize Level Briefing Screen ****/
+            List<Text> levelBriefingText = new List<Text>();
+            List<Text> levelBriefingOptions = new List<Text>();
+            Text levelBriefingOption1 = new Text("Start", new Vector2(0, 0));
+            levelBriefingOptions.Add(levelBriefingOption1);
+            Menu levelBriefingMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight - ScreenWidth / 6), 100, 100, levelBriefingOptions);
+            levelBriefingScene = new SelectionScene(levelBriefingText, levelBriefingMenu);
 
             /**** Initialize Main Game Screen ****/
 
@@ -163,6 +166,7 @@ namespace Midnight_Snack
             mainGame.LoadContent(this.Content);
             gameOverScene.LoadContent(this.Content);
             levelCompleteScene.LoadContent(this.Content);
+            levelBriefingScene.LoadContent(this.Content);
 
         }
 
@@ -212,6 +216,10 @@ namespace Midnight_Snack
                 case 3:
                     levelCompleteScene.Update(controls);
                     break;
+
+                //Level Briefing Screen
+                case 4:
+                    levelBriefingScene.Update(controls);
                     break;
             }
 
@@ -248,6 +256,11 @@ namespace Midnight_Snack
                 //Level Complete Screen
                 case 3:
                     levelCompleteScene.Draw(spriteBatch);
+                    break;
+
+                //Level Briefing Screen
+                case 4:
+                    levelBriefingScene.Draw(spriteBatch);
                     break;
             }
             spriteBatch.End();
