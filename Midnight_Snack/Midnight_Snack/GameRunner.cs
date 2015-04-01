@@ -35,6 +35,7 @@ namespace Midnight_Snack
         MainGame mainGame;
         Map map;
         List<Unit> units;
+        List<Menu> menus;
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -81,7 +82,7 @@ namespace Midnight_Snack
             Text option1 = new Text("Tutorial", new Vector2(0, 0));
             Text option2 = new Text("Level 1", new Vector2(0, 0));
             //Level 1 not available right now so display it as unavailable
-            option2.SetAvailable(false);
+            option2.SetAvailable(true);
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
             Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
@@ -99,19 +100,19 @@ namespace Midnight_Snack
 
             LoadXmlMap();
 
-            //Set up menus
-            Text moveText = new Text("Move", player.GetPosition());
-            Text abilitiesText = new Text("Abilities", player.GetPosition());
-            Text endTurnText = new Text("End Turn", player.GetPosition());
-            List<Text> actionMenuOptions = new List<Text>();
-            actionMenuOptions.Add(moveText);
-            actionMenuOptions.Add(abilitiesText);
-            actionMenuOptions.Add(endTurnText);
-            List<Menu> menus = new List<Menu>();
-            MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
-            menus.Add(actionMenu);
-            //Create the main game screen
-            mainGame = new MainGame(map, units, cursor, menus);
+            ////Set up menus
+            //Text moveText = new Text("Move", player.GetPosition());
+            //Text abilitiesText = new Text("Abilities", player.GetPosition());
+            //Text endTurnText = new Text("End Turn", player.GetPosition());
+            //List<Text> actionMenuOptions = new List<Text>();
+            //actionMenuOptions.Add(moveText);
+            //actionMenuOptions.Add(abilitiesText);
+            //actionMenuOptions.Add(endTurnText);
+            //menus = new List<Menu>();
+            //MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
+            //menus.Add(actionMenu);
+            ////Create the main game screen
+            //mainGame = new MainGame(map, units, cursor, menus);
 
             /**** Initialize Game Over Scene ****/
             Text gameOverText = new Text("Game Over", new Vector2(ScreenWidth / 2, ScreenHeight / 3));
@@ -221,6 +222,11 @@ namespace Midnight_Snack
                 case 4:
                     levelBriefingScene.Update(controls);
                     break;
+                case 5:
+                    LoadXmlMap();
+                    mainGame.LoadContent(this.Content);
+                    gameManager.SetGameState(4);
+                    break;
             }
 
             base.Update(gameTime);
@@ -271,8 +277,21 @@ namespace Midnight_Snack
 
         public void LoadXmlMap()
         {
+            string levelFile;
+            switch (gameManager.GetCurrentLevel())
+            {
+                case 0:
+                    levelFile = "tutorial";
+                    break;
+                case 1:
+                    levelFile = "level1";
+                    break;
+                default:
+                    levelFile = null;
+                    break;
+            }
             XmlDocument doc = new XmlDocument();
-            String contentDir = Directory.GetCurrentDirectory() + "\\Content\\testmap.xml";
+            String contentDir = Directory.GetCurrentDirectory() + "\\Content\\" + levelFile + ".xml";
             doc.Load(contentDir);
             string xmlcontents = doc.InnerXml;
 
@@ -375,6 +394,20 @@ namespace Midnight_Snack
                 units.Add(villager);
                 //for enemies later on a loop will be needed but ehh
                 units.Add(enemies[0]);
+
+                //Set up menus
+                Text moveText = new Text("Move", player.GetPosition());
+                Text abilitiesText = new Text("Abilities", player.GetPosition());
+                Text endTurnText = new Text("End Turn", player.GetPosition());
+                List<Text> actionMenuOptions = new List<Text>();
+                actionMenuOptions.Add(moveText);
+                actionMenuOptions.Add(abilitiesText);
+                actionMenuOptions.Add(endTurnText);
+                menus = new List<Menu>();
+                MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
+                menus.Add(actionMenu);
+                //Create the main game screen
+                mainGame = new MainGame(map, units, cursor, menus);
             }
         }
 
