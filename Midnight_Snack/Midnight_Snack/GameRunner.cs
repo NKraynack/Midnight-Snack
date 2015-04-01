@@ -424,6 +424,8 @@ namespace Midnight_Snack
                 player.SetPosition(map.GetLairPos());
                 player.SetMap(map);
                 player.SetCurrentHealth(player.GetMaxHealth());
+                player.SetHasBlood(false);
+                player.SetAlive(true);
 
 
                 //Set up villager stuff
