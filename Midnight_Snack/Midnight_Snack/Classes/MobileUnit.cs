@@ -36,10 +36,16 @@ namespace Midnight_Snack
         //Moves the unit to the given position
         public void Move(Vector2 pos, int row, int col)
         {
+            //makes new position not occupiable, and makes sure to set old position as occupiable
+            MapTile prevTile = map.GetTile(this.GetRow(), this.GetCol());
+            prevTile.SetPassable(true);
+            map.SetTile(this.GetRow(), this.GetCol(), prevTile);
             SetPosition(pos);
             SetRow(row);
             SetCol(col);
-
+            MapTile newTile = map.GetTile(row, col);
+            newTile.SetPassable(false);
+            map.SetTile(row, col, newTile);
             movedThisTurn = true;
         }
 
