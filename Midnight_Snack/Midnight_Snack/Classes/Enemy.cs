@@ -10,12 +10,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    public class Enemy : MobileUnit 
+    public class Enemy : MobileUnit
     {
 
         Player player = Player.GetInstance();
         private char[,] map_grid; //The grid for the map to generate shortest path
-        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map) 
+        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map)
             : base(pos, width, height, row, col, range, health, map)
         {
             this.map_grid = map.GenerateMapGrid();
@@ -41,7 +41,7 @@ namespace Midnight_Snack
         public override void Update()
         {
             base.Update();
-            
+
             if (!alive)
             {
                 //Remove enemy from play
@@ -63,20 +63,28 @@ namespace Midnight_Snack
                         Attack(player);
                     }
 
-                    if (this.GetCol() - 2 > 0) 
+                    //enemy movement
+                    if (this.GetCol() - 2 > 0)
                     {
                         MapTile dest = map.GetTile(this.GetRow(), this.GetCol() - 2);
                         if (this.NoObstacles(this.GetCol() - 2, this.GetRow()) && dest.IsPassable())
                         {
-                            Move(dest.GetPosition(), this.GetCol() - 2, this.GetRow());
+                            Move(dest.GetPosition(), this.GetRow(), this.GetCol() - 2);
                         }
                     }
-                    
+
+                    if (this.AdjacentToPlayer())
+                    {
+                        Debug.WriteLine("Attacking player!");
+                        //insert attack method
+                        Attack(player);
+                    }
+
                     //End enemy's turn
                     hasEndedTurn = true;
                 }
             }
- 
+
         }
 
         private bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
@@ -166,7 +174,7 @@ namespace Midnight_Snack
             if ((enemy_x - 1 < x_limit) && (enemy_y - 1 < y_limit) && (enemy_x - 1 >= 0) && (enemy_y - 1 >= 0) &&
                 grid[enemy_x - 1, enemy_y - 1] != 'x')
             {
-                neighbors.Add(new GridPoint(enemy_x- 1, enemy_y - 1));
+                neighbors.Add(new GridPoint(enemy_x - 1, enemy_y - 1));
             }
             //top
             if ((enemy_x < x_limit) && (enemy_y - 1 < y_limit) && (enemy_x >= 0) && (enemy_y - 1 >= 0) &&
@@ -192,43 +200,56 @@ namespace Midnight_Snack
 
         public bool AdjacentToPlayer()
         {
-            if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() != null)
+            if (this.GetRow() - 1 > -1)
             {
-                Debug.WriteLine("Enemy below something");
-                if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() != null)
                 {
-                    Debug.WriteLine("Enemy below player");
-                    return true;
+                    Debug.WriteLine("Enemy below something");
+                    if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Enemy below player");
+                        return true;
+                    }
                 }
             }
-            else if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() != null)
+            if (this.GetRow() + 1 >= map.GetNumRows())
             {
-                Debug.WriteLine("Enemy above something");
-                if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() != null)
                 {
-                    Debug.WriteLine("Enemy above player");
-                    return true;
-                }
-            }
-            else if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() != null)
-            {
-                Debug.WriteLine("Enemy right of something");
-                if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant().GetType() == typeof(Player))
-                {
-                    Debug.WriteLine("Enemy right of player");
-                    return true;
-                }
-            }
-            else if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
-            {
-                Debug.WriteLine("Enemy left of something");
-                if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant().GetType() == typeof(Player))
-                {
-                    Debug.WriteLine("Enemy left of player");
-                    return true;
+                    Debug.WriteLine("Enemy above something");
+                    if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Enemy above player");
+                        return true;
+                    }
                 }
             }
 
+            if (this.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Enemy right of something");
+                    if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Enemy right of player");
+                        return true;
+                    }
+                }
+            }
+
+            if (this.GetCol() + 1 >= map.GetNumRows())
+            {
+                if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Enemy left of something");
+                    if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Enemy left of player");
+                        return true;
+                    }
+                }
+            }
             return false;
         }
 
