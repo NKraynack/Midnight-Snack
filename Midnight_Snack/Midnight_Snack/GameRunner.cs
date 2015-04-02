@@ -328,6 +328,19 @@ namespace Midnight_Snack
                 gameManager.SetTurnLimit(turnLim);
                 map = new Map(rows, cols, startRow, startCol);
 
+                //Reset player fields between levels
+                player = Player.GetInstance();
+                player.SetRow(map.GetLairRow());
+                player.SetCol(map.GetLairCol());
+                player.SetPosition(map.GetLairPos());
+                player.SetMap(map);
+                player.SetCurrentHealth(player.GetMaxHealth());
+                player.SetHasBlood(false);
+                player.SetAlive(true);
+                player.SetMovedThisTurn(false);
+                player.SetHasEndedTurn(false);
+                player.SetUsedAbilityThisTurn(false);
+
                 //get villager info
                 reader.ReadToNextSibling("villager");
                 int vw = Convert.ToInt32(reader.GetAttribute("width"));
@@ -350,6 +363,7 @@ namespace Midnight_Snack
                 int[] enemyRange = new int[num_enemies];
                 MapTile[] enemyTiles = new MapTile[num_enemies];
                 units = new List<Unit>();
+                units.Add(player);
 
                 for (int i = 0; i < num_enemies; i++ )
                 {
@@ -425,19 +439,6 @@ namespace Midnight_Snack
 
                 cursor = new Cursor(map.GetLairPos(), cw, ch, map);
 
-                //Reset player fields between levels
-                player = Player.GetInstance();
-                player.SetRow(map.GetLairRow());
-                player.SetCol(map.GetLairCol());
-                player.SetPosition(map.GetLairPos());
-                player.SetMap(map);
-                player.SetCurrentHealth(player.GetMaxHealth());
-                player.SetHasBlood(false);
-                player.SetAlive(true);
-                player.SetMovedThisTurn(false);
-                player.SetHasEndedTurn(false);
-                player.SetUsedAbilityThisTurn(false);
-
 
                 //Set up villager stuff
                 villager = new SleepingVillager(new Vector2(0, 0), vw, vh, vrow, vcol);
@@ -459,7 +460,7 @@ namespace Midnight_Snack
                 MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
                 menus.Add(actionMenu);
                 //Create the main game screen
-                units.Add(player);
+                
                 units.Add(villager);
                 mainGame = new MainGame(map, units, cursor, menus);
             }
