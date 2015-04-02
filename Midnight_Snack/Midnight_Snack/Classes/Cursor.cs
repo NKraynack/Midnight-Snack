@@ -114,7 +114,7 @@ namespace Midnight_Snack
         public override void Draw(SpriteBatch spriteBatch)
         {
             //If not moving player display cursor normally
-            if (!gameManager.IsMovingPlayer())
+            if (!gameManager.IsMovingPlayer() && !gameManager.IsWerewolfPlayer() && !gameManager.IsMistMode())
             {
                 spriteBatch.Draw(texture, position, Color.White);
             }
@@ -154,9 +154,24 @@ namespace Midnight_Snack
 
                     if (gameManager.IsMovingPlayer())
                     {
+                        player.SetMoveRange(3);
                         MovePlayer(controls);
                     }
+                    else if (gameManager.IsWerewolfPlayer())
+                    {
+                        player.SetMoveRange(5);
+                        MovePlayer(controls);
+                        //Update that player has used an ability this turn
+                        player.SetUsedAbilityThisTurn(true);
+                    }
+                    else if (gameManager.IsMistMode())
+                    {
+                        MoveMistPlayer(controls);
+                        //Update that player has used an ability this turn
+                        player.SetUsedAbilityThisTurn(true);
+                    }
                 }
+                
             }
         }
 
@@ -188,7 +203,7 @@ namespace Midnight_Snack
         //Moves the player to a valid tile
         public void MovePlayer(Controls controls)
         {
-            if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMovingPlayer())
+            if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMovingPlayer() || controls.onPress(Keys.Space, Buttons.A) && gameManager.IsWerewolfPlayer())
             {
                 //If player chooses a valid tile within their move range, let them move there
                 if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) <= player.GetMoveRange())
@@ -204,8 +219,42 @@ namespace Midnight_Snack
                         //Update new map tile
                         map.GetTile(cursorRow, cursorCol).SetOccupant(player);
                         //Update that player has moved this turn
-                        player.SetMovedThisTurn(true);
+                        if (gameManager.IsMovingPlayer())
+                        {
+                            player.SetMovedThisTurn(true);
+                        }
+                        gameManager.SetMistMode(false);
                         gameManager.SetMovingPlayer(false);
+                        gameManager.SetWerewolfPlayer(false);
+                        //Open action menu again
+                        gameManager.SetInActionMenu(true);
+                    }
+                }
+            }
+        }
+
+        //Moves the player to a any valid tile on the map. Mist mode can ignores obstacles
+        public void MoveMistPlayer(Controls controls)
+        {
+            if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMistMode())
+            {
+                //If player chooses any tile within their move range, let them move there
+                if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) <= player.GetMoveRange())
+                {
+                    //Check if tile is unoccupied: all other tiles are passable or can be moved through
+                    MapTile tile = map.GetTile(cursorRow, cursorCol);
+                    if (tile.GetOccupant() == null)
+                    {
+                        //Remove player from old map tile
+                        map.GetTile(player.GetRow(), player.GetCol()).SetOccupant(null);
+                        //Move player to new tile
+                        player.Move(position, cursorRow, cursorCol);
+                        //Update new map tile
+                        map.GetTile(cursorRow, cursorCol).SetOccupant(player);
+                        //Update that player has moved this turn
+                        gameManager.SetMistMode(false);
+                        gameManager.SetMovingPlayer(false);
+                        gameManager.SetWerewolfPlayer(false);
                         //Open action menu again
                         gameManager.SetInActionMenu(true);
                     }
@@ -338,6 +387,19 @@ namespace Midnight_Snack
             }
         }
 
+        /**
+        public void werewolfMovement(Controls controls, string ability)
+        {
+                //Use werewolf ability
+                //Gives player the ability to increase movement range
+                if (ability.Equals("Werewolf"))
+                {
+                    player.SetMoveRange(5);
+                }
+
+        }
+        **/
+
         //Can only choose to use ability on a tile directly adjacent to player
         public void SelectAbilityTarget(Controls controls, string ability)
         {
@@ -413,6 +475,7 @@ namespace Midnight_Snack
                         }
                     }
                 }
+
                 gameManager.SetChoosingAbilityTarget(false);
                 //Go back to action menu
                 gameManager.SetInActionMenu(true);

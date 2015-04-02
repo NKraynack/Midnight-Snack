@@ -10,6 +10,8 @@ namespace Midnight_Snack
         private bool inActionMenu;  //Is the player currently navigating the action menu
         private bool inAbilitiesMenu;   //Is the player currently navigating the ability menu
         private bool movingPlayer;  //Is the player trying to move their character
+        private bool werewolfPlayer;  //Player enters werewolf mode
+        private bool mistMode; //returns the state of whether or not the PC is in the mist ability or not
         private bool choosingAbilityTarget;    //Is the player trying to choose their ability target
         private string playerAbility; //What ability is the player trying to use right now (empty string if none)
         private bool playerAlive;   //Is the player still alive
@@ -66,6 +68,26 @@ namespace Midnight_Snack
         public bool IsMovingPlayer()
         {
             return movingPlayer;
+        }
+
+        public void SetWerewolfPlayer(bool b)
+        {
+            werewolfPlayer = b;
+        }
+
+        public bool IsWerewolfPlayer()
+        {
+            return werewolfPlayer;
+        }
+
+        public void SetMistMode(bool b)
+        {
+            mistMode = b;
+        }
+
+        public bool IsMistMode()
+        {
+            return mistMode;
         }
 
         public void SetMovingPlayer(bool b)
