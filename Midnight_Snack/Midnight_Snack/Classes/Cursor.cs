@@ -166,6 +166,7 @@ namespace Midnight_Snack
                     }
                     else if (gameManager.IsMistMode())
                     {
+                        player.SetMoveRange(3);
                         MoveMistPlayer(controls);
                         //Update that player has used an ability this turn
                         player.SetUsedAbilityThisTurn(true);
