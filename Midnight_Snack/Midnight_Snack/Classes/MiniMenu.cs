@@ -97,7 +97,7 @@ namespace Midnight_Snack
         {
             //Tell the gameManager what ability the player is using
             gameManager.SetPlayerAbility(action);
-            
+
             if(action.Equals("Move"))
             {
                 //Go into move mode
@@ -105,8 +105,6 @@ namespace Midnight_Snack
                 if (!player.HasMovedThisTurn())
                 {
                     gameManager.SetMovingPlayer(true);
-                    gameManager.SetWerewolfPlayer(false);
-                    gameManager.SetMistMode(false);
                     gameManager.SetInActionMenu(false);
                     gameManager.SetChoosingAbilityTarget(false);
                 }
@@ -130,8 +128,6 @@ namespace Midnight_Snack
             else if (action.Equals("Feed"))
             {
                 gameManager.SetChoosingAbilityTarget(true);
-                gameManager.SetWerewolfPlayer(false);
-                gameManager.SetMistMode(false);
                 gameManager.SetMovingPlayer(false);
                 gameManager.SetInActionMenu(false);
                 gameManager.SetInAbilitiesMenu(false);
@@ -140,25 +136,7 @@ namespace Midnight_Snack
             {
                 gameManager.SetChoosingAbilityTarget(true);
                 gameManager.SetMovingPlayer(false);
-                gameManager.SetMistMode(false);
-                gameManager.SetWerewolfPlayer(false);
                 gameManager.SetInActionMenu(false);
-                gameManager.SetInAbilitiesMenu(false);
-            }
-            else if (action.Equals("Werewolf"))
-            {
-                gameManager.SetWerewolfPlayer(true);
-                gameManager.SetMistMode(false);
-                gameManager.SetMovingPlayer(false);
-                gameManager.SetInActionMenu(false);
-                gameManager.SetInAbilitiesMenu(false);
-            }
-            else if (action.Equals("Mist"))
-            {
-                gameManager.SetMistMode(true);
-                gameManager.SetMovingPlayer(false);
-                gameManager.SetInActionMenu(false);
-                gameManager.SetWerewolfPlayer(false);
                 gameManager.SetInAbilitiesMenu(false);
             }
             else if(action.Equals("End Turn"))
@@ -173,9 +151,7 @@ namespace Midnight_Snack
                 player.SetUsedAbilityThisTurn(false);
 
                 gameManager.SetChoosingAbilityTarget(false);
-                gameManager.SetMistMode(false);
                 gameManager.SetMovingPlayer(false);
-                gameManager.SetWerewolfPlayer(false);
                 gameManager.SetInActionMenu(false);
 
                 //Move selector back to top of menu
