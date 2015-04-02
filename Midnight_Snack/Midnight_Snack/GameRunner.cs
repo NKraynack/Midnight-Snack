@@ -34,9 +34,9 @@ namespace Midnight_Snack
         SelectionScene levelCompleteScene;
         SelectionScene levelBriefingScene;
         MainGame mainGame;
-        Map map;
-        List<Unit> units;
-        List<Menu> menus;
+        Map map; //map for the current level instance
+        List<Unit> units; //units for the current level instance
+        List<Menu> menus; //menu for the current level instance
 
         public static int ScreenWidth;
         public static int ScreenHeight;
@@ -98,7 +98,6 @@ namespace Midnight_Snack
             levelBriefingScene = new SelectionScene(levelBriefingText, levelBriefingMenu);
 
             /**** Initialize Main Game Screen ****/
-
             LoadXmlMap();
 
             ////Set up menus
@@ -306,25 +305,30 @@ namespace Midnight_Snack
             //Create an XmlReader
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlcontents)))
             {
+                //pull map info
                 reader.ReadToFollowing("map");
                 int rows = Convert.ToInt32(reader.GetAttribute("rows"));
                 int cols = Convert.ToInt32(reader.GetAttribute("cols"));
                 int startRow = Convert.ToInt32(reader.GetAttribute("startRow"));
                 int startCol = Convert.ToInt32(reader.GetAttribute("startCol"));
 
+                
                 reader.ReadToDescendant("turnLim"); //get turn limit
                 int turnLim = Convert.ToInt32(reader.GetAttribute("limit"));
 
-                reader.ReadToNextSibling("cursor");
+                //get cursor info
+                reader.ReadToNextSibling("cursor"); 
                 int cw = Convert.ToInt32(reader.GetAttribute("width"));
                 int ch = Convert.ToInt32(reader.GetAttribute("height"));
                 output.AppendLine("The cursor dimensions: ");
                 output.AppendLine("\t width: " + cw);
                 output.AppendLine("\t height: " + ch);
 
+                //set turn limit and create the map
                 gameManager.SetTurnLimit(turnLim);
                 map = new Map(rows, cols, startRow, startCol);
 
+                //get villager info
                 reader.ReadToNextSibling("villager");
                 int vw = Convert.ToInt32(reader.GetAttribute("width"));
                 int vh = Convert.ToInt32(reader.GetAttribute("height"));
@@ -336,6 +340,7 @@ namespace Midnight_Snack
                 //output.AppendLine("\t width: " + vw);
                 //output.AppendLine("\t height: " + vh);
 
+                //get enemies info, then create every enemy type accordingly
                 reader.ReadToNextSibling("enemies");
                 int num_enemies = Convert.ToInt32(reader.GetAttribute("numEnemies"));
                 reader.ReadStartElement();
@@ -383,6 +388,7 @@ namespace Midnight_Snack
                 output.AppendLine("\t startCol: " + startCol);
                 Console.WriteLine(output);
 
+                //Get obstacles information and then create all of them accordingly
                 reader.ReadToNextSibling("obstacles");
                 int num_obs = Convert.ToInt32(reader.GetAttribute("numObs"));
                 reader.ReadStartElement();
@@ -399,6 +405,7 @@ namespace Midnight_Snack
                     reader.ReadToNextSibling("obstacle");
                 }
 
+                //Get tile types and create all of them accordingly
                 reader.ReadToNextSibling("tiles");
                 int num_tiles = Convert.ToInt32(reader.GetAttribute("numTiles"));
                 reader.ReadStartElement();
@@ -418,6 +425,7 @@ namespace Midnight_Snack
 
                 cursor = new Cursor(map.GetLairPos(), cw, ch, map);
 
+                //Reset player fields between levels
                 player = Player.GetInstance();
                 player.SetRow(map.GetLairRow());
                 player.SetCol(map.GetLairCol());
@@ -426,6 +434,9 @@ namespace Midnight_Snack
                 player.SetCurrentHealth(player.GetMaxHealth());
                 player.SetHasBlood(false);
                 player.SetAlive(true);
+                player.SetMovedThisTurn(false);
+                player.SetHasEndedTurn(false);
+                player.SetUsedAbilityThisTurn(false);
 
 
                 //Set up villager stuff
@@ -436,7 +447,7 @@ namespace Midnight_Snack
                 map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
                 villager.SetPosition(villagerTile.GetPosition());
 
-                //Set up menus
+                //Set up menus needs to be done here sonce it's dependent on the player 
                 Text moveText = new Text("Move", player.GetPosition());
                 Text abilitiesText = new Text("Abilities", player.GetPosition());
                 Text endTurnText = new Text("End Turn", player.GetPosition());
