@@ -186,6 +186,15 @@ namespace Midnight_Snack
             }
         }
 
+        //Move the cursor back to the player's position
+        public void ResetCursor()
+        {
+            cursorRow = player.GetRow();
+            cursorCol = player.GetCol();
+            SetX(player.GetX());
+            SetY(player.GetY());
+        }
+
         //Moves the player to a valid tile
         public void MovePlayer(Controls controls)
         {
@@ -213,6 +222,14 @@ namespace Midnight_Snack
                         gameManager.SetInActionMenu(true);
                     }
                 }
+            }
+            //Player cancels out of move
+            else if (controls.onPress(Keys.F, Buttons.B))
+            {
+                gameManager.SetMovingPlayer(false);
+                this.ResetCursor();
+                //Open action menu again
+                gameManager.SetInActionMenu(true);
             }
         }
 
@@ -417,36 +434,22 @@ namespace Midnight_Snack
                     }
                 }
                 gameManager.SetChoosingAbilityTarget(false);
+                //Reset cursor
+                this.ResetCursor();
                 //Go back to action menu
                 gameManager.SetInActionMenu(true);
                 //Reset what ability the player is using back to empty
                 gameManager.SetPlayerAbility("");
             }
-            //If player cancels the ability select, exit ability select mode
+            //If player cancels the ability select, exit ability select mode and reset cursor
             else if (controls.onPress(Keys.F, Buttons.B))
             {
                 gameManager.SetChoosingAbilityTarget(false);
+                this.ResetCursor();
                 //Go back to action menu
                 gameManager.SetInActionMenu(true);
             }
         }
-
-        /*
-        public void SelectAction(Controls controls)
-        {
-            //Select an action
-            //Only option right now is move
-            if (controls.onPress(Keys.Space, Buttons.A))
-            {
-                gst.SetMovingPlayer(true);
-                gst.SetInActionMenu(false);
-            }
-            else if (controls.onPress(Keys.F, Buttons.B))
-            {
-                gst.SetInActionMenu(false);
-            }
-        }
-         * */
 
     }
 }

@@ -337,6 +337,7 @@ namespace Midnight_Snack
                 player.SetCurrentHealth(player.GetMaxHealth());
                 player.SetHasBlood(false);
                 player.SetAlive(true);
+                player.SetForm("vampire");
                 player.SetMovedThisTurn(false);
                 player.SetHasEndedTurn(false);
                 player.SetUsedAbilityThisTurn(false);
