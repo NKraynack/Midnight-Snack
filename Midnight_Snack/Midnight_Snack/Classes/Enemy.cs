@@ -54,8 +54,9 @@ namespace Midnight_Snack
                 //If it's this enemy's turn, have it move and use an ability (if possible)
                 if (unitsTurn)
                 {
-                    //For testing purposes enemy just moves one tile to the left each turn
                     Debug.WriteLine("Enemy Turn");
+
+                    //Attack the player if adjacent
                     if (this.AdjacentToPlayer())
                     {
                         Debug.WriteLine("Attacking player!");
@@ -71,13 +72,6 @@ namespace Midnight_Snack
                         {
                             Move(dest.GetPosition(), this.GetRow(), this.GetCol() - 2);
                         }
-                    }
-
-                    if (this.AdjacentToPlayer())
-                    {
-                        Debug.WriteLine("Attacking player!");
-                        //insert attack method
-                        Attack(player);
                     }
 
                     //End enemy's turn

@@ -12,6 +12,10 @@ namespace Midnight_Snack
     public class Player : MobileUnit
     {
         private bool hasBlood;   //Has the player collected blood
+        private string form;    //The form the player is currently in
+
+        private Texture2D wolfTexture;  //The texture for wolf form
+        private Texture2D mistTexture;  //The texture for mist form
 
         private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10, new Map(1, 1, 0, 0));
 
@@ -19,6 +23,7 @@ namespace Midnight_Snack
             : base(pos, width, height, row, col, range, health, map)
         {
             hasBlood = false;
+            form = "vampire";
         }
 
         public static Player GetInstance()
@@ -28,7 +33,9 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("dracula.png");
+            texture = content.Load<Texture2D>("dracula");
+            wolfTexture = content.Load<Texture2D>("wolf");
+            mistTexture = content.Load<Texture2D>("mist");
             healthBar.LoadContent(content);
         }
 
@@ -53,19 +60,51 @@ namespace Midnight_Snack
             hasBlood = b;
         }
 
-        //Tinge the player red if they have blood
+        public string GetForm()
+        {
+            return form;
+        }
+
+        public void SetForm(string f)
+        {
+            form = f;
+
+            //Update move range according to form
+            if (form.Equals("wolf"))
+            {
+                this.SetMoveRange(5);
+            }
+            else
+            {
+                this.SetMoveRange(3);
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);
 
+            Color spriteColor = Color.White;
+            //Tinge the player red if they have blood
             if (hasBlood)
             {
-                spriteBatch.Draw(texture, position, Color.Red);
+                spriteColor = Color.Red;
+            }
+
+            //Draw the player in the appropriate form
+            if (form.Equals("mist"))
+            {
+                spriteBatch.Draw(mistTexture, position, spriteColor);
+            }
+            else if (form.Equals("wolf"))
+            {
+                spriteBatch.Draw(wolfTexture, position, spriteColor);
             }
             else
             {
-                spriteBatch.Draw(texture, position, Color.White);
+                spriteBatch.Draw(texture, position, spriteColor);
             }
+
         }
 
     }

@@ -47,13 +47,13 @@ namespace Midnight_Snack
 
             Text feedText = new Text("Feed", player.GetPosition());
             Text attackText = new Text("Attack", player.GetPosition());
-            Text werewolfText = new Text("Werewolf", player.GetPosition());
-            Text mistText = new Text("Mist", player.GetPosition());
+            Text wolfText = new Text("Wolf Form", player.GetPosition());
+            Text mistText = new Text("Mist Form", player.GetPosition());
             //Text endAbilityTurnText = new Text("End Ability", player.GetPosition());
             List<Text> abilitiesMenuOptions = new List<Text>();
             abilitiesMenuOptions.Add(attackText);
             abilitiesMenuOptions.Add(feedText);
-            abilitiesMenuOptions.Add(werewolfText);
+            abilitiesMenuOptions.Add(wolfText);
             abilitiesMenuOptions.Add(mistText);
             //abilitiesMenuOptions.Add(endAbilityTurnText);
             abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
