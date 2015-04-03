@@ -74,6 +74,10 @@ namespace Midnight_Snack
             {
                 this.SetMoveRange(5);
             }
+            else if (form.Equals("mist"))
+            {
+                this.SetMoveRange(2);
+            }
             else
             {
                 this.SetMoveRange(3);
