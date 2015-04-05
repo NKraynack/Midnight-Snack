@@ -65,14 +65,8 @@ namespace Midnight_Snack
                     }
 
                     //enemy movement
-                    if (this.GetCol() - 2 > 0)
-                    {
-                        MapTile dest = map.GetTile(this.GetRow(), this.GetCol() - 2);
-                        if (this.NoObstacles(this.GetCol() - 2, this.GetRow()) && dest.IsPassable())
-                        {
-                            Move(dest.GetPosition(), this.GetRow(), this.GetCol() - 2);
-                        }
-                    }
+                    MapTile dest = map.GetTile(this.GetRow(), this.GetCol() - 2);
+                    EnemyMove(dest.GetPosition(), this.GetRow(), this.GetCol() - 2, dest);
 
                     //End enemy's turn
                     hasEndedTurn = true;
@@ -81,7 +75,19 @@ namespace Midnight_Snack
 
         }
 
-        private bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
+        //enemy move method
+        public virtual void EnemyMove(Vector2 pos, int row, int col, MapTile dest)
+        {
+            if (col - 2 > 0)
+            {
+                if (this.NoObstacles(this.GetCol() - 2, this.GetRow()) && dest.IsPassable())
+                {
+                    Move(pos, row, col);
+                }
+            }
+        }
+
+        public bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
         {
             Queue<GridPoint> q = new Queue<GridPoint>();
             List<GridPoint> solution = new List<GridPoint>();
@@ -128,7 +134,7 @@ namespace Midnight_Snack
             return solution.Count <= player.GetMoveRange();
         }
 
-        private List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
+        public List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
         {
             /*
             System.Diagnostics.Debug.WriteLine("getting neighbors");
