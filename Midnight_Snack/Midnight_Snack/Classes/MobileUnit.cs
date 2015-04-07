@@ -47,6 +47,7 @@ namespace Midnight_Snack
 
             MapTile newTile = map.GetTile(row, col);
             newTile.SetPassable(false);
+            newTile.SetOccupant(this);
             map.SetTile(row, col, newTile);
 
             movedThisTurn = true;

@@ -95,7 +95,7 @@ namespace Midnight_Snack
             }
         }
 
-        public void Update(Controls controls)
+        public override void Update(Controls controls)
         {
             //Update Turn Counter
             turnText.SetMessage("Turns Until Sunrise: " + (gameManager.GetTurnLimit() - gameManager.GetTurn()));

@@ -427,7 +427,15 @@ namespace Midnight_Snack
                             //Update the enemy health bar
                             int enemyHealth = enemy.GetCurrentHealth() - 3;
                             enemy.SetCurrentHealth(enemyHealth);
-                            tile.SetOccupant(enemy);
+                            if (enemyHealth > 0)
+                            {
+                                tile.SetOccupant(enemy);
+                            }
+                            else
+                            {
+                                tile.SetOccupant(null);
+                                tile.SetPassable(true);
+                            }
                             //Update that player has used an ability this turn
                             player.SetUsedAbilityThisTurn(true);
                         }

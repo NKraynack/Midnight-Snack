@@ -27,7 +27,6 @@ namespace Midnight_Snack
         Controls controls;
         GameManager gameManager;
         Enemy[] enemies;
-        SleepingVillager villager;
 
         SelectionScene levelSelectScene;
         SelectionScene gameOverScene;
@@ -346,16 +345,34 @@ namespace Midnight_Snack
                 units.Add(player);
 
                 //get villager info
-                reader.ReadToNextSibling("villager");
-                int vw = Convert.ToInt32(reader.GetAttribute("width"));
-                int vh = Convert.ToInt32(reader.GetAttribute("height"));
-                int vrow = Convert.ToInt32(reader.GetAttribute("row"));
-                int vcol = Convert.ToInt32(reader.GetAttribute("col"));
-                //output.AppendLine("The villager dimensions: ");
-                //output.AppendLine("\t rows: " + vrow);
-                //output.AppendLine("\t cols: " + vcol);
-                //output.AppendLine("\t width: " + vw);
-                //output.AppendLine("\t height: " + vh);
+                reader.ReadToNextSibling("villagers");
+                int num_villagers = Convert.ToInt32(reader.GetAttribute("numVillagers"));
+                reader.ReadStartElement();
+                for (int i = 0; i < num_villagers; i++)
+                {
+                    int vw = Convert.ToInt32(reader.GetAttribute("width"));
+                    int vh = Convert.ToInt32(reader.GetAttribute("height"));
+                    int vrow = Convert.ToInt32(reader.GetAttribute("row"));
+                    int vcol = Convert.ToInt32(reader.GetAttribute("col"));
+                    //output.AppendLine("The villager dimensions: ");
+                    //output.AppendLine("\t rows: " + vrow);
+                    //output.AppendLine("\t cols: " + vcol);
+                    //output.AppendLine("\t width: " + vw);
+                    //output.AppendLine("\t height: " + vh);
+
+                    //Set up villager stuff
+                    SleepingVillager villager = new SleepingVillager(new Vector2(0, 0), vw, vh, vrow, vcol);
+                    //Mark villager tile as occupied
+                    MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
+                    villagerTile.SetOccupant(villager);
+                    map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
+                    villager.SetPosition(villagerTile.GetPosition());
+
+                    units.Add(villager);
+
+                    reader.ReadToNextSibling("villager");
+                }
+
 
                 //Get obstacles information and then create all of them accordingly
                 reader.ReadToNextSibling("obstacles");
@@ -412,11 +429,8 @@ namespace Midnight_Snack
                     enemyTiles[i].SetOccupant(enemies[i]);
                     map.SetTile(enemies[i].GetRow(), enemies[i].GetCol(), enemyTiles[i]);
                     enemies[i].SetPosition(enemyTiles[i].GetPosition());
+
                     //Create a list of all the units on the map
-                    
-                    //units.Add(player);
-                    //units.Add(villager);
-                    //for enemies later on a loop will be needed but ehh
                     units.Add(enemies[i]);
                     reader.ReadToNextSibling("enemy");
                 }
@@ -427,8 +441,6 @@ namespace Midnight_Snack
                 output.AppendLine("\t startRow: " + startRow);
                 output.AppendLine("\t startCol: " + startCol);
                 Console.WriteLine(output);
-
-                
 
                 //Get tile types and create all of them accordingly
                 reader.ReadToNextSibling("tiles");
@@ -450,15 +462,6 @@ namespace Midnight_Snack
 
                 cursor = new Cursor(map.GetLairPos(), cw, ch, map);
 
-
-                //Set up villager stuff
-                villager = new SleepingVillager(new Vector2(0, 0), vw, vh, vrow, vcol);
-                //Mark villager tile as occupied
-                MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
-                villagerTile.SetOccupant(villager);
-                map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
-                villager.SetPosition(villagerTile.GetPosition());
-
                 //Set up menus needs to be done here sonce it's dependent on the player 
                 Text moveText = new Text("Move", player.GetPosition());
                 Text abilitiesText = new Text("Abilities", player.GetPosition());
@@ -470,9 +473,8 @@ namespace Midnight_Snack
                 menus = new List<Menu>();
                 MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
                 menus.Add(actionMenu);
+
                 //Create the main game screen
-                
-                units.Add(villager);
                 mainGame = new MainGame(map, units, cursor, menus);
             }
         }

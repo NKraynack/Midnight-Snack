@@ -2,7 +2,9 @@
 <map rows="6" cols="8" startRow="3" startCol="0">
   <turnLim limit="3"/>
   <cursor width="100" height="100"/>
-  <villager width="100" height="100" row="2" col="5"/>
+  <villagers numVillagers="1" >
+    <villager width="100" height="100" row="2" col="5"/>
+  </villagers>
   <obstacles numObs="6">
     <obstacle row="0" col="0" type="wall_middle"/>
     <obstacle row="0" col="1" type="wall_middle"/>
@@ -17,7 +19,7 @@
 
   <tiles numTiles="2">
     <tile row="5" col="0" mod="consecrated"/>
-    <tile row="5" col="1" range="2" mod="garlic"/>
+    <tile row="5" col="1" mod="garlic"/>
   </tiles>
 </map>
 
