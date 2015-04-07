@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+
 namespace Midnight_Snack
 {
     public class SelectionScene : Scene
@@ -28,6 +29,9 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
+            //Load background content
+            //background = content.Load<Texture2D>("goomba");
+
             //Load all text content
             for(int i = 0; i < text.Count; i++)
             {
@@ -49,6 +53,9 @@ namespace Midnight_Snack
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //Draw the background
+            //spriteBatch.Draw(background, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White);
+
             //Draw all text content
             for (int i = 0; i < text.Count; i++)
             {

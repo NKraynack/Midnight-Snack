@@ -137,3 +137,4 @@ C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnigh
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wolf.png
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\mist.png
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wolf.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cobblestones.png

@@ -87,7 +87,6 @@ namespace Midnight_Snack
             else if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
             {
                 Debug.WriteLine("Vampire attacking player!");
-                //insert attack method
                 Attack(player);
             }
         }

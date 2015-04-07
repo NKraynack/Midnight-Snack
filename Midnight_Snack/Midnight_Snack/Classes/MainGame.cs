@@ -72,6 +72,9 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
+            //Load background content
+            background = content.Load<Texture2D>("cobblestones");
+
             map.LoadContent(content);
             cursor.LoadContent(content);
 
@@ -221,7 +224,15 @@ namespace Midnight_Snack
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        {
+        { 
+            //Draw repeating background
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            //spriteBatch.Draw(background, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White);
+            spriteBatch.Draw(background, Vector2.Zero, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            spriteBatch.End();
+            spriteBatch.Begin();          
+
             //Draw map
             map.Draw(spriteBatch);
             //Draw cursor
