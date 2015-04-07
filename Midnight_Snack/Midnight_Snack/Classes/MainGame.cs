@@ -73,7 +73,7 @@ namespace Midnight_Snack
         public override void LoadContent(ContentManager content)
         {
             //Load background content
-            background = content.Load<Texture2D>("cobblestones");
+            background = content.Load<Texture2D>("grass");
 
             map.LoadContent(content);
             cursor.LoadContent(content);
