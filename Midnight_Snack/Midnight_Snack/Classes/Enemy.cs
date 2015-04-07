@@ -94,8 +94,8 @@ namespace Midnight_Snack
         public virtual int[] GetDestination()
         {
             //Destination defaults to current position
-            int[] destination = {this.GetRow(), this.GetCol()};
-
+            //int[] destination = {this.GetRow(), this.GetCol()};
+            int[] destination = { player.GetRow(), player.GetCol() };
             //Subclasses should override this method and calculate dest here
 
             return destination;
@@ -105,26 +105,48 @@ namespace Midnight_Snack
         public virtual void EnemyMove(int destRow, int destCol, MapTile dest)
         {
             //Check if destination is within movement range
-            if (Math.Abs(destRow - this.GetRow()) + Math.Abs(destCol - this.GetCol()) <= this.GetMoveRange())
-            {
-                if (this.NoObstacles(destCol, destRow) && dest.IsPassable())
-                {
-                    Move(dest.GetPosition(), destRow, destCol);
-                }
-            }
+            //if (Math.Abs(destRow - this.GetRow()) + Math.Abs(destCol - this.GetCol()) <= this.GetMoveRange())
+            //{
+            //if (dest.IsPassable())
+            //{
+            GridPoint mov_dest = this.NoObstacles(destCol, destRow);
+            int mov_dest_row = mov_dest.getY();
+            int mov_dest_col = mov_dest.getX();
+            Console.WriteLine("moving to: " + mov_dest);
+            Vector2 dest_vector = map.GetTile(mov_dest_row, mov_dest_col).GetPosition();
+
+            Console.WriteLine("moving " + dest_vector.X + ":" + dest_vector.Y + " " + destRow + " " + destCol);
+            Move(dest_vector, mov_dest.getY(), mov_dest.getX());
+            //}
+            //}
         }
 
-        public bool NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
+        public GridPoint NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
         {
+
             Queue<GridPoint> q = new Queue<GridPoint>();
             List<GridPoint> solution = new List<GridPoint>();
             HashSet<GridPoint> discovered = new HashSet<GridPoint>();
             Dictionary<GridPoint, GridPoint> prev = new Dictionary<GridPoint, GridPoint>();
             GridPoint unit_pos = new GridPoint(this.GetCol(), this.GetRow());
             GridPoint current = unit_pos;
+            Console.WriteLine("current:" + current);
             GridPoint dest_pos = new GridPoint(mov_x, mov_y);
             q.Enqueue(current);
             discovered.Add(current);
+            //for (int i = 0; i < map_grid.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < map_grid.GetLength(1); j++)
+            //    {
+            //        Console.Write(map_grid[i, j]);
+            //    }
+            //    Console.WriteLine();
+            //}
+            if (this.AdjacentToPlayer())
+            {
+                return unit_pos;
+            }
+
             while (q.Count != 0)
             {
                 current = q.Dequeue();
@@ -152,13 +174,31 @@ namespace Midnight_Snack
             }
             if (!current.Equals(dest_pos))
             {
-                return false;
+                return unit_pos;
             }
             for (GridPoint node = dest_pos; node != unit_pos; prev.TryGetValue(node, out node))
             {
+                Console.WriteLine("adding " + node);
                 solution.Add(node);
             }
-            return solution.Count <= this.GetMoveRange();
+            if (solution.Count != 0)
+            {
+                solution.RemoveAt(0);
+            }
+
+            if (solution.Count == 0)
+            {
+                return unit_pos;
+            }
+            else if (solution.Count > this.GetMoveRange())
+            {
+                solution.Reverse();
+                return solution.ElementAt(this.GetMoveRange() - 1);
+            }
+            else
+            {
+                return solution.ElementAt(0);
+            }
         }
 
         public List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
@@ -239,7 +279,7 @@ namespace Midnight_Snack
                     }
                 }
             }
-            if (this.GetRow() + 1 >= map.GetNumRows())
+            if (this.GetRow() + 1 < map.GetNumRows())
             {
                 if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() != null)
                 {
@@ -265,7 +305,7 @@ namespace Midnight_Snack
                 }
             }
 
-            if (this.GetCol() + 1 >= map.GetNumRows())
+            if (this.GetCol() + 1 < map.GetNumCols())
             {
                 if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
                 {

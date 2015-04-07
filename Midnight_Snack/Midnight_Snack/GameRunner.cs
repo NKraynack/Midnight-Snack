@@ -326,7 +326,9 @@ namespace Midnight_Snack
 
                 //set turn limit and create the map
                 gameManager.SetTurnLimit(turnLim);
-                map = new Map(rows, cols, startRow, startCol);
+                map = new Map(rows, cols, startRow, startCol); 
+                units = new List<Unit>();
+                
 
                 //Reset player fields between levels
                 player = Player.GetInstance();
@@ -341,6 +343,7 @@ namespace Midnight_Snack
                 player.SetMovedThisTurn(false);
                 player.SetHasEndedTurn(false);
                 player.SetUsedAbilityThisTurn(false);
+                units.Add(player);
 
                 //get villager info
                 reader.ReadToNextSibling("villager");
@@ -354,6 +357,29 @@ namespace Midnight_Snack
                 //output.AppendLine("\t width: " + vw);
                 //output.AppendLine("\t height: " + vh);
 
+                //Get obstacles information and then create all of them accordingly
+                reader.ReadToNextSibling("obstacles");
+                int num_obs = Convert.ToInt32(reader.GetAttribute("numObs"));
+                reader.ReadStartElement();
+                //Console.WriteLine("loar: " + map.GetLairCol() + " " + map.GetLairRow());
+                for (int i = 0; i < num_obs; i++)
+                {
+                    int orows = Convert.ToInt32(reader.GetAttribute("row"));
+                    int ocols = Convert.ToInt32(reader.GetAttribute("col"));
+                    string otype = reader.GetAttribute("type");
+                    //output.AppendLine("Obstacle at: " + ocols + " " + orows);
+
+                    MapTile obstacleTile = map.GetTile(orows, ocols);
+                    obstacleTile.SetPassable(false);
+                    map.SetTile(orows, ocols, obstacleTile);
+
+                    Obstacle obstacle = new Obstacle(obstacleTile.GetPosition(), 100, 100, orows, ocols, otype);
+                    units.Add(obstacle);
+
+                    reader.ReadToNextSibling("obstacle");
+                }
+
+
                 //get enemies info, then create every enemy type accordingly
                 reader.ReadToNextSibling("enemies");
                 int num_enemies = Convert.ToInt32(reader.GetAttribute("numEnemies"));
@@ -363,8 +389,7 @@ namespace Midnight_Snack
                 int[] enemyY = new int[num_enemies];
                 int[] enemyRange = new int[num_enemies];
                 MapTile[] enemyTiles = new MapTile[num_enemies];
-                units = new List<Unit>();
-                units.Add(player);
+
 
                 for (int i = 0; i < num_enemies; i++ )
                 {
@@ -403,27 +428,7 @@ namespace Midnight_Snack
                 output.AppendLine("\t startCol: " + startCol);
                 Console.WriteLine(output);
 
-                //Get obstacles information and then create all of them accordingly
-                reader.ReadToNextSibling("obstacles");
-                int num_obs = Convert.ToInt32(reader.GetAttribute("numObs"));
-                reader.ReadStartElement();
-                //Console.WriteLine("loar: " + map.GetLairCol() + " " + map.GetLairRow());
-                for (int i = 0; i < num_obs; i++)
-                {
-                    int orows = Convert.ToInt32(reader.GetAttribute("row"));
-                    int ocols = Convert.ToInt32(reader.GetAttribute("col"));
-                    string otype = reader.GetAttribute("type");
-                    //output.AppendLine("Obstacle at: " + ocols + " " + orows);
-
-                    MapTile obstacleTile = map.GetTile(orows, ocols);
-                    obstacleTile.SetPassable(false);
-                    map.SetTile(orows, ocols, obstacleTile);
-
-                    Obstacle obstacle = new Obstacle(obstacleTile.GetPosition(), 100, 100, orows, ocols, otype);
-                    units.Add(obstacle);
-
-                    reader.ReadToNextSibling("obstacle");
-                }
+                
 
                 //Get tile types and create all of them accordingly
                 reader.ReadToNextSibling("tiles");

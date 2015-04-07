@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map rows="6" cols="8" startRow="3" startCol="0">
- <turnLim limit="3"/>
- <cursor width="100" height="100"/>
- <villager width="100" height="100" row="2" col="5"/>
-  <enemies numEnemies="1">
-    <enemy width="100" height="100" row="3" col="5" range="2" health="5"/>
-  </enemies>
-
+  <turnLim limit="3"/>
+  <cursor width="100" height="100"/>
+  <villager width="100" height="100" row="2" col="5"/>
   <obstacles numObs="6">
     <obstacle row="0" col="0" type="wall_middle"/>
     <obstacle row="0" col="1" type="wall_middle"/>
@@ -15,7 +11,10 @@
     <obstacle row="0" col="4" type="wall_middle"/>
     <obstacle row="0" col="5" type="wall_middle"/>
   </obstacles>
- 
+  <enemies numEnemies="1">
+    <enemy width="100" height="100" row="3" col="5" range="2" health="5"/>
+  </enemies>
+
   <tiles numTiles="2">
     <tile row="5" col="0" mod="consecrated"/>
     <tile row="5" col="1" range="2" mod="garlic"/>
