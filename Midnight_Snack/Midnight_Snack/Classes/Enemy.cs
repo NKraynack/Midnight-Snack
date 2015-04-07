@@ -12,19 +12,22 @@ namespace Midnight_Snack
 {
     public class Enemy : MobileUnit
     {
-
         Player player = Player.GetInstance();
-        private char[,] map_grid; //The grid for the map to generate shortest path
+        protected int strength; //How much the enemy hits for
+        protected char[,] map_grid; //The grid for the map to generate shortest path
+
         public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map)
             : base(pos, width, height, row, col, range, health, map)
         {
             this.map_grid = map.GenerateMapGrid();
+
+            strength = 3;
         }
 
         public override void LoadContent(ContentManager content)
         {
             //temp until I either draw one or find one
-            texture = content.Load<Texture2D>("goomba.png");
+            texture = content.Load<Texture2D>("goomba");
             healthBar.LoadContent(content);
         }
 
@@ -56,17 +59,16 @@ namespace Midnight_Snack
                 {
                     Debug.WriteLine("Enemy Turn");
 
-                    //Attack the player if adjacent
-                    if (this.AdjacentToPlayer())
-                    {
-                        Debug.WriteLine("Attacking player!");
-                        //insert attack method
-                        Attack(player);
-                    }
+                    //Use any relevant abilities
+                    this.UseAbilities();
 
-                    //enemy movement
-                    MapTile dest = map.GetTile(this.GetRow(), this.GetCol() - 2);
-                    EnemyMove(dest.GetPosition(), this.GetRow(), this.GetCol() - 2, dest);
+                    //Handle enemy movement
+                    int[] destCoords = GetDestination();
+                    MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
+                    EnemyMove(destCoords[0], destCoords[1], dest);
+
+                    //If did not use any abilities before moving, try now
+                    this.UseAbilities();
 
                     //End enemy's turn
                     hasEndedTurn = true;
@@ -75,14 +77,39 @@ namespace Midnight_Snack
 
         }
 
-        //enemy move method
-        public virtual void EnemyMove(Vector2 pos, int row, int col, MapTile dest)
+        //Enemy uses any relevant abilities
+        //Subclasses should override this method
+        public virtual void UseAbilities()
         {
-            if (col - 2 > 0)
+            //Attack the player if adjacent
+            if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
             {
-                if (this.NoObstacles(this.GetCol() - 2, this.GetRow()) && dest.IsPassable())
+                Debug.WriteLine("Enemy attacking player!");
+                Attack(player);
+            }
+        }
+
+        //Determine where to move
+        //Returns an int array containing [destRow, destCol]
+        public virtual int[] GetDestination()
+        {
+            //Destination defaults to current position
+            int[] destination = {this.GetRow(), this.GetCol()};
+
+            //Subclasses should override this method and calculate dest here
+
+            return destination;
+        }
+
+        //enemy move method
+        public virtual void EnemyMove(int destRow, int destCol, MapTile dest)
+        {
+            //Check if destination is within movement range
+            if (Math.Abs(destRow - this.GetRow()) + Math.Abs(destCol - this.GetCol()) <= this.GetMoveRange())
+            {
+                if (this.NoObstacles(destCol, destRow) && dest.IsPassable())
                 {
-                    Move(pos, row, col);
+                    Move(dest.GetPosition(), destRow, destCol);
                 }
             }
         }
@@ -93,15 +120,15 @@ namespace Midnight_Snack
             List<GridPoint> solution = new List<GridPoint>();
             HashSet<GridPoint> discovered = new HashSet<GridPoint>();
             Dictionary<GridPoint, GridPoint> prev = new Dictionary<GridPoint, GridPoint>();
-            GridPoint player_pos = new GridPoint(player.GetCol(), player.GetRow());
-            GridPoint current = player_pos;
-            GridPoint cursor_pos = new GridPoint(mov_x, mov_y);
+            GridPoint unit_pos = new GridPoint(this.GetCol(), this.GetRow());
+            GridPoint current = unit_pos;
+            GridPoint dest_pos = new GridPoint(mov_x, mov_y);
             q.Enqueue(current);
             discovered.Add(current);
             while (q.Count != 0)
             {
                 current = q.Dequeue();
-                if (current.Equals(cursor_pos))
+                if (current.Equals(dest_pos))
                 {
                     break;
                 }
@@ -123,15 +150,15 @@ namespace Midnight_Snack
                     }
                 }
             }
-            if (!current.Equals(cursor_pos))
+            if (!current.Equals(dest_pos))
             {
                 return false;
             }
-            for (GridPoint node = cursor_pos; node != player_pos; prev.TryGetValue(node, out node))
+            for (GridPoint node = dest_pos; node != unit_pos; prev.TryGetValue(node, out node))
             {
                 solution.Add(node);
             }
-            return solution.Count <= player.GetMoveRange();
+            return solution.Count <= this.GetMoveRange();
         }
 
         public List<GridPoint> getNeighbors(int x_limit, int y_limit, GridPoint cur_point, char[,] grid)
@@ -259,7 +286,7 @@ namespace Midnight_Snack
             if (target.IsAlive())
             {
                 //Update the target's health
-                int targetHealth = target.GetCurrentHealth() - 3;
+                int targetHealth = target.GetCurrentHealth() - strength;
                 target.SetCurrentHealth(targetHealth);
                 //Updated map tile of target
                 MapTile tile = map.GetTile(target.GetRow(), target.GetCol());

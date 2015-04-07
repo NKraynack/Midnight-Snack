@@ -58,6 +58,7 @@
     <Compile Include="Classes\SleepingVillager.cs" />
     <Compile Include="Classes\Text.cs" />
     <Compile Include="Classes\Unit.cs" />
+    <Compile Include="Classes\VampireEnemy.cs" />
     <Compile Include="Classes\Wall.cs" />
     <Compile Include="GameRunner.cs" />
     <Compile Include="Program.cs" />
