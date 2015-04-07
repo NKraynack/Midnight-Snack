@@ -267,6 +267,7 @@ namespace Midnight_Snack
 
         public bool AdjacentToPlayer()
         {
+            //Check above enemy
             if (this.GetRow() - 1 > -1)
             {
                 if (map.GetTile(this.GetRow() - 1, this.GetCol()).GetOccupant() != null)
@@ -279,6 +280,33 @@ namespace Midnight_Snack
                     }
                 }
             }
+            //Check upper left
+            if (this.GetRow() - 1 > -1 && this.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(this.GetRow() - 1, this.GetCol() - 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Something at enemy's upper left");
+                    if (map.GetTile(this.GetRow() - 1, this.GetCol() - 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Player at enemy's upper left");
+                        return true;
+                    }
+                }
+            }
+            //Check upper right
+            if (this.GetRow() - 1 > -1 && this.GetCol() + 1 < map.GetNumCols())
+            {
+                if (map.GetTile(this.GetRow() - 1, this.GetCol() + 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Something at enemy's upper right");
+                    if (map.GetTile(this.GetRow() - 1, this.GetCol() + 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Player at enemy's upper right");
+                        return true;
+                    }
+                }
+            }
+            //Check below enemy
             if (this.GetRow() + 1 < map.GetNumRows())
             {
                 if (map.GetTile(this.GetRow() + 1, this.GetCol()).GetOccupant() != null)
@@ -291,7 +319,33 @@ namespace Midnight_Snack
                     }
                 }
             }
-
+            //Check bottom left
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(this.GetRow() + 1, this.GetCol() - 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Something at enemy's bottom left");
+                    if (map.GetTile(this.GetRow() + 1, this.GetCol() - 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Player at enemy's bottom left");
+                        return true;
+                    }
+                }
+            }
+            //Check bottom right
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 > map.GetNumCols())
+            {
+                if (map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant() != null)
+                {
+                    Debug.WriteLine("Something at enemy's bottom right");
+                    if (map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant().GetType() == typeof(Player))
+                    {
+                        Debug.WriteLine("Player at enemy's bottom right");
+                        return true;
+                    }
+                }
+            }
+            //Check left of enemy
             if (this.GetCol() - 1 > -1)
             {
                 if (map.GetTile(this.GetRow(), this.GetCol() - 1).GetOccupant() != null)
@@ -304,7 +358,7 @@ namespace Midnight_Snack
                     }
                 }
             }
-
+            //Check right of enemy
             if (this.GetCol() + 1 < map.GetNumCols())
             {
                 if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
