@@ -87,7 +87,12 @@ namespace Midnight_Snack
         {
             position = pos;
             currentHealth = currHealth;
-            int xOffset = 0;
+            //Calculate where healthbar should start to be centered above unit
+            int healthBarWidth = health.Count * 5;
+            //Assumes all units' sprites around 100 pixels wide (which they should be)
+            int remainingSpace = 100 - healthBarWidth;
+
+            int xOffset = remainingSpace/2;
             int yOffset = -10;
             for (int i = 0; i < health.Count; i++)
             {
