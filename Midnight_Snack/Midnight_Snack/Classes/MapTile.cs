@@ -30,28 +30,21 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            if (passable)
+            if (modifier.Equals("lair"))
             {
-                if (modifier.Equals("lair"))
-                {
-                    texture = content.Load<Texture2D>("lair_map_tile.png");
-                }
-                else if (modifier.Equals("consecrated"))
-                {
-                    texture = content.Load<Texture2D>("consecrated_ground_map_tile");
-                }
-                else if (modifier.Equals("garlic"))
-                {
-                    texture = content.Load<Texture2D>("garlic_map_tile");
-                }
-                else
-                {
-                    texture = content.Load<Texture2D>("map_tile_border.png");
-                }
+                texture = content.Load<Texture2D>("lair_map_tile");
+            }
+            else if (modifier.Equals("consecrated"))
+            {
+                texture = content.Load<Texture2D>("consecrated_ground_map_tile");
+            }
+            else if (modifier.Equals("garlic"))
+            {
+                texture = content.Load<Texture2D>("garlic_map_tile");
             }
             else
             {
-                texture = content.Load<Texture2D>("unpassable_map_tile.png");
+                texture = content.Load<Texture2D>("map_tile_border");
             }
         }
 

@@ -412,11 +412,16 @@ namespace Midnight_Snack
                 {
                     int orows = Convert.ToInt32(reader.GetAttribute("row"));
                     int ocols = Convert.ToInt32(reader.GetAttribute("col"));
+                    string otype = reader.GetAttribute("type");
                     //output.AppendLine("Obstacle at: " + ocols + " " + orows);
 
-                    MapTile obstacle = map.GetTile(orows, ocols);
-                    obstacle.SetPassable(false);
-                    map.SetTile(orows, ocols, obstacle);
+                    MapTile obstacleTile = map.GetTile(orows, ocols);
+                    obstacleTile.SetPassable(false);
+                    map.SetTile(orows, ocols, obstacleTile);
+
+                    Obstacle obstacle = new Obstacle(obstacleTile.GetPosition(), 100, 100, orows, ocols, otype);
+                    units.Add(obstacle);
+
                     reader.ReadToNextSibling("obstacle");
                 }
 

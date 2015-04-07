@@ -9,18 +9,18 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Midnight_Snack
 {
-    public class Wall : Unit
+    public class Obstacle : Unit
     {
-        private string formation;
+        private string obstacleType;
 
-        public Wall(Vector2 pos, int width, int height, int row, int col, string formation) : base(pos, width, height, row, col)
+        public Obstacle(Vector2 pos, int width, int height, int row, int col, string type) : base(pos, width, height, row, col)
         {
-            this.formation = formation;
+            this.obstacleType = type;
         }
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("unpassable_map_tile.png");
+            texture = content.Load<Texture2D>(obstacleType);
         }
     }
 }

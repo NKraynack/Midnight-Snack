@@ -8,12 +8,12 @@
   </enemies>
 
   <obstacles numObs="6">
-    <obstacle row="0" col="0"/>
-    <obstacle row="0" col="1"/>
-    <obstacle row="0" col="2"/>
-    <obstacle row="0" col="3"/>
-    <obstacle row="0" col="4"/>
-    <obstacle row="0" col="5"/>
+    <obstacle row="0" col="0" type="wall_middle"/>
+    <obstacle row="0" col="1" type="wall_middle"/>
+    <obstacle row="0" col="2" type="wall_middle"/>
+    <obstacle row="0" col="3" type="wall_middle"/>
+    <obstacle row="0" col="4" type="wall_middle"/>
+    <obstacle row="0" col="5" type="wall_middle"/>
   </obstacles>
  
   <tiles numTiles="2">
