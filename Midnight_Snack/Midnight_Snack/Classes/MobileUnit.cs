@@ -38,6 +38,7 @@ namespace Midnight_Snack
         {
             MapTile prevTile = map.GetTile(this.GetRow(), this.GetCol());
             prevTile.SetPassable(true);
+            prevTile.SetOccupant(null);
             map.SetTile(this.GetRow(), this.GetCol(), prevTile);
 
             SetPosition(pos);
