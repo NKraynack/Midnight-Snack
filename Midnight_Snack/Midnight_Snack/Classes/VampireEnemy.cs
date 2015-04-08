@@ -63,6 +63,12 @@ namespace Midnight_Snack
                     //End enemy's turn
                     hasEndedTurn = true;
                 }
+                else
+                {
+                    //Reset enemy options
+                    SetMovedThisTurn(false);
+                    SetUsedAbilityThisTurn(false);
+                }
             }
 
         }
@@ -188,7 +194,7 @@ namespace Midnight_Snack
                 }
             }
             //Check bottom right
-            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 > map.GetNumCols())
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 < map.GetNumCols())
             {
                 if (map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant() != null)
                 {
@@ -196,7 +202,7 @@ namespace Midnight_Snack
                     if (map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant().GetType() == typeof(SleepingVillager))
                     {
                         Debug.WriteLine("Villager at enemy's bottom right");
-                        return (SleepingVillager)map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant();
+                        return (SleepingVillager) map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant();
                     }
                 }
             }
@@ -214,7 +220,7 @@ namespace Midnight_Snack
                 }
             }
             //Check enemy's right
-            if (this.GetCol() + 1 < map.GetNumRows())
+            if (this.GetCol() + 1 < map.GetNumCols())
             {
                 if (map.GetTile(this.GetRow(), this.GetCol() + 1).GetOccupant() != null)
                 {
@@ -229,130 +235,93 @@ namespace Midnight_Snack
             return null;
         }
 
+        //Returns the undrained villager at the given tile
+        //If there is not an undrained villager at that tile, returns null
+        public SleepingVillager GetUndrainedVillager(int row, int col)
+        {
+            if (row > -1 && col > -1 && row < map.GetNumRows() && col < map.GetNumCols())
+            {
+                if (map.GetTile(row, col).GetOccupant() != null)
+                {
+                    if (map.GetTile(row, col).GetOccupant().GetType() == typeof(SleepingVillager))
+                    {
+                        //Check if villager is drained
+                        if (!((SleepingVillager)map.GetTile(row, col).GetOccupant()).IsDrained())
+                        {
+                            return (SleepingVillager)map.GetTile(row, col).GetOccupant();
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         //Returns the closest undrained villager to the vampire's location
         //If there are no undrained villagers, returns null
         public SleepingVillager GetClosestVillager()
         {
+            int row = this.GetRow();
+            int col = this.GetCol();
+
+            //Looks for villagers in a widening counterclockwise spiral around vampire
             for (int i = 1; i < Math.Max(map.GetNumRows(), map.GetNumCols()); i++)
             {
-                //Check above vampire
-                if (this.GetRow() - i > -1)
+                //left
+                col = this.GetCol() - i;
+                //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                if (GetUndrainedVillager(row, col) != null)
                 {
-                    if (map.GetTile(this.GetRow() - i, this.GetCol()).GetOccupant() != null)
+                    return GetUndrainedVillager(row, col);
+                }
+                //bottom left
+                for (int j = 0; j < i; j++)
+                {
+                    row += 1;
+                    //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                    if (GetUndrainedVillager(row, col) != null)
                     {
-                        if (map.GetTile(this.GetRow() - i, this.GetCol()).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol()).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol()).GetOccupant();
-                            }
-                        }
+                        return GetUndrainedVillager(row, col);
                     }
                 }
-                //Check upper left
-                if (this.GetRow() - i > -1 && this.GetCol() - i > -1)
+                //bottom
+                for (int j = 0; j < i * 2; j++)
                 {
-                    if (map.GetTile(this.GetRow() - i, this.GetCol() - i).GetOccupant() != null)
+                    col += 1;
+                    //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                    if (GetUndrainedVillager(row, col) != null)
                     {
-                        if (map.GetTile(this.GetRow() - i, this.GetCol() - i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol() - i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol() - i).GetOccupant();
-                            }
-                        }
+                        return GetUndrainedVillager(row, col);
                     }
                 }
-                //Check upper right
-                if (this.GetRow() - i > -1 && this.GetCol() + i < map.GetNumCols())
+                //right
+                for (int j = 0; j < i * 2; j++)
                 {
-                    if (map.GetTile(this.GetRow() - i, this.GetCol() + i).GetOccupant() != null)
+                    row -= 1;
+                    //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                    if (GetUndrainedVillager(row, col) != null)
                     {
-                        if (map.GetTile(this.GetRow() - i, this.GetCol() + i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol() + i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() - i, this.GetCol() + i).GetOccupant();
-                            }
-                        }
+                        return GetUndrainedVillager(row, col);
                     }
                 }
-                //Check below enemy
-                if (this.GetRow() + i < map.GetNumRows())
+                //top
+                for (int j = 0; j < i * 2; j++)
                 {
-                    if (map.GetTile(this.GetRow() + i, this.GetCol()).GetOccupant() != null)
+                    col -= 1;
+                    //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                    if (GetUndrainedVillager(row, col) != null)
                     {
-                        if (map.GetTile(this.GetRow() + i, this.GetCol()).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol()).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol()).GetOccupant();
-                            }
-                        }
+                        return GetUndrainedVillager(row, col);
                     }
                 }
-                //Check bottom left
-                if (this.GetRow() + i < map.GetNumRows() && this.GetCol() - i > -1)
+                //top left
+                for (int j = 0; j < i; j++)
                 {
-                    if (map.GetTile(this.GetRow() + i, this.GetCol() - i).GetOccupant() != null)
+                    row += 1;
+                    //Debug.WriteLine("Checking (" + row + ", " + col + ")");
+                    if (GetUndrainedVillager(row, col) != null)
                     {
-                        if (map.GetTile(this.GetRow() + i, this.GetCol() - i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol() - i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol() - i).GetOccupant();
-                            }
-                        }
-                    }
-                }
-                //Check bottom right
-                if (this.GetRow() + i < map.GetNumRows() && this.GetCol() + i < map.GetNumCols())
-                {
-                    if (map.GetTile(this.GetRow() + i, this.GetCol() + i).GetOccupant() != null)
-                    {
-                        if (map.GetTile(this.GetRow() + i, this.GetCol() + i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol() + i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow() + i, this.GetCol() + i).GetOccupant();
-                            }
-                        }
-                    }
-                }
-                //Check enemy's left
-                if (this.GetCol() - i > -1)
-                {
-                    if (map.GetTile(this.GetRow(), this.GetCol() - i).GetOccupant() != null)
-                    {
-                        if (map.GetTile(this.GetRow(), this.GetCol() - i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow(), this.GetCol() - i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow(), this.GetCol() - i).GetOccupant();
-                            }
-                        }
-                    }
-                }
-                //Check enemy's right
-                if (this.GetCol() + i < map.GetNumRows())
-                {
-                    if (map.GetTile(this.GetRow(), this.GetCol() + i).GetOccupant() != null)
-                    {
-                        if (map.GetTile(this.GetRow(), this.GetCol() + i).GetOccupant().GetType() == typeof(SleepingVillager))
-                        {
-                            //Check if villager is drained
-                            if (!((SleepingVillager)map.GetTile(this.GetRow(), this.GetCol() + i).GetOccupant()).IsDrained())
-                            {
-                                return (SleepingVillager)map.GetTile(this.GetRow(), this.GetCol() + i).GetOccupant();
-                            }
-                        }
+                        return GetUndrainedVillager(row, col);
                     }
                 }
             }

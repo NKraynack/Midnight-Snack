@@ -418,18 +418,17 @@ namespace Midnight_Snack
                 //Use attack ability
                 else if (ability.Equals("Attack"))
                 {
-                    if (occupant.GetType() == typeof(Enemy))
+                    if (occupant.GetType() == typeof(Enemy) || occupant.GetType().IsSubclassOf(typeof(Enemy)))
                     {
-                        Enemy enemy = (Enemy)occupant;
                         //Enemy object must still be alive
-                        if (enemy.IsAlive())
+                        if (((Enemy)occupant).IsAlive())
                         {
                             //Update the enemy health bar
-                            int enemyHealth = enemy.GetCurrentHealth() - 3;
-                            enemy.SetCurrentHealth(enemyHealth);
+                            int enemyHealth = ((Enemy)occupant).GetCurrentHealth() - 3;
+                            ((Enemy)occupant).SetCurrentHealth(enemyHealth);
                             if (enemyHealth > 0)
                             {
-                                tile.SetOccupant(enemy);
+                                tile.SetOccupant(occupant);
                             }
                             else
                             {

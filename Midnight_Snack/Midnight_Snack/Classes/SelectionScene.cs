@@ -78,6 +78,9 @@ namespace Midnight_Snack
                 case 1:
                     briefingText.SetMessage("herp derp level 1.");
                     break;
+                case 2:
+                    briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
+                    break;
                 default:
                     break;
 

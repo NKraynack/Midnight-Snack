@@ -73,6 +73,12 @@ namespace Midnight_Snack
                     //End enemy's turn
                     hasEndedTurn = true;
                 }
+                else
+                {
+                    //Reset enemy options
+                    SetMovedThisTurn(false);
+                    SetUsedAbilityThisTurn(false);
+                }
             }
 
         }
@@ -333,7 +339,7 @@ namespace Midnight_Snack
                 }
             }
             //Check bottom right
-            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 > map.GetNumCols())
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 < map.GetNumCols())
             {
                 if (map.GetTile(this.GetRow() + 1, this.GetCol() + 1).GetOccupant() != null)
                 {

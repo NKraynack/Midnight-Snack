@@ -13,9 +13,8 @@
     <obstacle row="0" col="4" type="wall_middle"/>
     <obstacle row="0" col="5" type="wall_middle"/>
   </obstacles>
-  <enemies numEnemies="2">
+  <enemies numEnemies="1">
     <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5"/>
-    <enemy type="vampire" width="100" height="100" row="0" col="7" range="3" health="9"/>
   </enemies>
 
   <tiles numTiles="2">

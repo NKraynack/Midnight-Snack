@@ -81,10 +81,11 @@ namespace Midnight_Snack
             List<Text> levelSelectOptions = new List<Text>();
             Text option1 = new Text("Tutorial", new Vector2(0, 0));
             Text option2 = new Text("Level 1", new Vector2(0, 0));
-            //Level 1 not available right now so display it as unavailable
+            Text option3 = new Text("Level 2", new Vector2(0, 0));
             option2.SetAvailable(true);
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
+            levelSelectOptions.Add(option3);
             Menu levelSelectMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
@@ -290,6 +291,9 @@ namespace Midnight_Snack
                     break;
                 case 1:
                     levelFile = "level1";
+                    break;
+                case 2:
+                    levelFile = "level2";
                     break;
                 default:
                     levelFile = null;

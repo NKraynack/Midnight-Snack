@@ -78,10 +78,16 @@ namespace Midnight_Snack
             else if(action.Equals("Level 1"))
             {
                 //Load level 1
-                
                 gameManager.SetCurrentLevel(1);
                 gameManager.SetGameState(5);
                  
+            }
+            else if (action.Equals("Level 2"))
+            {
+                //Load level 2
+                gameManager.SetCurrentLevel(2);
+                gameManager.SetGameState(5);
+
             }
             else if(action.Equals("Try Again"))
             {
