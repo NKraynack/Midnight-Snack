@@ -29,7 +29,11 @@ namespace Midnight_Snack
 
         public override void Update()
         {
-            base.Update();
+            healthBar.Update(position, currentHealth);
+            if (currentHealth <= 0)
+            {
+                alive = false;
+            }
 
             if (!alive)
             {
@@ -307,7 +311,7 @@ namespace Midnight_Snack
                     }
                 }
                 //Check bottom right
-                if (this.GetRow() + i < map.GetNumRows() && this.GetCol() + i > map.GetNumCols())
+                if (this.GetRow() + i < map.GetNumRows() && this.GetCol() + i < map.GetNumCols())
                 {
                     if (map.GetTile(this.GetRow() + i, this.GetCol() + i).GetOccupant() != null)
                     {

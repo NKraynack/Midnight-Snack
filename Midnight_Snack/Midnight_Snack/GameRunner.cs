@@ -410,7 +410,7 @@ namespace Midnight_Snack
 
                 for (int i = 0; i < num_enemies; i++ )
                 {
-                    
+                    string etype = reader.GetAttribute("type");
                     int ew = Convert.ToInt32(reader.GetAttribute("width"));
                     int eh = Convert.ToInt32(reader.GetAttribute("height"));
                     int erow = Convert.ToInt32(reader.GetAttribute("row"));
@@ -422,8 +422,22 @@ namespace Midnight_Snack
                     enemyX[i] = erow;
                     enemyY[i] = ecol;
                     enemyRange[i] = erange;
-                    enemies[i] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[i],
+
+                    if (etype.Equals("guard"))
+                    {
+                        enemies[i] = new TownGuard(new Vector2(0, 0), ew, eh, enemyX[i],
                         enemyY[i], enemyRange[i], ehealth, map);
+                    }
+                    else if (etype.Equals("vampire"))
+                    {
+                        enemies[i] = new VampireEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
+                        enemyY[i], enemyRange[i], ehealth, map);
+                    }
+                    else
+                    {
+                        enemies[i] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[i],
+                            enemyY[i], enemyRange[i], ehealth, map);
+                    }
 
                     enemyTiles[i] = map.GetTile(enemies[i].GetRow(), enemies[i].GetCol());
                     enemyTiles[i].SetOccupant(enemies[i]);

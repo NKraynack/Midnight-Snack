@@ -18,7 +18,7 @@
     <obstacle row="2" col="5" type="wall_vertical_end_down"/>
   </obstacles>
   <enemies numEnemies="1">
-    <enemy width="100" height="100" row="3" col="5" range="2" health="5"/>
+    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5"/>
   </enemies>
 
   <tiles numTiles="0">

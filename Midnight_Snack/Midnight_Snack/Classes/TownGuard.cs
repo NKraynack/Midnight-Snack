@@ -13,7 +13,6 @@ namespace Midnight_Snack
     public class TownGuard : Enemy
     {
         Player player = Player.GetInstance();
-        private char[,] map_grid; //The grid for the map to generate shortest path
 
         public TownGuard(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map)
             : base(pos, width, height, row, col, range, health, map)
