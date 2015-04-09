@@ -453,6 +453,11 @@ namespace Midnight_Snack
                         enemies[i] = new ClericEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
                         enemyY[i], enemyRange[i], ehealth, map);
                     }
+                    else if (etype.Equals("hunter"))
+                    {
+                        enemies[i] = new HunterEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
+                        enemyY[i], enemyRange[i], ehealth, map);
+                    }
                     else
                     {
                         enemies[i] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[i],
