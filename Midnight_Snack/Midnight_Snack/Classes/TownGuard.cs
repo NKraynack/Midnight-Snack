@@ -63,18 +63,21 @@ namespace Midnight_Snack
 
                     //Handle enemy movement
                     int[] destCoords = GetDestination();
+                    Debug.WriteLine("Step: " + step);
+                    Debug.WriteLine("Before move: Row: " + this.GetRow() + " Col: " + this.GetCol());
                     Debug.WriteLine("Row: " + destCoords[0] + " " + "Col: " + destCoords[1]);
                     MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
                     int[] preCoords = { this.GetRow(), this.GetCol() };
                     EnemyMove(destCoords[0], destCoords[1], dest);
-                
+                    step = (step + 2) % (dests.Length);
+                    /*
                     if (preCoords[0] != this.GetRow() && preCoords[1] != this.GetCol())
                     {
                         Debug.WriteLine("before the move" + step);
-                        step = (step + 2) % (dests.Length / 2);
+                        step = (step + 2) % (dests.Length);
                         Debug.WriteLine("after the move" + step);
                     }
-                    
+                    */
                     //If did not use any abilities before moving, try now
                     this.UseAbilities();
 
@@ -93,21 +96,12 @@ namespace Midnight_Snack
 
         public override void EnemyMove(int destRow, int destCol, MapTile dest)
         {
-            //Check if destination is within movement range
-            if (Math.Abs(destRow - this.GetRow()) + Math.Abs(destCol - this.GetCol()) <= this.GetMoveRange())
-            {
-                if (dest.IsPassable())
-                {
-                    GridPoint mov_dest = this.NoObstacles(destCol, destRow);
-                    int mov_dest_row = mov_dest.getY();
-                    int mov_dest_col = mov_dest.getX();
-                    Console.WriteLine("moving to: " + mov_dest);
-                    Vector2 dest_vector = map.GetTile(mov_dest_row, mov_dest_col).GetPosition();
+            //no need for bounds checks if it's a set path anyway
+                    
+            Vector2 dest_vector = map.GetTile(destRow, destCol).GetPosition();
 
-                    Console.WriteLine("moving " + dest_vector.X + ":" + dest_vector.Y + " " + destRow + " " + destCol);
-                    Move(dest_vector, mov_dest.getY(), mov_dest.getX());
-                }
-            }
+            Console.WriteLine("moving " + dest_vector.X + ":" + dest_vector.Y + " " + destRow + " " + destCol);
+            Move(dest_vector, destRow, destCol);
         }
     }
 }
