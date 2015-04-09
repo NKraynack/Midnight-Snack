@@ -27,6 +27,12 @@
     <obstacle row="5" col="7" type="wall_left_corner_up"/>
     <obstacle row="5" col="8" type="wall_middle"/>
     <obstacle row="5" col="9" type="wall_right_end"/>
+    <obstacle row="3" col="0" type="spooky_tree"/>
+    <obstacle row="4" col="0" type="spooky_tree"/>
+    <obstacle row="5" col="0" type="spooky_tree"/>
+    <obstacle row="4" col="1" type="spooky_tree"/>
+    <obstacle row="0" col="4" type="spooky_tree"/>
+    <obstacle row="1" col="4" type="spooky_tree"/>
   </obstacles>
   <enemies numEnemies="3">
     <enemy type="hunter" width="100" height="100" row="1" col="9" range="2" health="9"/>
