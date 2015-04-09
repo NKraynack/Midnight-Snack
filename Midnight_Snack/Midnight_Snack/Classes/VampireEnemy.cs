@@ -117,7 +117,7 @@ namespace Midnight_Snack
                 Feed(this.GetAdjacentVillager());
             }
             //Attack the player if adjacent
-            else if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
+            if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
             {
                 Debug.WriteLine("Vampire attacking player!");
                 Attack(player);
