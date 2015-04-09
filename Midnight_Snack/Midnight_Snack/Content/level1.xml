@@ -14,7 +14,7 @@
     <obstacle row="0" col="5" type="wall_middle"/>
   </obstacles>
   <enemies numEnemies="1">
-    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5"/>
+    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5" steps="2" dest="-2;0;2;0"/>
   </enemies>
 
   <tiles numTiles="2">

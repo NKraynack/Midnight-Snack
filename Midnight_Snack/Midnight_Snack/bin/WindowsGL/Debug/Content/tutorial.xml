@@ -18,7 +18,7 @@
     <obstacle row="2" col="5" type="wall_vertical_end_down"/>
   </obstacles>
   <enemies numEnemies="2">
-    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5"/>
+    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5" steps="2" dest="0;-1;0;1"/>
     <enemy type="cleric" width="100" height="100" row="1" col="7" range="3" health="3"/>
   </enemies>
 

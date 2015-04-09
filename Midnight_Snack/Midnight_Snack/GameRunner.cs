@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -421,6 +422,7 @@ namespace Midnight_Snack
                     int ecol = Convert.ToInt32(reader.GetAttribute("col"));
                     int erange = Convert.ToInt32(reader.GetAttribute("range"));
                     int ehealth = Convert.ToInt32(reader.GetAttribute("health"));
+                    
                     //Console.WriteLine("pos: enemy: " + ecol + ":" + erow);
 
                     enemyX[i] = erow;
@@ -429,8 +431,17 @@ namespace Midnight_Snack
 
                     if (etype.Equals("guard"))
                     {
+                        int[] tgdests = new int[Convert.ToInt32(reader.GetAttribute("steps")) * 2];
+                        string[] destsinString = new string[tgdests.Length * 2];
+                        string steps2 = reader.GetAttribute("dest");
+                        destsinString = steps2.Split(new char[] {';'});
+                        for (int j = 0; j < tgdests.Length; j++)
+                        {
+                            Debug.WriteLine("Row: " + destsinString[j]);
+                            tgdests[j] = Convert.ToInt32(destsinString[j]);
+                        }
                         enemies[i] = new TownGuard(new Vector2(0, 0), ew, eh, enemyX[i],
-                        enemyY[i], enemyRange[i], ehealth, map);
+                        enemyY[i], enemyRange[i], ehealth, map, tgdests);
                     }
                     else if (etype.Equals("vampire"))
                     {
