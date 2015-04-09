@@ -22,8 +22,7 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            //temporary image
-            texture = content.Load<Texture2D>("hunter");
+            texture = content.Load<Texture2D>("vampire_hunter");
             healthBar.LoadContent(content);
         }
 
