@@ -166,3 +166,5 @@ C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnigh
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2.xml
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2.xml
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cleric.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cleric.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\player_vampire.png

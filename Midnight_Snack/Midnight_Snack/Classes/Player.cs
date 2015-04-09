@@ -33,7 +33,7 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("dracula");
+            texture = content.Load<Texture2D>("player_vampire");
             wolfTexture = content.Load<Texture2D>("wolf");
             mistTexture = content.Load<Texture2D>("mist");
             healthBar.LoadContent(content);
