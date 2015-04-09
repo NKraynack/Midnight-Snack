@@ -32,7 +32,13 @@ namespace Midnight_Snack
         {
             MapTile[,] g = new MapTile[numRows, numCols];
 
-            int xOffset = 10;
+            //Get width of map in pixels
+            int mapWidth = this.GetNumCols() * 100;
+            //Calculate remaining screen space
+            int remainingSpace = GameRunner.ScreenWidth - mapWidth;
+            //Calculate where map should start to be centered on screen
+
+            int xOffset = remainingSpace / 2;
             int yOffset = 30;
             int tilesize = 100;
 
