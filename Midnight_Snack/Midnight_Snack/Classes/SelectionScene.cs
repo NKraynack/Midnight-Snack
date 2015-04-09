@@ -76,10 +76,13 @@ namespace Midnight_Snack
                     briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
                     break;
                 case 1:
-                    briefingText.SetMessage("herp derp level 1.");
+                    briefingText.SetMessage("Level 1");
                     break;
                 case 2:
                     briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
+                    break;
+                case 3:
+                    briefingText.SetMessage("Level 3");
                     break;
                 default:
                     break;

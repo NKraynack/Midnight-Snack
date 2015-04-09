@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\ClericEnemy.cs" />
+    <Compile Include="Classes\HunterEnemy.cs" />
     <Compile Include="Classes\TownGuard.cs" />
     <Compile Include="Classes\Controls.cs" />
     <Compile Include="Classes\Cursor.cs" />
@@ -122,6 +123,9 @@
     <Content Include="Content\health_pip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\hunter.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\lair_map_tile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -130,8 +134,11 @@
     </Content>
     <Content Include="Content\level2.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\level3.xml" />
+    <Content Include="Content\level3.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\map_tile_border.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
