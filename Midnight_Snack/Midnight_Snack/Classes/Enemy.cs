@@ -27,7 +27,7 @@ namespace Midnight_Snack
         public override void LoadContent(ContentManager content)
         {
             //temp until I either draw one or find one
-            texture = content.Load<Texture2D>("goomba");
+            texture = content.Load<Texture2D>("town_guard");
             healthBar.LoadContent(content);
         }
 

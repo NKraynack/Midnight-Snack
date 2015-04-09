@@ -169,3 +169,5 @@ C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnigh
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cleric.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\player_vampire.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\spooky_tree.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\sleeping_villager.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\town_guard.png

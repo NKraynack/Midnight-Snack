@@ -20,7 +20,7 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>("mario.png");
+            texture = content.Load<Texture2D>("sleeping_villager");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
