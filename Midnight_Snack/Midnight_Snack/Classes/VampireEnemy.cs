@@ -56,6 +56,7 @@ namespace Midnight_Snack
                     int[] destCoords = GetDestination();
                     MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
                     EnemyMove(destCoords[0], destCoords[1], dest);
+                    //Debug.WriteLine("Moved to Destination");
 
                     //If did not use any abilities before moving, try now
                     this.UseAbilities();
@@ -84,15 +85,19 @@ namespace Midnight_Snack
             SleepingVillager closestVillager = GetClosestVillager();
             if (closestVillager != null)
             {
+                /*
                 destination[0] = closestVillager.GetRow();
                 destination[1] = closestVillager.GetCol();
+                */
+
+                destination = FindPassableAdjTile(closestVillager);
             }
             else
             {
                 destination[0] = player.GetRow();
                 destination[1] = player.GetCol();
             }
-
+            //Debug.WriteLine("Destination: " + destination[0] + ", " + destination[1]);
             return destination;
         }
 
@@ -113,8 +118,11 @@ namespace Midnight_Snack
             //Feed on an adjacent villager if possible
             if (this.GetAdjacentVillager() != null && !this.HasUsedAbilityThisTurn())
             {
-                Debug.WriteLine("Vampire feeding on villager");
-                Feed(this.GetAdjacentVillager());
+                if (!this.GetAdjacentVillager().IsDrained())
+                {
+                    Debug.WriteLine("Vampire feeding on villager");
+                    Feed(this.GetAdjacentVillager());
+                }
             }
             //Attack the player if adjacent
             if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
@@ -327,6 +335,93 @@ namespace Midnight_Snack
             }
 
             return null;
+        }
+
+        public int[] FindPassableAdjTile(Unit unit)
+        {
+            //List of all the tiles adjacent to the closest villager which are also passable
+            List<int[]> validVillagerAdjTiles = new List<int[]>();
+
+            //Check above 
+            if (unit.GetRow() - 1 > -1)
+            {
+                if (map.GetTile(unit.GetRow() - 1, unit.GetCol()).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() - 1, unit.GetCol()});
+                }
+            }
+            //Check upper left
+            if (unit.GetRow() - 1 > -1 && unit.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(unit.GetRow() - 1, unit.GetCol() - 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() - 1, unit.GetCol() - 1});
+                }
+            }
+            //Check upper right
+            if (unit.GetRow() - 1 > -1 && unit.GetCol() + 1 < map.GetNumCols())
+            {
+                if (map.GetTile(unit.GetRow() - 1, unit.GetCol() + 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() - 1, unit.GetCol() + 1});
+                }
+            }
+            //Check below
+            if (unit.GetRow() + 1 < map.GetNumRows())
+            {
+                if (map.GetTile(unit.GetRow() + 1, unit.GetCol()).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() + 1, unit.GetCol()});
+                }
+            }
+            //Check bottom left
+            if (unit.GetRow() + 1 < map.GetNumRows() && unit.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(unit.GetRow() + 1, unit.GetCol() - 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() + 1, unit.GetCol() - 1});
+                }
+            }
+            //Check bottom right
+            if (unit.GetRow() + 1 < map.GetNumRows() && unit.GetCol() + 1 < map.GetNumCols())
+            {
+                if (map.GetTile(unit.GetRow() + 1, unit.GetCol() + 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow() + 1, unit.GetCol() + 1});
+                }
+            }
+            //Check unit's left
+            if (unit.GetCol() - 1 > -1)
+            {
+                if (map.GetTile(unit.GetRow(), unit.GetCol() - 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow(), unit.GetCol() - 1});
+                }
+            }
+            //Check unit's right
+            if (unit.GetCol() + 1 < map.GetNumCols())
+            {
+                if (map.GetTile(unit.GetRow(), unit.GetCol() + 1).IsPassable())
+                {
+                    validVillagerAdjTiles.Add(new int[]{unit.GetRow(), unit.GetCol() + 1});
+                }
+            }
+
+            //Find closest tile
+            int closestIndex = 0;
+            int shortestDist = Math.Abs(this.GetRow() - validVillagerAdjTiles[0][0]) + Math.Abs(this.GetCol() - validVillagerAdjTiles[0][1]);
+            for(int i = 0; i < validVillagerAdjTiles.Count; i++)
+            {
+                int dist = Math.Abs(this.GetRow() - validVillagerAdjTiles[i][0]) + Math.Abs(this.GetCol() - validVillagerAdjTiles[i][1]);
+                if(dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    closestIndex = i;
+                }
+            }
+
+            return validVillagerAdjTiles[closestIndex];
+
         }
 
     }
