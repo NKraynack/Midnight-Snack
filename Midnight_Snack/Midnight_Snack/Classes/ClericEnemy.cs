@@ -45,6 +45,12 @@ namespace Midnight_Snack
                 map.GetTile(this.GetRow(), this.GetCol()).SetOccupant(null);
                 //End enemy's turn
                 hasEndedTurn = true;
+                //Remove consecrated ground
+                if (consec_tile != null)
+                {
+                    consec_tile.SetModifier("basic");
+                    map.SetTile(consec_row, consec_col, consec_tile);
+                }
             }
             else
             {
