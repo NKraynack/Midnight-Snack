@@ -201,3 +201,27 @@ C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnigh
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\town_guard.png
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_enemy.png
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_hunter.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cleric.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\cobblestones.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\grass.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\hunter.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2.xml
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level3.xml
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\mist.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\player_vampire.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\sleeping_villager.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\spooky_tree.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\town_guard.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_enemy.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_hunter.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_left_corner_down.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_left_corner_up.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_left_end.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_middle.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_right_corner_down.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_right_corner_up.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_right_end.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_vertical_end_down.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_vertical_end_up.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_vertical_middle.png
+C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wolf.png
