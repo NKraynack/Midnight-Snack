@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -12,6 +13,7 @@ namespace Midnight_Snack
     public class MainGame : Scene
     {
         private List<Unit> units;
+        private List<Unit> sortedUnits;
         private Cursor cursor;
         private List<Menu> menus;
         private MiniMenu actionMenu;
@@ -30,6 +32,7 @@ namespace Midnight_Snack
         public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus) 
         {
             this.units = units;
+            sortedUnits = units;
             this.cursor = cursor;
             this.menus = menus;
             this.text = new List<Text>();
@@ -237,12 +240,17 @@ namespace Midnight_Snack
             map.Draw(spriteBatch);
             //Draw cursor
             cursor.Draw(spriteBatch);
+
+            //Create a new list of units sorted by row so units don't draw on top of other unit's health bars
+            sortedUnits = SortByRow(sortedUnits);
+
             //Draw units
-            for (int i = 0; i < units.Count; i++)
+            for (int i = 0; i < sortedUnits.Count; i++)
             {
-                if(units[i] != null)
+                if (sortedUnits[i] != null)
                 {
-                    units[i].Draw(spriteBatch);
+                    //Debug.WriteLine(sortedUnits[i].GetType() + " at (" + sortedUnits[i].GetRow() + ", " + sortedUnits[i].GetCol() + ")");
+                    sortedUnits[i].Draw(spriteBatch);
                 }
             }
             //Draw menus
@@ -323,6 +331,60 @@ namespace Midnight_Snack
             {
                 activeUnit++;
             }
+        }
+
+        //Sorts the given list of units by row
+        public List<Unit> SortByRow(List<Unit> ulist)
+        {
+            List<Unit> list = ulist;
+
+            //Use Quicksort
+            int h = 0;
+            int k = 1;
+            Unit pivot = list[0];
+            for (k = 1; k < list.Count; k++)
+            {
+                //k++;
+                Unit unit = list[k];
+                if (unit.GetRow() < pivot.GetRow())
+                {
+                    h++;
+                    Unit temp = list[h];
+                    list[h] = unit;
+                    list[k] = temp;
+                }
+            }
+            //Swap pivot with item at h
+            list[0] = list[h];
+            list[h] = pivot;
+
+            //Recursively quicksort sublists on either side of pivot
+            List<Unit> left = new List<Unit>();
+            for (int i = 0; i < h; i++)
+            {
+                left.Add(list[i]);
+            }
+            List<Unit> right = new List<Unit>();
+            for (int i = h + 1; i < list.Count; i++)
+            {
+                right.Add(list[i]);
+            }
+
+            if (left.Count > 0)
+            {
+                left = SortByRow(left);
+            }
+            if (right.Count > 0)
+            {
+                right = SortByRow(right);
+            }
+
+            List<Unit> sortedList = new List<Unit>();
+            sortedList.AddRange(left);
+            sortedList.Add(pivot);
+            sortedList.AddRange(right);
+
+            return sortedList;
         }
     }
 }

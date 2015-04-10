@@ -15,13 +15,13 @@ namespace Midnight_Snack
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
         int[] dests;
-        int step;
+        
         public TownGuard(Vector2 pos, int width, int height, int row, int col, int range, int health, int[] destList)
             : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
             this.dests = destList;
-            step = 0;
+            
         }
 
         public override void LoadContent(ContentManager content)
@@ -64,13 +64,13 @@ namespace Midnight_Snack
 
                     //Handle enemy movement
                     int[] destCoords = GetDestination();
-                    Debug.WriteLine("Step: " + step);
+                    
                     Debug.WriteLine("Before move: Row: " + this.GetRow() + " Col: " + this.GetCol());
                     Debug.WriteLine("Row: " + destCoords[0] + " " + "Col: " + destCoords[1]);
                     MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
                     int[] preCoords = { this.GetRow(), this.GetCol() };
                     EnemyMove(destCoords[0], destCoords[1], dest);
-                    step = (step + 2) % (dests.Length);
+                    
                     /*
                     if (preCoords[0] != this.GetRow() && preCoords[1] != this.GetCol())
                     {
@@ -91,7 +91,17 @@ namespace Midnight_Snack
 
         public override int[] GetDestination()
         {
-            int[] ret_val = { this.GetRow() + dests[step], this.GetCol() + dests[step + 1] };
+            int[] ret_val = { this.GetRow(), this.GetCol() };
+            if (ret_val[0] == dests[0] && ret_val[1] == dests[1])
+            {
+                ret_val[0] = dests[2];
+                ret_val[1] = dests[3];
+            }
+            else
+            {
+                ret_val[0] = dests[0];
+                ret_val[0] = dests[1];
+            }
             return ret_val;
         }
 

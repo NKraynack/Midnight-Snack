@@ -442,10 +442,11 @@ namespace Midnight_Snack
 
                     if (etype.Equals("guard"))
                     {
-                        int[] tgdests = new int[Convert.ToInt32(reader.GetAttribute("steps")) * 2];
-                        string[] destsinString = new string[tgdests.Length * 2];
+                        int[] tgdests = new int[4];
                         string steps2 = reader.GetAttribute("dest");
-                        destsinString = steps2.Split(new char[] {';'});
+                        string[] destsinString = steps2.Split(new char[] { ';' });
+                        
+                        
                         for (int j = 0; j < tgdests.Length; j++)
                         {
                             Debug.WriteLine("Row: " + destsinString[j]);

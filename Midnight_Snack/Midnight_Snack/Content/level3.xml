@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <map rows="7" cols="12" startRow="1" startCol="0">
-  <turnLim limit="6"/>
+  <turnLim limit="7"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="2" >
     <villager width="100" height="100" row="1" col="11"/>
     <villager width="100" height="100" row="4" col="8"/>
   </villagers>
-  <obstacles numObs="20">
+  <obstacles numObs="26">
     <obstacle row="2" col="3" type="wall_left_corner_down"/>
     <obstacle row="2" col="4" type="wall_middle"/>
     <obstacle row="2" col="5" type="wall_middle"/>
