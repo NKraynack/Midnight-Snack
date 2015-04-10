@@ -14,7 +14,10 @@ namespace Midnight_Snack
     {
         public Menu optionMenu;
 
+        private bool briefingScreen;
         private Text briefingText;
+        private Texture2D briefingImage;
+        private List<Texture2D> briefingImages;
 
         GameManager gameManager = GameManager.GetInstance();
 
@@ -22,6 +25,8 @@ namespace Midnight_Snack
         {
             text = t;
             optionMenu = menu;
+            briefingScreen = false;
+            briefingImages = new List<Texture2D>();
 
             briefingText = new Text("", new Vector2(GameRunner.ScreenWidth * 1 / 6, GameRunner.ScreenHeight * 1 / 6));
             text.Add(briefingText);
@@ -31,6 +36,12 @@ namespace Midnight_Snack
         {
             //Load background content
             //background = content.Load<Texture2D>("goomba");
+
+            //Load all briefing images
+            briefingImages.Add(content.Load<Texture2D>("tutorial_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("level1_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("level2_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("level3_briefing"));
 
             //Load all text content
             for(int i = 0; i < text.Count; i++)
@@ -47,7 +58,7 @@ namespace Midnight_Snack
 
             if(gameManager.GetGameState() == 4)
             {
-                loadLevelBriefingText(gameManager.GetCurrentLevel());
+                loadLevelBriefing(gameManager.GetCurrentLevel());
             }
         }
 
@@ -55,6 +66,17 @@ namespace Midnight_Snack
         {
             //Draw the background
             //spriteBatch.Draw(background, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White);
+
+            if (briefingScreen)
+            {
+                if (briefingImage != null)
+                {
+                    //Calculate remaining screen space
+                    int remainingSpace = GameRunner.ScreenWidth - briefingImage.Width;
+                    //Draw the briefing image
+                    spriteBatch.Draw(briefingImage, new Rectangle(remainingSpace / 2, 250, 800, 400), Color.White);
+                }
+            }
 
             //Draw all text content
             for (int i = 0; i < text.Count; i++)
@@ -65,7 +87,7 @@ namespace Midnight_Snack
             optionMenu.Draw(spriteBatch);
         }
 
-        public void loadLevelBriefingText(int level)
+        public void loadLevelBriefing(int level)
         {
             text.Clear();
             //Text briefingText = new Text("", new Vector2(GameRunner.ScreenWidth * 1/6, GameRunner.ScreenHeight * 1 / 6));
@@ -74,15 +96,19 @@ namespace Midnight_Snack
                 //Tutorial Briefing Text
                 case 0:
                     briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
+                    briefingImage = briefingImages[0];
                     break;
                 case 1:
                     briefingText.SetMessage("Level 1");
+                    briefingImage = briefingImages[1];
                     break;
                 case 2:
                     briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
+                    briefingImage = briefingImages[2];
                     break;
                 case 3:
                     briefingText.SetMessage("Level 3");
+                    briefingImage = briefingImages[3];
                     break;
                 default:
                     break;
@@ -91,6 +117,16 @@ namespace Midnight_Snack
             }
 
             text.Add(briefingText);
+        }
+
+        public bool IsBriefingScreen()
+        {
+            return briefingScreen;
+        }
+
+        public void SetBriefingScreen(bool b)
+        {
+            briefingScreen = b;
         }
     }
 }

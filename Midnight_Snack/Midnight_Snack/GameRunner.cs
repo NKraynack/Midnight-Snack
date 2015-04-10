@@ -99,6 +99,7 @@ namespace Midnight_Snack
             levelBriefingOptions.Add(levelBriefingOption1);
             Menu levelBriefingMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight - ScreenWidth / 6), 100, 100, levelBriefingOptions);
             levelBriefingScene = new SelectionScene(levelBriefingText, levelBriefingMenu);
+            levelBriefingScene.SetBriefingScreen(true);
 
             /**** Initialize Main Game Screen ****/
             LoadXmlMap();
@@ -135,7 +136,6 @@ namespace Midnight_Snack
             levelCompleteSceneText.Add(levelCompleteText);
             List<Text> levelCompleteOptions = new List<Text>();
             Text levelCompleteOption1 = new Text("Next Level", new Vector2(0, 0));
-            //Can't currently go to next level yet, so gray out option
             levelCompleteOption1.SetAvailable(true);
             Text levelCompleteOption2 = new Text("Level Select", new Vector2(0, 0));
             levelCompleteOptions.Add(levelCompleteOption1);
