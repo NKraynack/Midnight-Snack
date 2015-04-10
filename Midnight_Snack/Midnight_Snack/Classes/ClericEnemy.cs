@@ -64,7 +64,7 @@ namespace Midnight_Snack
                     MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
                     EnemyMove(destCoords[0], destCoords[1], dest);
 
-                    //Use ability only onces per turn regardless of move
+                    //Use ability only once per turn regardless of move
                     this.UseAbilities();
 
                     //End enemy's turn
@@ -79,9 +79,66 @@ namespace Midnight_Snack
             }
 
         }
+        
+        public override void UseAbilities()
+        {
+            Debug.WriteLine("Heal Target: " + this.GetAdjacentDamagedEnemy());
+            //Heal an adjacent damaged enemy if there is one
+            if (this.GetAdjacentDamagedEnemy() != null && !this.HasUsedAbilityThisTurn())
+            {
+                Debug.WriteLine("Cleric Healing");
+                Heal(this.GetAdjacentDamagedEnemy());
+            }
+            //If adjacent to player, place garlic on player's tile
+            if (this.AdjacentToPlayer() && !this.HasUsedAbilityThisTurn())
+            {
+                PlaceGarlic(player.GetRow(), player.GetCol());
+            }
+            //Otherwise just use consecrate
+            if (!this.HasUsedAbilityThisTurn())
+            {
+                Consecrate();
+            }
+        }
+
+        //Heals the target by the cleric's strength amount
+        public void Heal(Enemy target)
+        {
+            //Target must still be alive
+            if (target.IsAlive())
+            {
+                //Update the target's health
+                int targetHealth = target.GetCurrentHealth() + strength;
+                if(targetHealth > target.GetMaxHealth())
+                {
+                    targetHealth = target.GetMaxHealth();
+                }
+                target.SetCurrentHealth(targetHealth);
+                //Updated map tile of target
+                MapTile tile = map.GetTile(target.GetRow(), target.GetCol());
+                tile.SetOccupant(target);
+                //Update that unit has used an ability this turn
+                this.SetUsedAbilityThisTurn(true);
+            }
+        }
+
+        //Places garlic on the given location
+        public void PlaceGarlic(int row, int col)
+        {
+            //Target location must be adjacent to cleric
+            if (Math.Abs(this.GetRow() - row) <= 1 && Math.Abs(this.GetCol() - col) <= 1)
+            {
+                map = Map.GetInstance();
+                MapTile garlicTile = map.GetTile(row, col);
+                garlicTile.SetModifier("garlic");
+                map.SetTile(row, col, garlicTile);
+            }
+            //Update that unit has used an ability this turn
+            this.SetUsedAbilityThisTurn(true);
+        }
 
         //Randomly makes consecrated ground nearby or on player
-        public override void UseAbilities()
+        public void Consecrate()
         {
             if (consec_tile != null)
             {
@@ -260,6 +317,9 @@ namespace Midnight_Snack
                 }
 
             } while (!valid_seed);
+
+            //Update that unit has used an ability this turn
+            this.SetUsedAbilityThisTurn(true);
         }
 
         //Determine where to move
@@ -286,8 +346,8 @@ namespace Midnight_Snack
             return destination;
         }
 
-        //Returns the undrained villager at the given tile
-        //If there is not an undrained villager at that tile, returns null
+        //Returns the enemy at the given tile
+        //If there is not an enemy at that tile, returns null
         public Enemy GetEnemy(int row, int col)
         {
             if (row > -1 && col > -1 && row < map.GetNumRows() && col < map.GetNumCols())
@@ -373,6 +433,101 @@ namespace Midnight_Snack
                 }
             }
 
+            return null;
+        }
+
+        //Returns a damaged enemy adjacent to the unit if there is one
+        //If there is not an adjacent damaged enemy, returns null
+        public Enemy GetAdjacentDamagedEnemy()
+        {
+            //Check above
+            if (this.GetRow() - 1 > -1)
+            {
+                if (GetEnemy(this.GetRow() - 1, this.GetCol()) != null)
+                {
+                    if (GetEnemy(this.GetRow() - 1, this.GetCol()).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() - 1, this.GetCol());
+                    }
+                }
+            }
+            //Check upper left
+            if (this.GetRow() - 1 > -1 && this.GetCol() - 1 > -1)
+            {
+                if (GetEnemy(this.GetRow() - 1, this.GetCol() - 1) != null)
+                {
+                    if (GetEnemy(this.GetRow() - 1, this.GetCol() - 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() - 1, this.GetCol() - 1);
+                    }
+                }
+            }
+            //Check upper right
+            if (this.GetRow() - 1 > -1 && this.GetCol() + 1 < map.GetNumCols())
+            {
+                if (GetEnemy(this.GetRow() - 1, this.GetCol() + 1) != null)
+                {
+                    if (GetEnemy(this.GetRow() - 1, this.GetCol() + 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() - 1, this.GetCol() + 1);
+                    }
+                }
+            }
+            //Check below
+            if (this.GetRow() + 1 < map.GetNumRows())
+            {
+                if (GetEnemy(this.GetRow() + 1, this.GetCol()) != null)
+                {
+                    if (GetEnemy(this.GetRow() + 1, this.GetCol()).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() + 1, this.GetCol());
+                    }
+                }
+            }
+            //Check bottom left
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() - 1 > -1)
+            {
+                if (GetEnemy(this.GetRow() + 1, this.GetCol() - 1) != null)
+                {
+                    if (GetEnemy(this.GetRow() + 1, this.GetCol() - 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() + 1, this.GetCol() - 1);
+                    }
+                }
+            }
+            //Check bottom right
+            if (this.GetRow() + 1 < map.GetNumRows() && this.GetCol() + 1 < map.GetNumCols())
+            {
+                if (GetEnemy(this.GetRow() + 1, this.GetCol() + 1) != null)
+                {
+                    if (GetEnemy(this.GetRow() + 1, this.GetCol() + 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow() + 1, this.GetCol() + 1);
+                    }
+                }
+            }
+            //Check left
+            if (this.GetCol() - 1 > -1)
+            {
+                if (GetEnemy(this.GetRow(), this.GetCol() - 1) != null)
+                {
+                    if (GetEnemy(this.GetRow(), this.GetCol() - 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow(), this.GetCol() - 1);
+                    }
+                }
+            }
+            //Check right
+            if (this.GetCol() + 1 < map.GetNumCols())
+            {
+                if (GetEnemy(this.GetRow(), this.GetCol() + 1) != null)
+                {
+                    if (GetEnemy(this.GetRow(), this.GetCol() + 1).IsDamaged())
+                    {
+                        return GetEnemy(this.GetRow(), this.GetCol() + 1);
+                    }
+                }
+            }
             return null;
         }
     }

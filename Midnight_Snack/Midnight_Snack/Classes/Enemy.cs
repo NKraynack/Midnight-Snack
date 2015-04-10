@@ -423,5 +423,17 @@ namespace Midnight_Snack
                 this.SetUsedAbilityThisTurn(true);
             }
         }
+
+        public bool IsDamaged()
+        {
+            if (this.GetCurrentHealth() < this.GetMaxHealth())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
