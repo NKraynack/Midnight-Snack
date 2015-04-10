@@ -3,37 +3,43 @@
   <turnLim limit="6"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="2" >
-    <villager width="100" height="100" row="2" col="11"/>
-    <villager width="100" height="100" row="5" col="8"/>
+    <villager width="100" height="100" row="1" col="11"/>
+    <villager width="100" height="100" row="4" col="8"/>
   </villagers>
-  <obstacles numObs="20">
-    <obstacle row="3" col="3" type="wall_left_corner_down"/>
-    <obstacle row="3" col="4" type="wall_middle"/>
-    <obstacle row="3" col="5" type="wall_middle"/>
-    <obstacle row="3" col="6" type="wall_right_corner_down"/>
-    <obstacle row="4" col="6" type="wall_left_corner_up"/>
-    <obstacle row="4" col="7" type="wall_middle"/>
-    <obstacle row="4" col="8" type="wall_middle"/>
-    <obstacle row="4" col="9" type="wall_right_corner_up"/>
-    <obstacle row="3" col="9" type="wall_left_corner_down"/>
-    <obstacle row="3" col="10" type="wall_middle"/>
-    <obstacle row="3" col="11" type="wall_right_end"/>
-    <obstacle row="4" col="3" type="wall_vertical_middle"/>
-    <obstacle row="5" col="3" type="wall_left_corner_up"/>
-    <obstacle row="5" col="4" type="wall_middle"/>
-    <obstacle row="5" col="5" type="wall_middle"/>
-    <obstacle row="5" col="6" type="wall_middle"/>
-    <obstacle row="5" col="7" type="wall_right_corner_down"/>
-    <obstacle row="6" col="7" type="wall_left_corner_up"/>
-    <obstacle row="6" col="8" type="wall_middle"/>
-    <obstacle row="6" col="9" type="wall_right_end"/>
+  <obstacles numObs="26">
+    <obstacle row="2" col="3" type="wall_left_corner_down"/>
+    <obstacle row="2" col="4" type="wall_middle"/>
+    <obstacle row="2" col="5" type="wall_middle"/>
+    <obstacle row="2" col="6" type="wall_right_corner_down"/>
+    <obstacle row="3" col="6" type="wall_left_corner_up"/>
+    <obstacle row="3" col="7" type="wall_middle"/>
+    <obstacle row="3" col="8" type="wall_middle"/>
+    <obstacle row="3" col="9" type="wall_right_corner_up"/>
+    <obstacle row="2" col="9" type="wall_left_corner_down"/>
+    <obstacle row="2" col="10" type="wall_middle"/>
+    <obstacle row="2" col="11" type="wall_right_end"/>
+    <obstacle row="3" col="3" type="wall_vertical_middle"/>
+    <obstacle row="4" col="3" type="wall_left_corner_up"/>
+    <obstacle row="4" col="4" type="wall_middle"/>
+    <obstacle row="4" col="5" type="wall_middle"/>
+    <obstacle row="4" col="6" type="wall_middle"/>
+    <obstacle row="4" col="7" type="wall_right_corner_down"/>
+    <obstacle row="5" col="7" type="wall_left_corner_up"/>
+    <obstacle row="5" col="8" type="wall_middle"/>
+    <obstacle row="5" col="9" type="wall_right_end"/>
+    <obstacle row="3" col="0" type="spooky_tree"/>
+    <obstacle row="4" col="0" type="spooky_tree"/>
+    <obstacle row="5" col="0" type="spooky_tree"/>
+    <obstacle row="4" col="1" type="spooky_tree"/>
+    <obstacle row="0" col="4" type="spooky_tree"/>
+    <obstacle row="1" col="4" type="spooky_tree"/>
   </obstacles>
   <enemies numEnemies="3">
-    <enemy type="hunter" width="100" height="100" row="2" col="9" range="2" health="9"/>
+    <enemy type="hunter" width="100" height="100" row="1" col="9" range="2" health="9"/>
     <enemy type="hunter" width="100" height="100" row="6" col="10" range="1" health="6"/>
     <enemy type="hunter" width="100" height="100" row="6" col="3" range="3" health="3"/>
   </enemies>
-  
+
   <tiles numTiles="0">
   </tiles>
 </map>

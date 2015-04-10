@@ -6,7 +6,7 @@
     <villager width="100" height="100" row="1" col="11"/>
     <villager width="100" height="100" row="4" col="8"/>
   </villagers>
-  <obstacles numObs="20">
+  <obstacles numObs="26">
     <obstacle row="2" col="3" type="wall_left_corner_down"/>
     <obstacle row="2" col="4" type="wall_middle"/>
     <obstacle row="2" col="5" type="wall_middle"/>

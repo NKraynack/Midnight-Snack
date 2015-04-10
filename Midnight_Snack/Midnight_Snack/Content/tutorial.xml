@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map rows="6" cols="8" startRow="3" startCol="0">
+<map rows="6" cols="9" startRow="3" startCol="0">
   <turnLim limit="8"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="1" >
     <villager width="100" height="100" row="2" col="6"/>
   </villagers>
-  <obstacles numObs="10">
+  <obstacles numObs="17">
     <obstacle row="4" col="3" type="wall_left_corner_up"/>
     <obstacle row="4" col="4" type="wall_middle"/>
     <obstacle row="4" col="5" type="wall_middle"/>
     <obstacle row="4" col="6" type="wall_middle"/>
-    <obstacle row="4" col="7" type="wall_right_end"/>
+    <obstacle row="4" col="7" type="wall_middle"/>
+    <obstacle row="4" col="8" type="wall_right_corner_up"/>
+    <obstacle row="3" col="8" type="wall_vertical_middle"/>
+    <obstacle row="2" col="8" type="wall_vertical_middle"/>
+    <obstacle row="1" col="8" type="wall_vertical_middle"/>
+    <obstacle row="0" col="8" type="wall_right_corner_down"/>
+    <obstacle row="0" col="7" type="wall_middle"/>
+    <obstacle row="0" col="6" type="wall_middle"/>
+    <obstacle row="0" col="5" type="wall_left_corner_down"/>
     <obstacle row="2" col="3" type="wall_vertical_end_up"/>
     <obstacle row="3" col="3" type="wall_vertical_middle"/>
-    <obstacle row="0" col="5" type="wall_vertical_end_up"/>
     <obstacle row="1" col="5" type="wall_vertical_middle"/>
     <obstacle row="2" col="5" type="wall_vertical_end_down"/>
   </obstacles>
-  <enemies numEnemies="2">
-    <enemy type="guard" width="100" height="100" row="3" col="5" range="2" health="5" steps="2" dest="0;-1;0;1"/>
-    <enemy type="cleric" width="100" height="100" row="1" col="7" range="3" health="3"/>
+  <enemies numEnemies="1">
+    <enemy type="guard" width="100" height="100" row="1" col="4" range="2" health="3" steps="2" dest="0;-1;0;1"/>
   </enemies>
 
   <tiles numTiles="0">
