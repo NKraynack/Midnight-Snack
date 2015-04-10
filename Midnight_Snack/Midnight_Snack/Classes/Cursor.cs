@@ -72,7 +72,6 @@ namespace Midnight_Snack
     {
         private int cursorRow;  //The row of the grid which the cursor is currently on
         private int cursorCol;  //The col of the grid which the cursor is currently on
-        private Map map;    //The map the cursor is on
         private int maxRow; //The Bottom-most row in the grid
         private int maxCol; //The right-most column in the grid
         private char[,] map_grid; //The grid for the map to generate shortest path
@@ -81,10 +80,10 @@ namespace Midnight_Snack
 
         GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
+        Map map = Map.GetInstance();
 
-        public Cursor(int x, int y, int width, int height, Map map) : base(x, y, width, height)
+        public Cursor(int x, int y, int width, int height) : base(x, y, width, height)
         {
-            this.map = map;
             cursorRow = map.GetLairRow();
             cursorCol = map.GetLairCol();
             maxRow = map.GetNumRows() - 1;
@@ -94,9 +93,8 @@ namespace Midnight_Snack
             max_rows = map.GetNumRows();
         }
 
-        public Cursor(Vector2 pos, int width, int height, Map map) : base(pos, width, height)
+        public Cursor(Vector2 pos, int width, int height) : base(pos, width, height)
         {
-            this.map = map;
             cursorRow = map.GetLairRow();
             cursorCol = map.GetLairCol();
             maxRow = map.GetNumRows() - 1;

@@ -335,7 +335,12 @@ namespace Midnight_Snack
 
                 //set turn limit and create the map
                 gameManager.SetTurnLimit(turnLim);
-                map = new Map(rows, cols, startRow, startCol); 
+                
+                map = Map.GetInstance();
+                map.SetRows(rows);
+                map.SetCols(cols);
+                map.FillGrid(rows, cols);
+                map.SetLair(startRow, startCol);
                 units = new List<Unit>();
                 
 
@@ -375,6 +380,7 @@ namespace Midnight_Snack
                     //Mark villager tile as occupied
                     MapTile villagerTile = map.GetTile(villager.GetRow(), villager.GetCol());
                     villagerTile.SetOccupant(villager);
+                    villagerTile.SetPassable(false);
                     map.SetTile(villager.GetRow(), villager.GetCol(), villagerTile);
                     villager.SetPosition(villagerTile.GetPosition());
 
@@ -446,27 +452,27 @@ namespace Midnight_Snack
                             tgdests[j] = Convert.ToInt32(destsinString[j]);
                         }
                         enemies[i] = new TownGuard(new Vector2(0, 0), ew, eh, enemyX[i],
-                        enemyY[i], enemyRange[i], ehealth, map, tgdests);
+                        enemyY[i], enemyRange[i], ehealth, tgdests);
                     }
                     else if (etype.Equals("vampire"))
                     {
                         enemies[i] = new VampireEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
-                        enemyY[i], enemyRange[i], ehealth, map);
+                        enemyY[i], enemyRange[i], ehealth);
                     }
                     else if (etype.Equals("cleric"))
                     {
                         enemies[i] = new ClericEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
-                        enemyY[i], enemyRange[i], ehealth, map);
+                        enemyY[i], enemyRange[i], ehealth);
                     }
                     else if (etype.Equals("hunter"))
                     {
                         enemies[i] = new HunterEnemy(new Vector2(0, 0), ew, eh, enemyX[i],
-                        enemyY[i], enemyRange[i], ehealth, map);
+                        enemyY[i], enemyRange[i], ehealth);
                     }
                     else
                     {
                         enemies[i] = new Enemy(new Vector2(0, 0), ew, eh, enemyX[i],
-                            enemyY[i], enemyRange[i], ehealth, map);
+                            enemyY[i], enemyRange[i], ehealth);
                     }
 
                     enemyTiles[i] = map.GetTile(enemies[i].GetRow(), enemies[i].GetCol());
@@ -504,7 +510,7 @@ namespace Midnight_Snack
                     reader.ReadToNextSibling("tile");
                 }
 
-                cursor = new Cursor(map.GetLairPos(), cw, ch, map);
+                cursor = new Cursor(map.GetLairPos(), cw, ch);
 
                 //Set up menus needs to be done here sonce it's dependent on the player 
                 Text moveText = new Text("Move", player.GetPosition());
@@ -519,7 +525,7 @@ namespace Midnight_Snack
                 menus.Add(actionMenu);
 
                 //Create the main game screen
-                mainGame = new MainGame(map, units, cursor, menus);
+                mainGame = new MainGame(units, cursor, menus);
             }
         }
 

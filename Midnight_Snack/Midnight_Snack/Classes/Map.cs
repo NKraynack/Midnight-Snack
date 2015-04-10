@@ -16,21 +16,48 @@ namespace Midnight_Snack
         private int lairRow;    //The row in which the lair is located
         private int lairCol;    //The column in which the lair is located
 
+        private static Map instance;
+
         //Creates a map of the given number of rows and columns
         //with a starting position at [startRow, startCol]
         public Map(int numRows, int numCols, int startRow, int startCol)
         {
             rows = numRows;
             cols = numCols;
-            this.grid = FillGrid(numRows, numCols);
+            this.grid = new MapTile[numCols, numRows];
+            this.FillGrid(numRows, numCols);
             SetLair(startRow, startCol);
+        }
+
+        //public void Update()
+        //{
+        //    grid = this.FillGrid(rows, cols);
+        //}
+
+        public static Map GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Map(1, 1, 0, 0);
+            }
+            return instance;
+        }
+
+        public void SetRows(int numRows)
+        {
+            this.rows = numRows;
+        }
+
+        public void SetCols(int numCols)
+        {
+            this.cols = numCols;
         }
 
         //Returns a grid with the given number of rows and cols
         //with MapTiles in each square of the grid
-        public MapTile[,] FillGrid(int numRows, int numCols)
+        public void FillGrid(int numRows, int numCols)
         {
-            MapTile[,] g = new MapTile[numRows, numCols];
+            this.grid = new MapTile[numRows, numCols];
 
             //Get width of map in pixels
             int mapWidth = this.GetNumCols() * 100;
@@ -49,11 +76,9 @@ namespace Midnight_Snack
                     int x = xOffset + (c * tilesize);
                     int y = yOffset + (r * tilesize);
                     MapTile tile = new MapTile(x, y, tilesize, tilesize);
-                    g[r, c] = tile;
+                    this.grid[r, c] = tile;
                 }
             }
-
-            return g;
         }
 
         //Generate map for movement

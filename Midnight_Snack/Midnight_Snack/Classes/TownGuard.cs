@@ -13,10 +13,11 @@ namespace Midnight_Snack
     public class TownGuard : Enemy
     {
         Player player = Player.GetInstance();
+        Map map = Map.GetInstance();
         int[] dests;
         int step;
-        public TownGuard(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map, int[] destList)
-            : base(pos, width, height, row, col, range, health, map)
+        public TownGuard(Vector2 pos, int width, int height, int row, int col, int range, int health, int[] destList)
+            : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
             this.dests = destList;

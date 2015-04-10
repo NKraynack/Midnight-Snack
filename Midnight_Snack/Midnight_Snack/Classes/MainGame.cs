@@ -11,7 +11,6 @@ namespace Midnight_Snack
 {
     public class MainGame : Scene
     {
-        private Map map;
         private List<Unit> units;
         private Cursor cursor;
         private List<Menu> menus;
@@ -26,10 +25,10 @@ namespace Midnight_Snack
 
         GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
+        Map map = Map.GetInstance();
 
-        public MainGame(Map map, List<Unit> units, Cursor cursor, List<Menu> menus) 
+        public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus) 
         {
-            this.map = map;
             this.units = units;
             this.cursor = cursor;
             this.menus = menus;
@@ -173,6 +172,7 @@ namespace Midnight_Snack
                     }
                     units[i].Update();
                 }
+                //map.Update();
             }
 
             //Only display the action menu when using it

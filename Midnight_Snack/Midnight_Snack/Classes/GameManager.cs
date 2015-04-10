@@ -22,7 +22,7 @@ namespace Midnight_Snack
         int gameState;
         const int levelSelect = 0, mainGame = 1, gameOver = 2, levelComplete = 3, levelBriefing = 4, loadMap = 5, tryAgain = 6;
 
-        private static GameManager instance = new GameManager();
+        private static GameManager instance;
 
         private GameManager()
         {
@@ -40,6 +40,10 @@ namespace Midnight_Snack
 
         public static GameManager GetInstance()
         {
+            if (instance == null)
+            {
+                instance = new GameManager();
+            }
             return instance;
         }
 

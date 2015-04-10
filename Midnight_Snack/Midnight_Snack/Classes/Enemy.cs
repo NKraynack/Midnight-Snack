@@ -13,11 +13,12 @@ namespace Midnight_Snack
     public class Enemy : MobileUnit
     {
         Player player = Player.GetInstance();
+        Map map = Map.GetInstance();
         protected int strength; //How much the enemy hits for
         protected char[,] map_grid; //The grid for the map to generate shortest path
 
-        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map)
-            : base(pos, width, height, row, col, range, health, map)
+        public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health)
+            : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
 

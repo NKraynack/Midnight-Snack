@@ -13,9 +13,10 @@ namespace Midnight_Snack
     public class VampireEnemy : Enemy
     {
         Player player = Player.GetInstance();
+        Map map = Map.GetInstance();
 
-        public VampireEnemy(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map)
-            : base(pos, width, height, row, col, range, health, map)
+        public VampireEnemy(Vector2 pos, int width, int height, int row, int col, int range, int health)
+            : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
         }

@@ -17,10 +17,12 @@ namespace Midnight_Snack
         private Texture2D wolfTexture;  //The texture for wolf form
         private Texture2D mistTexture;  //The texture for mist form
 
-        private static Player instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10, new Map(1, 1, 0, 0));
+        Map map = Map.GetInstance();
 
-        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health, Map map) 
-            : base(pos, width, height, row, col, range, health, map)
+        private static Player instance;
+
+        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health) 
+            : base(pos, width, height, row, col, range, health)
         {
             hasBlood = false;
             form = "vampire";
@@ -28,6 +30,10 @@ namespace Midnight_Snack
 
         public static Player GetInstance()
         {
+            if (instance == null)
+            {
+                instance = new Player(new Vector2(0, 0), 100, 100, 0, 0, 3, 10);
+            }
             return instance;
         }
 
