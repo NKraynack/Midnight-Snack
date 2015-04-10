@@ -85,12 +85,12 @@ namespace Midnight_Snack
             SleepingVillager closestVillager = GetClosestVillager();
             if (closestVillager != null)
             {
-                /*
+                
                 destination[0] = closestVillager.GetRow();
                 destination[1] = closestVillager.GetCol();
-                */
+                
 
-                destination = FindPassableAdjTile(closestVillager);
+                //destination = FindPassableAdjTile(closestVillager);
             }
             else
             {

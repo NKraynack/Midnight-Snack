@@ -141,6 +141,16 @@ namespace Midnight_Snack
             GridPoint dest_pos = new GridPoint(mov_x, mov_y);
             q.Enqueue(current);
             discovered.Add(current);
+            this.map_grid = map.GenerateMapGrid();
+            if (map.GetTile(mov_y, mov_x).GetOccupant() != null
+                && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager))
+            {
+                MapTile obstacle = map.GetTile(mov_y, mov_x);
+                obstacle.SetModifier("basic");
+                obstacle.SetPassable(true);
+                map.SetTile(mov_y, mov_x, obstacle);
+            }
+            this.map_grid = map.GenerateMapGrid();
             //for (int i = 0; i < map_grid.GetLength(0); i++)
             //{
             //    for (int j = 0; j < map_grid.GetLength(1); j++)
@@ -178,6 +188,14 @@ namespace Midnight_Snack
                         }
                     }
                 }
+            }
+            if (map.GetTile(mov_y, mov_x).GetOccupant() != null
+                && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager))
+            {
+                MapTile obstacle = map.GetTile(mov_y, mov_x);
+                obstacle.SetModifier("villager");
+                obstacle.SetPassable(false);
+                map.SetTile(mov_y, mov_x, obstacle);
             }
             if (!current.Equals(dest_pos))
             {
