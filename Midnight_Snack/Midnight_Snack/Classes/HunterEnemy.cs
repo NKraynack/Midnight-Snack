@@ -77,105 +77,11 @@ namespace Midnight_Snack
             int[] destination = { this.GetRow(), this.GetCol() };
 
             //Subclasses should override this method and calculate dest here
-            Player closestPlayer = GetClosestPlayer();
-            if (closestPlayer != null)
-            {
-                destination[0] = closestPlayer.GetRow();
-                destination[1] = closestPlayer.GetCol();
-            }
-            else
-            {
-                destination[0] = player.GetRow();
-                destination[1] = player.GetCol();
-            }
+
+            destination[0] = player.GetRow();
+            destination[1] = player.GetCol();
 
             return destination;
-        }
-
-        //Returns the player at a given tile
-        public Player GetPlayer(int row, int col)
-        {
-            if (row > -1 && col > -1 && row < map.GetNumRows() && col < map.GetNumCols())
-            {
-                if (map.GetTile(row, col).GetOccupant() != null)
-                {
-                    if (map.GetTile(row, col).GetOccupant().GetType() == typeof(Player))
-                    {
-                        //Check if player is alive
-                        if (((Player)map.GetTile(row, col).GetOccupant()).IsAlive())
-                        {
-                            return (Player)map.GetTile(row, col).GetOccupant();
-                        }
-                    }
-                }
-            }
-
-            return null;
-        }
-
-
-        //Returns the closest player character to the vampire's location
-        public Player GetClosestPlayer()
-        {
-            int row = this.GetRow();
-            int col = this.GetCol();
-
-            for (int i = 1; i < Math.Max(map.GetNumRows(), map.GetNumCols()); i++)
-            {
-                //left
-                col = this.GetCol() - i;
-                if (GetPlayer(row, col) != null)
-                {
-                    return GetPlayer(row, col);
-                }
-                //bottom left
-                for (int j = 0; j < i; j++)
-                {
-                    row += 1;
-                    if (GetPlayer(row, col) != null)
-                    {
-                        return GetPlayer(row, col);
-                    }
-                }
-                //bottom
-                for (int j = 0; j < i * 2; j++)
-                {
-                    col += 1;
-                    if (GetPlayer(row, col) != null)
-                    {
-                        return GetPlayer(row, col);
-                    }
-                }
-                //right
-                for (int j = 0; j < i * 2; j++)
-                {
-                    row -= 1;
-                    if (GetPlayer(row, col) != null)
-                    {
-                        return GetPlayer(row, col);
-                    }
-                }
-                //top
-                for (int j = 0; j < i * 2; j++)
-                {
-                    col -= 1;
-                    if (GetPlayer(row, col) != null)
-                    {
-                        return GetPlayer(row, col);
-                    }
-                }
-                //top left
-                for (int j = 0; j < i; j++)
-                {
-                    row += 1;
-                    if (GetPlayer(row, col) != null)
-                    {
-                        return GetPlayer(row, col);
-                    }
-                }
-            }
-
-            return null;
         }
 
         public override void UseAbilities()

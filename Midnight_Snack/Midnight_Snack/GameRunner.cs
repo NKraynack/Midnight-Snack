@@ -123,8 +123,6 @@ namespace Midnight_Snack
             gameOverSceneText.Add(gameOverText);
             List<Text> gameOverOptions = new List<Text>();
             Text gameOverOption1 = new Text("Try Again", new Vector2(0, 0));
-            //Can't currently "Try Again" yet so gray out option
-            gameOverOption1.SetAvailable(true);
             Text gameOverOption2 = new Text("Level Select", new Vector2(0, 0));
             gameOverOptions.Add(gameOverOption1);
             gameOverOptions.Add(gameOverOption2);
@@ -138,7 +136,7 @@ namespace Midnight_Snack
             List<Text> levelCompleteOptions = new List<Text>();
             Text levelCompleteOption1 = new Text("Next Level", new Vector2(0, 0));
             //Can't currently go to next level yet, so gray out option
-            levelCompleteOption1.SetAvailable(false);
+            levelCompleteOption1.SetAvailable(true);
             Text levelCompleteOption2 = new Text("Level Select", new Vector2(0, 0));
             levelCompleteOptions.Add(levelCompleteOption1);
             levelCompleteOptions.Add(levelCompleteOption2);

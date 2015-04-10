@@ -66,11 +66,11 @@ namespace Midnight_Snack
             menus.Add(abilitiesMenu);
 
             turnText = new Text("Turn: 1", new Vector2(10, 5));
-            goalText = new Text("Goal: Get blood from villager and get back to start before sunrise \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
+            //goalText = new Text("Goal: Get blood from villager and get back to start before sunrise \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
             endText = new Text("", new Vector2(700, 60));
             endText.SetVisible(false);
             text.Add(turnText);
-            text.Add(goalText);
+            //text.Add(goalText);
             text.Add(endText);
 
             activeUnit = 0;

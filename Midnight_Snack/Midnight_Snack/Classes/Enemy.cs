@@ -143,7 +143,8 @@ namespace Midnight_Snack
             discovered.Add(current);
             this.map_grid = map.GenerateMapGrid();
             if (map.GetTile(mov_y, mov_x).GetOccupant() != null
-                && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager))
+                && (map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager) 
+                || (map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(Player))))
             {
                 MapTile obstacle = map.GetTile(mov_y, mov_x);
                 obstacle.SetModifier("basic");
@@ -194,6 +195,14 @@ namespace Midnight_Snack
             {
                 MapTile obstacle = map.GetTile(mov_y, mov_x);
                 obstacle.SetModifier("villager");
+                obstacle.SetPassable(false);
+                map.SetTile(mov_y, mov_x, obstacle);
+            }
+            if (map.GetTile(mov_y, mov_x).GetOccupant() != null
+                && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(Player))
+            {
+                MapTile obstacle = map.GetTile(mov_y, mov_x);
+                obstacle.SetModifier("player");
                 obstacle.SetPassable(false);
                 map.SetTile(mov_y, mov_x, obstacle);
             }
