@@ -225,3 +225,7 @@ C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin
 C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_vertical_end_up.png
 C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wall_vertical_middle.png
 C:\Users\Owner\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\wolf.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\hunter.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level3.xml
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_enemy.png
+C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\vampire_hunter.png

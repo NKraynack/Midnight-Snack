@@ -24,9 +24,8 @@
     <obstacle row="1" col="5" type="wall_vertical_middle"/>
     <obstacle row="2" col="5" type="wall_vertical_end_down"/>
   </obstacles>
-  <enemies numEnemies="2">
-    <enemy type="guard" width="100" height="100" row="1" col="4" range="2" health="3" steps="2" dest="0;-1;0;1"/>
-    <enemy type="vampire" width="100" height="100" row="0" col="4" range="2" health="3"/>
+  <enemies numEnemies="1">
+    <enemy type="guard" width="100" height="100" row="1" col="4" range="2" health="3" dest="1;4;1;3"/>
   </enemies>
 
   <tiles numTiles="0">

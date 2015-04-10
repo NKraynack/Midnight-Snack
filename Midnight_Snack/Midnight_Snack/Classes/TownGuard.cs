@@ -92,6 +92,16 @@ namespace Midnight_Snack
         public override int[] GetDestination()
         {
             int[] ret_val = { this.GetRow(), this.GetCol() };
+            if (ret_val[0] == dests[0] && ret_val[1] == dests[1])
+            {
+                ret_val[0] = dests[2];
+                ret_val[1] = dests[3];
+            }
+            else
+            {
+                ret_val[0] = dests[0];
+                ret_val[0] = dests[1];
+            }
             return ret_val;
         }
 
