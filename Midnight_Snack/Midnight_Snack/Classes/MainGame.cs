@@ -32,7 +32,11 @@ namespace Midnight_Snack
         public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus) 
         {
             this.units = units;
-            sortedUnits = units;
+            sortedUnits = new List<Unit>();
+            for (int i = 0; i < units.Count; i++)
+            {
+                sortedUnits.Add(units[i]);
+            }
             this.cursor = cursor;
             this.menus = menus;
             this.text = new List<Text>();
