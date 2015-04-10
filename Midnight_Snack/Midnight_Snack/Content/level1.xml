@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map rows="6" cols="8" startRow="3" startCol="0">
-  <turnLim limit="3"/>
+  <turnLim limit="5"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="1" >
     <villager width="100" height="100" row="2" col="5"/>
   </villagers>
-  <obstacles numObs="6">
-    <obstacle row="0" col="0" type="wall_middle"/>
-    <obstacle row="0" col="1" type="wall_middle"/>
-    <obstacle row="0" col="2" type="wall_middle"/>
-    <obstacle row="0" col="3" type="wall_middle"/>
-    <obstacle row="0" col="4" type="wall_middle"/>
-    <obstacle row="0" col="5" type="wall_middle"/>
+  <obstacles numObs="8">
+    <obstacle row="1" col="4" type="wall_left_corner_down"/>
+    <obstacle row="1" col="5" type="wall_middle"/>
+    <obstacle row="1" col="6" type="wall_middle"/>
+    <obstacle row="1" col="7" type="wall_middle"/>
+    <obstacle row="2" col="4" type="wall_vertical_middle"/>
+    <obstacle row="3" col="4" type="wall_vertical_middle"/>
+    <obstacle row="4" col="4" type="wall_vertical_middle"/>
+    <obstacle row="5" col="4" type="wall_vertical_end_down"/>
   </obstacles>
-  <enemies numEnemies="2">
-    <enemy type="cleric" width="100" height="100" row="3" col="5" range="2" health="5"/>
-    <enemy type="vampire" width="100" height="100" row="2" col="2" range="3" health="9"/>
+  <enemies numEnemies="1">
+    <enemy type="cleric" width="100" height="100" row="3" col="6" range="2" health="5"/>
   </enemies>
 
-  <tiles numTiles="2">
-    <tile row="5" col="0" mod="consecrated"/>
-    <tile row="5" col="1" mod="garlic"/>
+  <tiles numTiles="0">
   </tiles>
 </map>
 
