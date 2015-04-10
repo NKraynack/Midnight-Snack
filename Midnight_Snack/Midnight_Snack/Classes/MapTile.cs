@@ -14,6 +14,10 @@ namespace Midnight_Snack
         private bool passable;  //Is this tile passable
         private string modifier;    //The modifier on this tile (i.e. lair, consecrated, etc.)
 
+        Texture2D lair_texture;
+        Texture2D consec_texture;
+        Texture2D garlic_texture;
+
         public MapTile(int x, int y, int width, int height) : base(x, y, width, height)
         {
             occupant = null;
@@ -30,22 +34,31 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
+                lair_texture = content.Load<Texture2D>("lair_map_tile");
+                consec_texture = content.Load<Texture2D>("consecrated_ground_map_tile");
+                garlic_texture = content.Load<Texture2D>("garlic_map_tile");
+                texture = content.Load<Texture2D>("map_tile_border");
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
             if (modifier.Equals("lair"))
             {
-                texture = content.Load<Texture2D>("lair_map_tile");
+                spriteBatch.Draw(lair_texture, position, Color.White);
             }
             else if (modifier.Equals("consecrated"))
             {
-                texture = content.Load<Texture2D>("consecrated_ground_map_tile");
+                spriteBatch.Draw(consec_texture, position, Color.White);
             }
             else if (modifier.Equals("garlic"))
             {
-                texture = content.Load<Texture2D>("garlic_map_tile");
+                spriteBatch.Draw(garlic_texture, position, Color.White);
             }
             else
             {
-                texture = content.Load<Texture2D>("map_tile_border");
+                spriteBatch.Draw(texture, position, Color.White);
             }
+            
         }
 
         public Unit GetOccupant()

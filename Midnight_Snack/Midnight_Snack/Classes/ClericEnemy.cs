@@ -14,6 +14,9 @@ namespace Midnight_Snack
     {
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
+        MapTile consec_tile;
+        int consec_row;
+        int consec_col;
 
         public ClericEnemy(Vector2 pos, int width, int height, int row, int col, int range, int health)
             : base(pos, width, height, row, col, range, health)
@@ -74,6 +77,13 @@ namespace Midnight_Snack
         //Randomly makes consecrated ground nearby or on player
         public override void UseAbilities()
         {
+            if (consec_tile != null)
+            {
+                consec_tile.SetModifier("basic");
+                map.SetTile(consec_row, consec_col, consec_tile);
+            }
+
+            map = Map.GetInstance();
             int player_row = player.GetRow();
             int player_col = player.GetCol();
             Random rnd = new Random();
@@ -107,84 +117,137 @@ namespace Midnight_Snack
             {
                 seed = rnd.Next(0, 8);
 
-                MapTile obstacle;
                 switch (seed)
                 {
                     case 0: //player
-                        obstacle = map.GetTile(player_row, player_col);
-                        obstacle.SetModifier("consecrated");
-                        map.SetTile(player_row, player_col, obstacle);
+                        consec_tile = map.GetTile(player_row, player_col);
+                        consec_row = player_row;
+                        consec_col = player_col;
+                        if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                        {
+                            break;
+                        }
+                        consec_tile.SetModifier("consecrated");
+                        map.SetTile(player_row, player_col, consec_tile);
                         valid_seed = true;
                         break;
                     case 1: //right
                         if (!right_no) 
                         {
-                            obstacle = map.GetTile(player_row, player_col + 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row, player_col + 1, obstacle);
+                            consec_tile = map.GetTile(player_row, player_col + 1);
+                            consec_row = player_row;
+                            consec_col = player_col + 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row, player_col + 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 2: //bottom right
                         if (!right_no && !bottom_no)
                         {
-                            obstacle = map.GetTile(player_row + 1, player_col + 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row + 1, player_col + 1, obstacle);
+                            consec_tile = map.GetTile(player_row + 1, player_col + 1);
+                            consec_row = player_row + 1;
+                            consec_col = player_col + 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row + 1, player_col + 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 3: //bottom
                         if (!bottom_no)
                         {
-                            obstacle = map.GetTile(player_row + 1, player_col);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row + 1, player_col, obstacle);
+                            consec_tile = map.GetTile(player_row + 1, player_col);
+                            consec_row = player_row + 1;
+                            consec_col = player_col;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row + 1, player_col, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 4: //bottom left
                         if (!left_no && !bottom_no)
                         {
-                            obstacle = map.GetTile(player_row + 1, player_col - 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row + 1, player_col - 1, obstacle);
+                            consec_tile = map.GetTile(player_row + 1, player_col - 1);
+                            consec_row = player_row + 1;
+                            consec_col = player_col - 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row + 1, player_col - 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 5: //left
                         if (!left_no)
                         {
-                            obstacle = map.GetTile(player_row, player_col - 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row, player_col - 1, obstacle);
+                            consec_tile = map.GetTile(player_row, player_col - 1);
+                            consec_row = player_row;
+                            consec_col = player_col - 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row, player_col - 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 6: //top left
                         if (!top_no && !left_no)
                         {
-                            obstacle = map.GetTile(player_row - 1, player_col - 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row - 1, player_col - 1, obstacle);
+                            consec_tile = map.GetTile(player_row - 1, player_col - 1);
+                            consec_row = player_row - 1;
+                            consec_col = player_col - 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row - 1, player_col - 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 7: //top
                         if (!top_no)
                         {
-                            obstacle = map.GetTile(player_row - 1, player_col);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row - 1, player_col, obstacle);
+                            consec_tile = map.GetTile(player_row - 1, player_col);
+                            consec_row = player_row - 1;
+                            consec_col = player_col;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row - 1, player_col, consec_tile);
                             valid_seed = true;
                         }
                         break;
                     case 8: //top right
                         if (!top_no && !right_no)
                         {
-                            obstacle = map.GetTile(player_row - 1, player_col + 1);
-                            obstacle.SetModifier("consecrated");
-                            map.SetTile(player_row - 1, player_col + 1, obstacle);
+                            consec_tile = map.GetTile(player_row - 1, player_col + 1);
+                            consec_row = player_row - 1;
+                            consec_col = player_col + 1;
+                            if (!consec_tile.IsPassable() || (consec_row == map.GetLairRow() && consec_col == map.GetLairCol()))
+                            {
+                                break;
+                            }
+                            consec_tile.SetModifier("consecrated");
+                            map.SetTile(player_row - 1, player_col + 1, consec_tile);
                             valid_seed = true;
                         }
                         break;
