@@ -18,14 +18,16 @@ namespace Midnight_Snack
         Texture2D consec_texture;
         Texture2D garlic_texture;
 
-        public MapTile(int x, int y, int width, int height) : base(x, y, width, height)
+        public MapTile(int x, int y, int width, int height)
+            : base(x, y, width, height)
         {
             occupant = null;
             passable = true;
             modifier = "none";
         }
 
-        public MapTile(Vector2 pos, int width, int height) : base(pos, width, height)
+        public MapTile(Vector2 pos, int width, int height)
+            : base(pos, width, height)
         {
             occupant = null;
             passable = true;
@@ -34,10 +36,10 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-                lair_texture = content.Load<Texture2D>("lair_map_tile");
-                consec_texture = content.Load<Texture2D>("consecrated_ground_map_tile");
-                garlic_texture = content.Load<Texture2D>("garlic_map_tile");
-                texture = content.Load<Texture2D>("map_tile_border");
+            lair_texture = content.Load<Texture2D>("lair_map_tile");
+            consec_texture = content.Load<Texture2D>("consecrated_ground_map_tile");
+            garlic_texture = content.Load<Texture2D>("garlic_map_tile");
+            texture = content.Load<Texture2D>("map_tile_border");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -58,7 +60,7 @@ namespace Midnight_Snack
             {
                 spriteBatch.Draw(texture, position, Color.White);
             }
-            
+
         }
 
         public Unit GetOccupant()

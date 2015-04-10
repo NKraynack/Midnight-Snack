@@ -99,7 +99,7 @@ namespace Midnight_Snack
             if (player_row - 1 < 0)
             {
                 top_no = true;
-            } 
+            }
             if (player_row + 1 >= map.GetNumRows())
             {
                 bottom_no = true;
@@ -132,7 +132,7 @@ namespace Midnight_Snack
                         valid_seed = true;
                         break;
                     case 1: //right
-                        if (!right_no) 
+                        if (!right_no)
                         {
                             consec_tile = map.GetTile(player_row, player_col + 1);
                             consec_row = player_row;
