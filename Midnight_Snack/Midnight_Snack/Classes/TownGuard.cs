@@ -15,35 +15,30 @@ namespace Midnight_Snack
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
         int[] dests;
+        int[] currentDest;
         
         public TownGuard(Vector2 pos, int width, int height, int row, int col, int range, int health, int[] destList)
             : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
             this.dests = destList;
+            currentDest = new int[]{dests[2], dests[3]};
             
         }
 
         public override void LoadContent(ContentManager content)
         {
-            //temp until I either draw one or find one
             texture = content.Load<Texture2D>("town_guard");
             healthBar.LoadContent(content);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (alive)
-            {
-                base.Draw(spriteBatch);
-
-                spriteBatch.Draw(texture, position, Color.White);
-            }
-        }
-
         public override void Update()
         {
-            base.Update();
+            healthBar.Update(position, currentHealth);
+            if (currentHealth <= 0)
+            {
+                alive = false;
+            }
 
             if (!alive)
             {
@@ -64,26 +59,20 @@ namespace Midnight_Snack
 
                     //Handle enemy movement
                     int[] destCoords = GetDestination();
-                    
-                    Debug.WriteLine("Before move: Row: " + this.GetRow() + " Col: " + this.GetCol());
-                    Debug.WriteLine("Row: " + destCoords[0] + " " + "Col: " + destCoords[1]);
                     MapTile dest = map.GetTile(destCoords[0], destCoords[1]);
-                    int[] preCoords = { this.GetRow(), this.GetCol() };
                     EnemyMove(destCoords[0], destCoords[1], dest);
                     
-                    /*
-                    if (preCoords[0] != this.GetRow() && preCoords[1] != this.GetCol())
-                    {
-                        Debug.WriteLine("before the move" + step);
-                        step = (step + 2) % (dests.Length);
-                        Debug.WriteLine("after the move" + step);
-                    }
-                    */
                     //If did not use any abilities before moving, try now
                     this.UseAbilities();
 
                     //End enemy's turn
                     hasEndedTurn = true;
+                }
+                else
+                {
+                    //Reset enemy options
+                    SetMovedThisTurn(false);
+                    SetUsedAbilityThisTurn(false);
                 }
             }
 
@@ -91,28 +80,23 @@ namespace Midnight_Snack
 
         public override int[] GetDestination()
         {
-            int[] ret_val = { this.GetRow(), this.GetCol() };
-            if (ret_val[0] == dests[0] && ret_val[1] == dests[1])
+            if (this.GetRow() == dests[0] && this.GetCol() == dests[1])
             {
-                ret_val[0] = dests[2];
-                ret_val[1] = dests[3];
+                currentDest[0] = dests[2];
+                currentDest[1] = dests[3];
             }
-            else
+            else if (this.GetRow() == dests[2] && this.GetCol() == dests[3])
             {
-                ret_val[0] = dests[0];
-                ret_val[0] = dests[1];
+                currentDest[0] = dests[0];
+                currentDest[1] = dests[1];
             }
-            return ret_val;
-        }
+            Debug.WriteLine("Destination: (" + currentDest[0] + ", " + currentDest[1] + ")");
 
-        public override void EnemyMove(int destRow, int destCol, MapTile dest)
-        {
-            //no need for bounds checks if it's a set path anyway
-                    
-            Vector2 dest_vector = map.GetTile(destRow, destCol).GetPosition();
+            //For right now, just make guard immobile
+            currentDest[0] = this.GetRow();
+            currentDest[1] = this.GetCol();
 
-            Console.WriteLine("moving " + dest_vector.X + ":" + dest_vector.Y + " " + destRow + " " + destCol);
-            Move(dest_vector, destRow, destCol);
+            return currentDest;
         }
     }
 }
