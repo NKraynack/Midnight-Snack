@@ -355,8 +355,6 @@ namespace Midnight_Snack
                 player.SetMovedThisTurn(false);
                 player.SetHasEndedTurn(false);
                 player.SetUsedAbilityThisTurn(false);
-                player.SetPrevRow(map.GetLairRow());
-                player.SetPrevCol(map.GetLairCol());
                 units.Add(player);
 
                 //get villager info

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map rows="6" cols="8" startRow="3" startCol="0">
- <turnLim limit="8"/>
+ <turnLim limit="5"/>
  <cursor width="100" height="100"/>
  <villager width="100" height="100" row="2" col="6"/>
  <enemy width="100" height="100" row="3" col="5" range="2" health="5"/>
@@ -14,8 +14,6 @@
  <obstacle row="3" col="3"/>
  <obstacle row="4" col="3"/>
  <obstacle row="0" col="5"/>
- <obstacle row="1" col="5"/>
- <obstacle row="2" col="5"/>
  <obstacle row="1" col="3"/>
  <obstacle row="2" col="3"/>
 </map>
