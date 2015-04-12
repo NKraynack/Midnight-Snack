@@ -233,3 +233,7 @@ C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnigh
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level1_briefing.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2_briefing.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level3_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level1_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level3_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\tutorial_briefing.png
