@@ -253,10 +253,6 @@ namespace Midnight_Snack
             {
                 solution.Add(node);
             }
-            if (this.GetForm().Equals("mist"))
-            {
-                return true;
-            }
             return solution.Count <= this.GetMoveRange();
         }
 
