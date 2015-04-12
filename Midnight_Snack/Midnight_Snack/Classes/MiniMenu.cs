@@ -14,6 +14,7 @@ namespace Midnight_Snack
 
         Player player = Player.GetInstance();
         GameManager gameManager = GameManager.GetInstance();
+        Map map = Map.GetInstance();
 
         public MiniMenu(Vector2 playerPos, int width, int height, List<Text> options) : base(playerPos, width, height, options)
         {
@@ -108,6 +109,8 @@ namespace Midnight_Snack
                     gameManager.SetMovingPlayer(true);
                     gameManager.SetInActionMenu(false);
                     gameManager.SetChoosingAbilityTarget(false);
+                    player.DrawTile();
+                    
                 }
             }
             //Can only use abilities if not on a garlic tile

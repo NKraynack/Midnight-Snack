@@ -121,7 +121,7 @@ namespace Midnight_Snack
             else
             {
                 MapTile tile = map.GetTile(cursorRow, cursorCol);
-                if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) > player.GetMoveRange()
+                if (!NoObstacles(cursorCol, cursorRow)
                     || tile.GetOccupant() != null || !tile.IsPassable())
                 {
                     spriteBatch.Draw(texture, position, Color.Red);
@@ -199,7 +199,7 @@ namespace Midnight_Snack
             if (controls.onPress(Keys.Space, Buttons.A) && gameManager.IsMovingPlayer())
             {
                 //If player chooses a valid tile within their move range, let them move there
-                if (Math.Abs(cursorRow - player.GetRow()) + Math.Abs(cursorCol - player.GetCol()) <= player.GetMoveRange())
+                if (NoObstacles(cursorCol, cursorRow))
                 {
                     //Check if tile is unoccupied and passable
                     MapTile tile = map.GetTile(cursorRow, cursorCol);
@@ -207,6 +207,7 @@ namespace Midnight_Snack
                     //Otherwise make sure there is also a valid path to the tile
                     if (tile.GetOccupant() == null && tile.IsPassable() && (NoObstacles(cursorCol, cursorRow) || player.GetForm().Equals("mist")))
                     {
+                        bool x = NoObstacles(cursorCol, cursorRow);
                         //Remove player from old map tile
                         map.GetTile(player.GetRow(), player.GetCol()).SetOccupant(null);
                         //Move player to new tile

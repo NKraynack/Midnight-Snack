@@ -93,7 +93,7 @@ namespace Midnight_Snack
             return movedThisTurn;
         }
 
-        public void SetMovedThisTurn(bool b)
+        public virtual void SetMovedThisTurn(bool b)
         {
             movedThisTurn = b;
         }

@@ -237,3 +237,5 @@ C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnigh
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level2_briefing.png
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level3_briefing.png
 C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\tutorial_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\valid_move_map_tile.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\valid_move_lair_map_tile.png
