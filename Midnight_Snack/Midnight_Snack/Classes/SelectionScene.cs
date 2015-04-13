@@ -74,7 +74,7 @@ namespace Midnight_Snack
                     //Calculate remaining screen space
                     int remainingSpace = GameRunner.ScreenWidth - briefingImage.Width;
                     //Draw the briefing image
-                    spriteBatch.Draw(briefingImage, new Rectangle(remainingSpace / 2, 250, 800, 400), Color.White);
+                    spriteBatch.Draw(briefingImage, new Rectangle(remainingSpace / 2, 250, briefingImage.Width, briefingImage.Height), Color.White);
                 }
             }
 

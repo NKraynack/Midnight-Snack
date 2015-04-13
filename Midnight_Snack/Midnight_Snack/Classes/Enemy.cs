@@ -128,7 +128,7 @@ namespace Midnight_Snack
             //}
         }
 
-        public GridPoint NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
+        public virtual GridPoint NoObstacles(int mov_x, int mov_y) //Do dijkstra and then return if movable
         {
 
             Queue<GridPoint> q = new Queue<GridPoint>();
@@ -142,12 +142,14 @@ namespace Midnight_Snack
             q.Enqueue(current);
             discovered.Add(current);
             this.map_grid = map.GenerateMapGrid();
-            if (map.GetTile(mov_y, mov_x).GetOccupant() != null
-                && (map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager) 
-                || (map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(Player))))
+
+            MapTile originalTile = map.GetTile(mov_y, mov_x);
+            if (originalTile.GetOccupant() != null
+                && (originalTile.GetOccupant().GetType() == typeof(SleepingVillager)
+                || (originalTile.GetOccupant().GetType() == typeof(Player))))
             {
                 MapTile obstacle = map.GetTile(mov_y, mov_x);
-                obstacle.SetModifier("basic");
+                //obstacle.SetModifier("basic");
                 obstacle.SetPassable(true);
                 map.SetTile(mov_y, mov_x, obstacle);
             }
@@ -194,7 +196,7 @@ namespace Midnight_Snack
                 && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(SleepingVillager))
             {
                 MapTile obstacle = map.GetTile(mov_y, mov_x);
-                obstacle.SetModifier("villager");
+                obstacle.SetModifier(originalTile.GetModifier());
                 obstacle.SetPassable(false);
                 map.SetTile(mov_y, mov_x, obstacle);
             }
@@ -202,7 +204,7 @@ namespace Midnight_Snack
                 && map.GetTile(mov_y, mov_x).GetOccupant().GetType() == typeof(Player))
             {
                 MapTile obstacle = map.GetTile(mov_y, mov_x);
-                obstacle.SetModifier("player");
+                obstacle.SetModifier(originalTile.GetModifier());
                 obstacle.SetPassable(false);
                 map.SetTile(mov_y, mov_x, obstacle);
             }
