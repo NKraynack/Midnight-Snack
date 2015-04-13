@@ -207,6 +207,7 @@ namespace Midnight_Snack
                     //Otherwise make sure there is also a valid path to the tile
                     if (tile.GetOccupant() == null && tile.IsPassable() && (NoObstacles(cursorCol, cursorRow) || player.GetForm().Equals("mist")))
                     {
+                        player.DrawMoveRange(true);
                         //Remove player from old map tile
                         map.GetTile(player.GetRow(), player.GetCol()).SetOccupant(null);
                         //Move player to new tile
@@ -224,6 +225,7 @@ namespace Midnight_Snack
             //Player cancels out of move
             else if (controls.onPress(Keys.F, Buttons.B))
             {
+                player.DrawMoveRange(true);
                 gameManager.SetMovingPlayer(false);
                 this.ResetCursor();
                 //Open action menu again

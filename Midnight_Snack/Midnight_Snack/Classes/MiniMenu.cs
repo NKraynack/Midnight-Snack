@@ -105,6 +105,7 @@ namespace Midnight_Snack
                 //Move if haven't already moved this turn
                 if (!player.HasMovedThisTurn())
                 {
+                    player.DrawMoveRange(false);
                     gameManager.SetMovingPlayer(true);
                     gameManager.SetInActionMenu(false);
                     gameManager.SetChoosingAbilityTarget(false);
