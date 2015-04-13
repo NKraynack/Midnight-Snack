@@ -134,21 +134,13 @@ namespace Midnight_Snack
                             && (x != this.GetCol() || y != this.GetRow()) && map.GetTile(y, x).IsPassable())
                         {
                             MapTile tile = map.GetTile(y, x);
-                            if (undraw && x == map.GetLairCol() && y == map.GetLairRow())
+                            if (undraw)
                             {
-                                tile.SetModifier("lair");
+                                tile.SetLit(false);
                             }
-                            else if (undraw)
+                            else if (!undraw)
                             {
-                                tile.SetModifier("basic");
-                            }
-                            else if (!undraw && x == map.GetLairCol() && y == map.GetLairRow())
-                            {
-                                tile.SetModifier("valid_lair_move");
-                            }
-                            else
-                            {
-                                tile.SetModifier("valid_move");
+                                tile.SetLit(true);
                             }
                             map.SetTile(y, x, tile);
                         }
