@@ -99,7 +99,7 @@ namespace Midnight_Snack
                     briefingImage = briefingImages[0];
                     break;
                 case 1:
-                    briefingText.SetMessage("Level 1");
+                    briefingText.SetMessage("The villagers have recruited a cleric to ward off vampires. Don't let divine interference get between you and dinner!");
                     briefingImage = briefingImages[1];
                     break;
                 case 2:
@@ -107,7 +107,7 @@ namespace Midnight_Snack
                     briefingImage = briefingImages[2];
                     break;
                 case 3:
-                    briefingText.SetMessage("Level 3");
+                    briefingText.SetMessage("All this vampiric activity has attracted vampire hunters. A smart vampire picks his fights wisely.");
                     briefingImage = briefingImages[3];
                     break;
                 default:

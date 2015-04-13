@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <map rows="7" cols="12" startRow="1" startCol="0">
-  <turnLim limit="8"/>
+  <turnLim limit="10"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="2" >
     <villager width="100" height="100" row="1" col="11"/>
@@ -36,7 +36,7 @@
   </obstacles>
   <enemies numEnemies="3">
     <enemy type="hunter" width="100" height="100" row="1" col="9" range="2" health="9"/>
-    <enemy type="hunter" width="100" height="100" row="6" col="10" range="1" health="6"/>
+    <enemy type="hunter" width="100" height="100" row="6" col="10" range="2" health="6"/>
     <enemy type="hunter" width="100" height="100" row="6" col="3" range="3" health="3"/>
   </enemies>
 
