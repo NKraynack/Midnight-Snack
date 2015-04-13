@@ -75,6 +75,18 @@ namespace Midnight_Snack
                         menuOptions[i].SetAvailable(true);
                     }
                 }
+                if (menuOptions[i].GetMessage().Equals("Mist Form") || menuOptions[i].GetMessage().Equals("Wolf Form"))
+                {
+                    //Gray out 'Mist Form' and 'Wolf Form' if already moved this turn counter
+                    if (player.HasMovedThisTurn())
+                    {
+                        menuOptions[i].SetAvailable(false);
+                    }
+                    else
+                    {
+                        menuOptions[i].SetAvailable(true);
+                    }
+                }
             }
         }
 
