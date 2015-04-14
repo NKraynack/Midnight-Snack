@@ -79,6 +79,7 @@ namespace Midnight_Snack
                 if (currentPage > numPages)
                 {
                     gameManager.SetGameState(1);
+                    currentPage = 1;
                 }
             }
         }
