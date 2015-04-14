@@ -95,28 +95,14 @@ namespace Midnight_Snack
             /***** Initialize Level Briefing Screen ****/
             List<Text> levelBriefingText = new List<Text>();
             List<Text> levelBriefingOptions = new List<Text>();
-            Text levelBriefingOption1 = new Text("Start", new Vector2(0, 0));
+            Text levelBriefingOption1 = new Text("Next", new Vector2(0, 0));
             levelBriefingOptions.Add(levelBriefingOption1);
-            Menu levelBriefingMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight - ScreenWidth / 6), 100, 100, levelBriefingOptions);
+            Menu levelBriefingMenu = new Menu(new Vector2(ScreenWidth / 2, ScreenHeight - ScreenHeight / 6), 100, 100, levelBriefingOptions);
             levelBriefingScene = new SelectionScene(levelBriefingText, levelBriefingMenu);
             levelBriefingScene.SetBriefingScreen(true);
 
             /**** Initialize Main Game Screen ****/
             LoadXmlMap();
-
-            ////Set up menus
-            //Text moveText = new Text("Move", player.GetPosition());
-            //Text abilitiesText = new Text("Abilities", player.GetPosition());
-            //Text endTurnText = new Text("End Turn", player.GetPosition());
-            //List<Text> actionMenuOptions = new List<Text>();
-            //actionMenuOptions.Add(moveText);
-            //actionMenuOptions.Add(abilitiesText);
-            //actionMenuOptions.Add(endTurnText);
-            //menus = new List<Menu>();
-            //MiniMenu actionMenu = new MiniMenu(player.GetPosition(), 70, 70, actionMenuOptions);
-            //menus.Add(actionMenu);
-            ////Create the main game screen
-            //mainGame = new MainGame(map, units, cursor, menus);
 
             /**** Initialize Game Over Scene ****/
             Text gameOverText = new Text("Game Over", new Vector2(ScreenWidth / 2, ScreenHeight / 3));

@@ -18,6 +18,8 @@ namespace Midnight_Snack
         private Text briefingText;
         private Texture2D briefingImage;
         private List<Texture2D> briefingImages;
+        private int numPages;
+        private int currentPage;
 
         GameManager gameManager = GameManager.GetInstance();
 
@@ -27,6 +29,8 @@ namespace Midnight_Snack
             optionMenu = menu;
             briefingScreen = false;
             briefingImages = new List<Texture2D>();
+            numPages = 1;
+            currentPage = 1;
 
             briefingText = new Text("", new Vector2(GameRunner.ScreenWidth * 1 / 6, GameRunner.ScreenHeight * 1 / 6));
             text.Add(briefingText);
@@ -42,6 +46,7 @@ namespace Midnight_Snack
             briefingImages.Add(content.Load<Texture2D>("level1_briefing"));
             briefingImages.Add(content.Load<Texture2D>("level2_briefing"));
             briefingImages.Add(content.Load<Texture2D>("level3_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("shapeshifting_briefing"));
 
             //Load all text content
             for(int i = 0; i < text.Count; i++)
@@ -56,9 +61,25 @@ namespace Midnight_Snack
         {
             optionMenu.Update(controls);
 
-            if(gameManager.GetGameState() == 4)
+            if (gameManager.GetGameState() == 4)
             {
                 loadLevelBriefing(gameManager.GetCurrentLevel());
+            }
+            
+            //For briefing screens only
+            if (briefingScreen)
+            {
+                //Go to next briefing page
+                if (controls.onPress(Keys.Space, Buttons.A))
+                {
+                    currentPage++;
+                }
+
+                //Start level if seen all the briefing pages
+                if (currentPage > numPages)
+                {
+                    gameManager.SetGameState(1);
+                }
             }
         }
 
@@ -95,18 +116,26 @@ namespace Midnight_Snack
             {
                 //Tutorial Briefing Text
                 case 0:
+                    numPages = 2;
                     briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
                     briefingImage = briefingImages[0];
+                    if (currentPage == 2)
+                    {
+                        briefingImage = briefingImages[4];
+                    }
                     break;
                 case 1:
+                    numPages = 1;
                     briefingText.SetMessage("The villagers have recruited a cleric to ward off vampires. Don't let divine interference get between you and dinner!");
                     briefingImage = briefingImages[1];
                     break;
                 case 2:
+                    numPages = 1;
                     briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
                     briefingImage = briefingImages[2];
                     break;
                 case 3:
+                    numPages = 1;
                     briefingText.SetMessage("All this vampiric activity has attracted vampire hunters. A smart vampire picks his fights wisely.");
                     briefingImage = briefingImages[3];
                     break;
@@ -127,6 +156,16 @@ namespace Midnight_Snack
         public void SetBriefingScreen(bool b)
         {
             briefingScreen = b;
+        }
+
+        public int GetNumPages()
+        {
+            return numPages;
+        }
+
+        public void SetNumPages(int pages)
+        {
+            numPages = pages;
         }
     }
 }

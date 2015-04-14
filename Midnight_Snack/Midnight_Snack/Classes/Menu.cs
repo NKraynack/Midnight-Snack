@@ -66,7 +66,7 @@ namespace Midnight_Snack
             if(action.Equals("Start"))
             {
                 //Load the level 
-                gameManager.SetGameState(1);
+                //gameManager.SetGameState(1);
             }
             else if(action.Equals("Tutorial"))
             {
