@@ -26,14 +26,16 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            //temp until I either draw one or find one
             texture = content.Load<Texture2D>("cleric");
             healthBar.LoadContent(content);
+            stats.LoadContent(content);
         }
 
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
+            stats.Update(this);
+
             if (currentHealth <= 0)
             {
                 alive = false;

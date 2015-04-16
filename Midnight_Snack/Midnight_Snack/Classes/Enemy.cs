@@ -14,7 +14,6 @@ namespace Midnight_Snack
     {
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
-        protected int strength; //How much the enemy hits for
         protected char[,] map_grid; //The grid for the map to generate shortest path
 
         public Enemy(Vector2 pos, int width, int height, int row, int col, int range, int health)
@@ -27,18 +26,19 @@ namespace Midnight_Snack
 
         public override void LoadContent(ContentManager content)
         {
-            //temp until I either draw one or find one
             texture = content.Load<Texture2D>("town_guard");
             healthBar.LoadContent(content);
+            stats.LoadContent(content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (alive)
             {
-                base.Draw(spriteBatch);
-
                 spriteBatch.Draw(texture, position, Color.White);
+
+                healthBar.Draw(spriteBatch);
+                stats.Draw(spriteBatch);
             }
         }
 

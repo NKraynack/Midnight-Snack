@@ -347,7 +347,7 @@ namespace Midnight_Snack
         {
             //Get the occupant of the selected tile
             MapTile tile = map.GetTile(cursorRow, cursorCol);
-            GameObject occupant = tile.GetOccupant();
+            Unit occupant = tile.GetOccupant();
 
             //If selecting the tile that the player is on...
             if (controls.onPress(Keys.Space, Buttons.A) 

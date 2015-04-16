@@ -14,10 +14,12 @@ namespace Midnight_Snack
         protected int moveRange;  //Number of tiles the unit can move in one turn
         protected int maxHealth;  //The greatest amount of health this unit can have
         protected int currentHealth;  //The current amount of health this unit has
+        protected int strength;     //How much does this unit attack for?
         protected bool movedThisTurn; //Has the unit moved this turn?
         protected bool usedAbilityThisTurn;   //Has the unit used an ability this turn?
         protected bool alive; //Is the unit alive?
         public HealthBar healthBar; //The unit's health bar
+        public StatDisplay stats;   //The unit's stats
 
         Map map = Map.GetInstance();
 
@@ -26,11 +28,13 @@ namespace Midnight_Snack
             moveRange = range;
             maxHealth = health;
             currentHealth = health;
+            strength = 3;
             movedThisTurn = false;
             usedAbilityThisTurn = false;
             alive = true;
             unitsTurn = false;
             healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
+            stats = new StatDisplay(new Vector2(position.X + 20, position.Y - 20));
         }
 
         //Moves the unit to the given position
@@ -76,6 +80,21 @@ namespace Midnight_Snack
         public void SetMaxHealth(int health)
         {
             maxHealth = health;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public void SetStrength(int str)
+        {
+            strength = str;
+        }
+
+        public void DisplayStats(bool b)
+        {
+            stats.SetVisible(b);
         }
 
         public int GetMoveRange()
@@ -136,6 +155,7 @@ namespace Midnight_Snack
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
+            stats.Update(this);
 
             if(currentHealth <= 0)
             {
@@ -146,6 +166,7 @@ namespace Midnight_Snack
         public override void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);
+            stats.Draw(spriteBatch);
         }
 
         public virtual void Attack(MobileUnit target)

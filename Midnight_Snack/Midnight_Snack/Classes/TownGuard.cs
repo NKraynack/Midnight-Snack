@@ -34,11 +34,14 @@ namespace Midnight_Snack
         {
             texture = content.Load<Texture2D>("town_guard");
             healthBar.LoadContent(content);
+            stats.LoadContent(content);
         }
 
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
+            stats.Update(this);
+
             if (currentHealth <= 0)
             {
                 alive = false;

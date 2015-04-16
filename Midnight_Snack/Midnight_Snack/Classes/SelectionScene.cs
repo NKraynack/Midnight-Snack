@@ -76,7 +76,7 @@ namespace Midnight_Snack
                 }
 
                 //Start level if seen all the briefing pages
-                if (currentPage > numPages)
+                if (currentPage > numPages) 
                 {
                     gameManager.SetGameState(1);
                     currentPage = 1;

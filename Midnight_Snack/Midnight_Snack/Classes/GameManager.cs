@@ -17,6 +17,7 @@ namespace Midnight_Snack
         private int currentTurn;    //Keeps track of the number of turns
         private int turnLimit;  //The most amount of turns the player is allowed to complete objective in
         private int currentLevel;   //What level is the player currently on? (defaults to 0; the tutorial)
+        private bool gameCompleted; //Has the player completed the last level?
 
         //Tracks what state the game is in (i.e. main menu, gameplay, game over, etc.)
         int gameState;
@@ -157,6 +158,16 @@ namespace Midnight_Snack
             currentLevel = level;
         }
 
+        public bool IsGameCompleted()
+        {
+            return gameCompleted;
+        }
+
+        public void SetGameCompleted(bool b)
+        {
+            gameCompleted = b;
+        }
+
         //Resets the GameManager back to it's initial state
         public void ResetGameState()
         {
@@ -169,6 +180,7 @@ namespace Midnight_Snack
             playerWin = false;
             currentTurn = 1;
             turnLimit = 5;
+            gameCompleted = false;
         }
     }
 }
