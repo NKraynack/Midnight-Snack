@@ -50,7 +50,7 @@ namespace Midnight_Snack
                 yOffset += 20;
 
                 //Update whether option is available or not
-                if(menuOptions[i].GetMessage().Equals("Move"))
+                if (menuOptions[i].GetMessage().Equals("Move"))
                 {
                     //Gray out move option if already used this turn
                     if (player.HasMovedThisTurn())
@@ -62,23 +62,11 @@ namespace Midnight_Snack
                         menuOptions[i].SetAvailable(true);
                     }
                 }
-                if(menuOptions[i].GetMessage().Equals("Abilities"))
+                if (menuOptions[i].GetMessage().Equals("Abilities"))
                 {
                     //Gray out abilities option if already used this turn
                     //or if player is on a garlic tile
                     if (player.HasUsedAbilityThisTurn() || player.GetCurrentMapTile().GetModifier().Equals("garlic"))
-                    {
-                        menuOptions[i].SetAvailable(false);
-                    }
-                    else
-                    {
-                        menuOptions[i].SetAvailable(true);
-                    }
-                }
-                if (menuOptions[i].GetMessage().Equals("Mist Form") || menuOptions[i].GetMessage().Equals("Wolf Form"))
-                {
-                    //Gray out 'Mist Form' and 'Wolf Form' if already moved this turn counter
-                    if (player.HasMovedThisTurn())
                     {
                         menuOptions[i].SetAvailable(false);
                     }
@@ -111,7 +99,7 @@ namespace Midnight_Snack
             gameManager.SetPlayerAbility(action);
 
 
-            if(action.Equals("Move"))
+            if (action.Equals("Move"))
             {
                 //Go into move mode
                 //Move if haven't already moved this turn
@@ -124,11 +112,11 @@ namespace Midnight_Snack
                 }
             }
             //Can only use abilities if not on a garlic tile
-            else if(action.Equals("Abilities") && !player.GetCurrentMapTile().GetModifier().Equals("garlic"))
+            else if (action.Equals("Abilities") && !player.GetCurrentMapTile().GetModifier().Equals("garlic"))
             {
                 //Go into use ability mode
                 //Use ability if haven't already done so this turn
-                if(!player.HasUsedAbilityThisTurn())
+                if (!player.HasUsedAbilityThisTurn())
                 {
                     gameManager.SetInAbilitiesMenu(true);
 
@@ -169,17 +157,17 @@ namespace Midnight_Snack
                 gameManager.SetInActionMenu(true);
                 gameManager.SetInAbilitiesMenu(false);
             }
-            else if(action.Equals("End Turn"))
+            else if (action.Equals("End Turn"))
             {
                 //Increment turn counter
                 int nextTurnNum = gameManager.GetTurn() + 1;
                 gameManager.SetTurn(nextTurnNum);
-                    
+
                 //Update player status
                 player.SetHasEndedTurn(true);
                 player.SetMovedThisTurn(false);
                 player.SetUsedAbilityThisTurn(false);
-                player.SetForm("vampire");
+                //player.SetForm("vampire");
 
                 gameManager.SetChoosingAbilityTarget(false);
                 gameManager.SetMovingPlayer(false);

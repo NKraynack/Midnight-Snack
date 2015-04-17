@@ -18,7 +18,9 @@ namespace Midnight_Snack
         private List<Menu> menus;
         private MiniMenu actionMenu;
         private MiniMenu abilitiesMenu;
- 
+
+        private bool startOfPlayerTurn;
+
         private Text endText;
         private Text turnText;
         private Text goalText;
@@ -29,7 +31,7 @@ namespace Midnight_Snack
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
 
-        public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus) 
+        public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus)
         {
             this.units = units;
             sortedUnits = new List<Unit>();
@@ -65,6 +67,8 @@ namespace Midnight_Snack
             abilitiesMenu = new MiniMenu(player.GetPosition(), 70, 70, abilitiesMenuOptions);
             menus.Add(abilitiesMenu);
 
+            startOfPlayerTurn = true;
+
             turnText = new Text("Turn: 1", new Vector2(10, 5));
             //goalText = new Text("Goal: Get blood from villager and get back to start before sunrise \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
             endText = new Text("", new Vector2(700, 60));
@@ -85,7 +89,7 @@ namespace Midnight_Snack
             cursor.LoadContent(content);
 
             //Load unit content
-            for(int i = 0; i < units.Count; i++)
+            for (int i = 0; i < units.Count; i++)
             {
                 units[i].LoadContent(content);
             }
@@ -117,16 +121,23 @@ namespace Midnight_Snack
                     if (i == activeUnit && units[i].Equals(player))
                     {
                         //If player has not already ended their turn
-                        if(!units[i].GetHasEndedTurn())
+                        if (!units[i].GetHasEndedTurn())
                         {
                             //Set that it's their turn
                             units[i].SetUnitsTurn(true);
+
+                            //Revert player to vampire form
+                            if (startOfPlayerTurn)
+                            {
+                                player.SetForm("vampire");
+                                startOfPlayerTurn = false;
+                            }
                         }
                         //If the player has already ended their turn
                         else
                         {
                             //If player ends their turn on consecrated tile, take damage
-                            if(map.GetTile(player.GetRow(), player.GetCol()).GetModifier().Equals("consecrated"))
+                            if (map.GetTile(player.GetRow(), player.GetCol()).GetModifier().Equals("consecrated"))
                             {
                                 //Take 1 damage
                                 player.SetCurrentHealth(player.GetCurrentHealth() - 1);
@@ -134,6 +145,7 @@ namespace Midnight_Snack
 
                             //Set that it's not player's turn
                             units[i].SetUnitsTurn(false);
+                            startOfPlayerTurn = true;
                             //Go to the next unit's turn
                             NextActiveUnit();
                         }
@@ -221,14 +233,14 @@ namespace Midnight_Snack
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        { 
+        {
             //Draw repeating background
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone);
             //spriteBatch.Draw(background, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White);
             spriteBatch.Draw(background, Vector2.Zero, new Rectangle(0, 0, GameRunner.ScreenWidth, GameRunner.ScreenHeight), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             spriteBatch.End();
-            spriteBatch.Begin();          
+            spriteBatch.Begin();
 
             //Draw map
             map.Draw(spriteBatch);
@@ -252,7 +264,7 @@ namespace Midnight_Snack
             abilitiesMenu.Draw(spriteBatch);
             for (int i = 0; i < menus.Count; i++)
             {
-                if(menus[i] != null)
+                if (menus[i] != null)
                 {
                     menus[i].Draw(spriteBatch);
                 }
@@ -260,8 +272,8 @@ namespace Midnight_Snack
             //Draw all text content
             for (int i = 0; i < text.Count; i++)
             {
-                if(text[i] != null)
-                { 
+                if (text[i] != null)
+                {
                     text[i].Draw(spriteBatch);
                 }
             }
@@ -279,7 +291,7 @@ namespace Midnight_Snack
 
         public bool RemoveUnit(Unit unit)
         {
-            if(units.Contains(unit))
+            if (units.Contains(unit))
             {
                 units.Remove(unit);
                 return true;
@@ -382,3 +394,4 @@ namespace Midnight_Snack
         }
     }
 }
+
