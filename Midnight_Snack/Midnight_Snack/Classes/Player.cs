@@ -24,7 +24,7 @@ namespace Midnight_Snack
 
         private static Player instance;
 
-        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health) 
+        public Player(Vector2 pos, int width, int height, int row, int col, int range, int health)
             : base(pos, width, height, row, col, range, health)
         {
             hasBlood = false;
@@ -53,7 +53,7 @@ namespace Midnight_Snack
         {
             base.Update();
 
-            if(!alive)
+            if (!alive)
             {
                 GameManager.GetInstance().SetPlayerAlive(false);
             }
@@ -145,16 +145,16 @@ namespace Midnight_Snack
                     {
                         try
                         {
-                                MapTile tile = map.GetTile(y, x);
-                                if (undraw)
-                                {
-                                    tile.SetLit(false);
-                                }
-                                else if (!undraw)
-                                {
-                                    tile.SetLit(true);
-                                }
-                                map.SetTile(y, x, tile);
+                            MapTile tile = map.GetTile(y, x);
+                            if (undraw)
+                            {
+                                tile.SetLit(false);
+                            }
+                            else if (!undraw)
+                            {
+                                tile.SetLit(true);
+                            }
+                            map.SetTile(y, x, tile);
                         }
                         catch (IndexOutOfRangeException e)
                         {

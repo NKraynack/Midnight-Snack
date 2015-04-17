@@ -84,7 +84,8 @@ namespace Midnight_Snack
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
 
-        public Cursor(int x, int y, int width, int height) : base(x, y, width, height)
+        public Cursor(int x, int y, int width, int height)
+            : base(x, y, width, height)
         {
             cursorRow = map.GetLairRow();
             cursorCol = map.GetLairCol();
@@ -95,7 +96,8 @@ namespace Midnight_Snack
             max_rows = map.GetNumRows();
         }
 
-        public Cursor(Vector2 pos, int width, int height) : base(pos, width, height)
+        public Cursor(Vector2 pos, int width, int height)
+            : base(pos, width, height)
         {
             cursorRow = map.GetLairRow();
             cursorCol = map.GetLairCol();
@@ -139,7 +141,7 @@ namespace Midnight_Snack
         public void Update(Controls controls)
         {
             //Cursor should only move if it's the player's turn
-            if(player.IsUnitsTurn())
+            if (player.IsUnitsTurn())
             {
                 //If choosing an ability target, cursor should only select adjacent tiles
                 if (gameManager.IsChoosingAbilityTarget())
@@ -353,7 +355,7 @@ namespace Midnight_Snack
             Unit occupant = tile.GetOccupant();
 
             //If selecting the tile that the player is on...
-            if (controls.onPress(Keys.Space, Buttons.A) 
+            if (controls.onPress(Keys.Space, Buttons.A)
                 && cursorRow == player.GetRow() && cursorCol == player.GetCol())
             {
                 //Undraw move range
@@ -364,7 +366,7 @@ namespace Midnight_Snack
                 //...open up action menu
                 gameManager.SetInActionMenu(true);
             }
-            else if (controls.onPress(Keys.Space, Buttons.A) && !gameManager.IsMovingPlayer() 
+            else if (controls.onPress(Keys.Space, Buttons.A) && !gameManager.IsMovingPlayer()
                 && tile.GetOccupant().GetType().IsSubclassOf(typeof(Enemy)))
             {
                 //If chose new enemy undraw previous
