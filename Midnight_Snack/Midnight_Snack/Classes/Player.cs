@@ -13,11 +13,14 @@ namespace Midnight_Snack
     {
         private bool hasBlood;   //Has the player collected blood
         private string form;    //The form the player is currently in
+        private bool cur_drawn = false; //if drawn
+        private bool prev_drawn = true; //if undrawn these two are used to track 
 
         private Texture2D wolfTexture;  //The texture for wolf form
         private Texture2D mistTexture;  //The texture for mist form
 
         Map map = Map.GetInstance();
+        GameManager gameManager = GameManager.GetInstance();
 
         private static Player instance;
 
@@ -121,35 +124,78 @@ namespace Midnight_Snack
 
         public void DrawMoveRange(bool undraw)
         {
-            for(int x = this.GetCol() - this.GetMoveRange(); x <= this.GetCol() + this.GetMoveRange(); x++) 
+            if (cur_drawn == false && undraw == false)
             {
-                for (int y = this.GetRow() - this.GetMoveRange(); y <= this.GetRow() + this.GetMoveRange(); y++)
+                cur_drawn = true;
+            }
+            else if (cur_drawn == true && undraw == true)
+            {
+                cur_drawn = false;
+            }
+            if (cur_drawn != prev_drawn)
+            {
+                //pass
+            }
+            else if (gameManager.IsChoosingAbilityTarget())
+            {
+                prev_drawn = !cur_drawn;
+                for (int x = this.GetCol() - 1; x <= this.GetCol() + 1; x++)
                 {
-                    try
+                    for (int y = this.GetRow() - 1; y <= this.GetRow() + 1; y++)
                     {
-                        //Console.WriteLine("checking: " + x + " " + y);
-                        //Console.WriteLine(this.GetForm());
-                        //Console.WriteLine(Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange());
-                        //Console.WriteLine((this.NoObstacles(x, y) || this.GetForm().Equals("mist")));
-                        //Console.WriteLine((x != this.GetCol() || y != this.GetRow()));
-                        if (Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange() && (this.NoObstacles(x, y) || this.GetForm().Equals("mist"))
-                            && (x != this.GetCol() || y != this.GetRow()) && map.GetTile(y, x).IsPassable())
+                        try
                         {
-                            MapTile tile = map.GetTile(y, x);
-                            if (undraw)
-                            {
-                                tile.SetLit(false);
-                            }
-                            else if (!undraw)
-                            {
-                                tile.SetLit(true);
-                            }
-                            map.SetTile(y, x, tile);
+                                MapTile tile = map.GetTile(y, x);
+                                if (undraw)
+                                {
+                                    tile.SetLit(false);
+                                }
+                                else if (!undraw)
+                                {
+                                    tile.SetLit(true);
+                                }
+                                map.SetTile(y, x, tile);
+                        }
+                        catch (IndexOutOfRangeException e)
+                        {
+                            //pass through out of range index because im lazy to bounds check
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                }
+            }
+            else
+            {
+                prev_drawn = !cur_drawn;
+                for (int x = this.GetCol() - this.GetMoveRange(); x <= this.GetCol() + this.GetMoveRange(); x++)
+                {
+                    for (int y = this.GetRow() - this.GetMoveRange(); y <= this.GetRow() + this.GetMoveRange(); y++)
                     {
-                        //pass through out of range index because im lazy to bounds check
+                        try
+                        {
+                            //Console.WriteLine("checking: " + x + " " + y);
+                            //Console.WriteLine(this.GetForm());
+                            //Console.WriteLine(Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange());
+                            //Console.WriteLine((this.NoObstacles(x, y) || this.GetForm().Equals("mist")));
+                            //Console.WriteLine((x != this.GetCol() || y != this.GetRow()));
+                            if ((Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange() && (this.NoObstacles(x, y) || this.GetForm().Equals("mist"))
+                                && (x != this.GetCol() || y != this.GetRow()) && map.GetTile(y, x).IsPassable()))
+                            {
+                                MapTile tile = map.GetTile(y, x);
+                                if (undraw)
+                                {
+                                    tile.SetLit(false);
+                                }
+                                else if (!undraw)
+                                {
+                                    tile.SetLit(true);
+                                }
+                                map.SetTile(y, x, tile);
+                            }
+                        }
+                        catch (IndexOutOfRangeException e)
+                        {
+                            //pass through out of range index because im lazy to bounds check
+                        }
                     }
                 }
             }

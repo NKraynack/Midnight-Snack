@@ -144,6 +144,7 @@ namespace Midnight_Snack
                 //If choosing an ability target, cursor should only select adjacent tiles
                 if (gameManager.IsChoosingAbilityTarget())
                 {
+                    player.DrawMoveRange(false);
                     SelectAbilityTarget(controls, gameManager.GetPlayerAbility());
                 }
                 //If not in the action menu, cursor should move around map
@@ -459,6 +460,7 @@ namespace Midnight_Snack
                         }
                     }
                 }
+                player.DrawMoveRange(true);
                 gameManager.SetChoosingAbilityTarget(false);
                 //Reset cursor
                 this.ResetCursor();
@@ -470,6 +472,7 @@ namespace Midnight_Snack
             //If player cancels the ability select, exit ability select mode and reset cursor
             else if (controls.onPress(Keys.F, Buttons.B))
             {
+                player.DrawMoveRange(true);
                 gameManager.SetChoosingAbilityTarget(false);
                 this.ResetCursor();
                 //Go back to action menu
