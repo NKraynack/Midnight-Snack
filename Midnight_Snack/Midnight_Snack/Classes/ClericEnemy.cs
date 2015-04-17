@@ -144,13 +144,26 @@ namespace Midnight_Snack
         {
             if (consec_tile != null)
             {
-                consec_tile.SetModifier("basic");
-                map.SetTile(consec_row, consec_col, consec_tile);
+                //consec_tile.SetModifier("basic");
+                //map.SetTile(consec_row, consec_col, consec_tile);
             }
 
             map = Map.GetInstance();
             int player_row = player.GetRow();
             int player_col = player.GetCol();
+
+            consec_tile = map.GetTile(player_row, player_col);
+            consec_row = player_row;
+            consec_col = player_col;
+            //Don't consecrate over the lair
+            if ((consec_row != map.GetLairRow() || consec_col != map.GetLairCol()))
+            {
+                consec_tile.SetModifier("consecrated");
+                map.SetTile(player_row, player_col, consec_tile);
+            }
+
+
+            /*
             Random rnd = new Random();
             //Used to get a random tile on or around player
             //flag to tell it to generate a new seed
@@ -319,6 +332,10 @@ namespace Midnight_Snack
                 }
 
             } while (!valid_seed);
+            */
+
+            //Update that unit has used an ability this turn
+            this.SetUsedAbilityThisTurn(true);
 
             //Update that unit has used an ability this turn
             this.SetUsedAbilityThisTurn(true);
