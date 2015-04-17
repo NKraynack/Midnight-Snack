@@ -158,7 +158,7 @@ namespace Midnight_Snack
                 player.SetForm("wolf");
                 player.SetUsedAbilityThisTurn(true);
                 gameManager.SetMovingPlayer(false);
-                gameManager.SetInActionMenu(false);
+                gameManager.SetInActionMenu(true);
                 gameManager.SetInAbilitiesMenu(false);
             }
             else if (action.Equals("Mist Form"))
@@ -166,7 +166,7 @@ namespace Midnight_Snack
                 player.SetForm("mist");
                 player.SetUsedAbilityThisTurn(true);
                 gameManager.SetMovingPlayer(false);
-                gameManager.SetInActionMenu(false);
+                gameManager.SetInActionMenu(true);
                 gameManager.SetInAbilitiesMenu(false);
             }
             else if(action.Equals("End Turn"))
