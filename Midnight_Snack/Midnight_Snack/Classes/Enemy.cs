@@ -437,5 +437,91 @@ namespace Midnight_Snack
                 return false;
             }
         }
+
+         public void DrawMoveRange(bool undraw)
+        {
+            for(int x = this.GetCol() - this.GetMoveRange(); x <= this.GetCol() + this.GetMoveRange(); x++) 
+            {
+                for (int y = this.GetRow() - this.GetMoveRange(); y <= this.GetRow() + this.GetMoveRange(); y++)
+                {
+                    try
+                    {
+                        //Console.WriteLine("checking: " + x + " " + y);
+                        //Console.WriteLine(this.GetForm());
+                        //Console.WriteLine(Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange());
+                        //Console.WriteLine((this.NoObstacles(x, y) || this.GetForm().Equals("mist")));
+                        //Console.WriteLine((x != this.GetCol() || y != this.GetRow()));
+                        if (Math.Abs(y - this.GetRow()) + Math.Abs(x - this.GetCol()) <= this.GetMoveRange() && this.NoObstacles2(x, y)
+                            && (x != this.GetCol() || y != this.GetRow()) && map.GetTile(y, x).IsPassable())
+                        {
+                            MapTile tile = map.GetTile(y, x);
+                            if (undraw)
+                            {
+                                tile.SetModifier("basic");
+                                tile.SetLit(false);
+                            }
+                            else if (!undraw)
+                            {
+                                tile.SetModifier("enemy_move");
+                                tile.SetLit(true);
+                            }
+                            map.SetTile(y, x, tile);
+                        }
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        //pass through out of range index because im lazy to bounds check
+                    }
+                }
+            }
+
+        }
+
+         private bool NoObstacles2(int mov_x, int mov_y) //Do dijkstra and then return if movable
+         {
+             Queue<GridPoint> q = new Queue<GridPoint>();
+             List<GridPoint> solution = new List<GridPoint>();
+             HashSet<GridPoint> discovered = new HashSet<GridPoint>();
+             Dictionary<GridPoint, GridPoint> prev = new Dictionary<GridPoint, GridPoint>();
+             GridPoint player_pos = new GridPoint(this.GetCol(), this.GetRow());
+             GridPoint current = player_pos;
+             GridPoint cursor_pos = new GridPoint(mov_x, mov_y);
+             q.Enqueue(current);
+             discovered.Add(current);
+             while (q.Count != 0)
+             {
+                 current = q.Dequeue();
+                 if (current.Equals(cursor_pos))
+                 {
+                     break;
+                 }
+                 else
+                 {
+                     /*System.Diagnostics.Debug.WriteLine("starting");
+                     System.Diagnostics.Debug.WriteLine("cols:" + max_columns);
+                     System.Diagnostics.Debug.WriteLine("rows:" + max_rows);*/
+                     foreach (GridPoint node in getNeighbors(map.GetNumCols(), map.GetNumRows(), current, map.GenerateMapGrid()))
+                     {
+                         //System.Diagnostics.Debug.WriteLine("looking: " + node.ToString());
+                         if (!discovered.Contains(node))
+                         {
+                             //System.Diagnostics.Debug.WriteLine("adding: " + node.ToString());
+                             q.Enqueue(node);
+                             prev.Add(node, current);
+                             discovered.Add(node);
+                         }
+                     }
+                 }
+             }
+             if (!current.Equals(cursor_pos))
+             {
+                 return false;
+             }
+             for (GridPoint node = cursor_pos; node != player_pos; prev.TryGetValue(node, out node))
+             {
+                 solution.Add(node);
+             }
+             return solution.Count <= this.GetMoveRange();
+         }
     }
 }

@@ -77,6 +77,8 @@ namespace Midnight_Snack
         private char[,] map_grid; //The grid for the map to generate shortest path
         private int max_columns;
         private int max_rows;
+        Enemy enemy_selected;
+        Enemy prev_enemy_selected;
 
         GameManager gameManager = GameManager.GetInstance();
         Player player = Player.GetInstance();
@@ -353,8 +355,25 @@ namespace Midnight_Snack
             if (controls.onPress(Keys.Space, Buttons.A) 
                 && cursorRow == player.GetRow() && cursorCol == player.GetCol())
             {
+                //Undraw move range
+                if (enemy_selected != null)
+                {
+                    enemy_selected.DrawMoveRange(true);
+                }
                 //...open up action menu
                 gameManager.SetInActionMenu(true);
+            }
+            else if (controls.onPress(Keys.Space, Buttons.A) && !gameManager.IsMovingPlayer() 
+                && tile.GetOccupant().GetType().IsSubclassOf(typeof(Enemy)))
+            {
+                //If chose new enemy undraw previous
+                if (enemy_selected != null)
+                {
+                    enemy_selected.DrawMoveRange(true);
+                }
+                enemy_selected = (Enemy)tile.GetOccupant();
+                enemy_selected.DrawMoveRange(false);
+
             }
         }
 

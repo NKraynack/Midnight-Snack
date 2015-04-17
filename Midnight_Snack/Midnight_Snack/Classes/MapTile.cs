@@ -21,6 +21,7 @@ namespace Midnight_Snack
         Texture2D move_texture;
         Texture2D move_lair_texture;
         Texture2D move_garlic_texture;
+        Texture2D enemy_move_lair_texture;
 
         public MapTile(int x, int y, int width, int height)
             : base(x, y, width, height)
@@ -49,6 +50,7 @@ namespace Midnight_Snack
             move_texture = content.Load<Texture2D>("valid_move_map_tile");
             move_lair_texture = content.Load<Texture2D>("valid_move_lair_map_tile");
             move_garlic_texture = content.Load<Texture2D>("valid_move_garlic_map_tile");
+            enemy_move_lair_texture = content.Load<Texture2D>("enemy_valid_move_map_tile");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -80,6 +82,17 @@ namespace Midnight_Snack
                 if (lit)
                 {
                     spriteBatch.Draw(move_garlic_texture, position, Color.White);
+                }
+                else
+                {
+                    spriteBatch.Draw(garlic_texture, position, Color.White);
+                }
+            }
+            else if (modifier.Equals("enemy_move"))
+            {
+                if (lit)
+                {
+                    spriteBatch.Draw(enemy_move_lair_texture, position, Color.White);
                 }
                 else
                 {
