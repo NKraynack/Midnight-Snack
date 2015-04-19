@@ -38,6 +38,8 @@
   <enemies numEnemies="1">
     <enemy type="vampire" width="100" height="100" row="2" col="8" range="3" health="9"/>
   </enemies>
+  <hints numHints="0">
+  </hints>
 
   <tiles numTiles="0">
   </tiles>

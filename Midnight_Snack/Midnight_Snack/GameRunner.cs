@@ -501,6 +501,24 @@ namespace Midnight_Snack
                     reader.ReadToNextSibling("enemy");
                 }
 
+                //Get hint information and then create all of them accordingly
+                List<Hint> hints = new List<Hint>();
+                reader.ReadToNextSibling("hints");
+                int num_hints = Convert.ToInt32(reader.GetAttribute("numHints"));
+                reader.ReadStartElement();
+                for (int i = 0; i < num_hints; i++)
+                {
+                    int hintRow = Convert.ToInt32(reader.GetAttribute("row"));
+                    int hintCol = Convert.ToInt32(reader.GetAttribute("col"));
+                    string hintText = reader.GetAttribute("text");
+                    //output.AppendLine("Hint at: " + hintRow + " " + hintCol);
+
+                    Hint hint = new Hint(new Vector2(0, ScreenHeight - 200), 200, 200, hintRow, hintCol, hintText);
+                    hints.Add(hint);
+
+                    reader.ReadToNextSibling("hint");
+                }
+
                 output.AppendLine("The map dimensions: ");
                 output.AppendLine("\t rows: " + rows);
                 output.AppendLine("\t cols: " + cols);
@@ -541,7 +559,7 @@ namespace Midnight_Snack
                 menus.Add(actionMenu);
 
                 //Create the main game screen
-                mainGame = new MainGame(units, cursor, menus);
+                mainGame = new MainGame(units, cursor, menus, hints);
             }
         }
 

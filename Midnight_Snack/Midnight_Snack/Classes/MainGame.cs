@@ -18,6 +18,7 @@ namespace Midnight_Snack
         private List<Menu> menus;
         private MiniMenu actionMenu;
         private MiniMenu abilitiesMenu;
+        private List<Hint> hints;
 
         private bool startOfPlayerTurn;
 
@@ -31,7 +32,7 @@ namespace Midnight_Snack
         Player player = Player.GetInstance();
         Map map = Map.GetInstance();
 
-        public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus)
+        public MainGame(List<Unit> units, Cursor cursor, List<Menu> menus, List<Hint> hints)
         {
             this.units = units;
             sortedUnits = new List<Unit>();
@@ -69,6 +70,8 @@ namespace Midnight_Snack
 
             startOfPlayerTurn = true;
 
+            this.hints = hints;
+
             turnText = new Text("Turn: 1", new Vector2(10, 5));
             //goalText = new Text("Goal: Get blood from villager and get back to start before sunrise \nMove with arrow keys and select with space. Cancel out of an action with F", new Vector2(20, GameRunner.ScreenHeight * 5/6));
             endText = new Text("", new Vector2(700, 60));
@@ -102,6 +105,11 @@ namespace Midnight_Snack
             for (int i = 0; i < text.Count; i++)
             {
                 text[i].LoadContent(content);
+            }
+            //Load all hint content
+            for (int i = 0; i < hints.Count; i++)
+            {
+                hints[i].LoadContent(content);
             }
         }
 
@@ -207,6 +215,12 @@ namespace Midnight_Snack
                 cursor.Update(controls);
             }
 
+            //Update hints
+            for (int i = 0; i < hints.Count; i++)
+            {
+                hints[i].Update();
+            }
+
             //Update player win progression status
             if (gameManager.GetTurn() > gameManager.GetTurnLimit())
             {
@@ -268,6 +282,11 @@ namespace Midnight_Snack
                 {
                     menus[i].Draw(spriteBatch);
                 }
+            }
+            //Draw all hints
+            for (int i = 0; i < hints.Count; i++)
+            {
+                hints[i].Draw(spriteBatch);
             }
             //Draw all text content
             for (int i = 0; i < text.Count; i++)

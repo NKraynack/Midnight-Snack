@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Classes\ClericEnemy.cs" />
+    <Compile Include="Classes\Hint.cs" />
     <Compile Include="Classes\HunterEnemy.cs" />
     <Compile Include="Classes\StatDisplay.cs" />
     <Compile Include="Classes\TownGuard.cs" />
@@ -125,6 +126,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\health_pip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\hint_box.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\hunter.png">
