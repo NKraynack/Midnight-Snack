@@ -115,8 +115,14 @@ namespace Midnight_Snack
             //Text briefingText = new Text("", new Vector2(GameRunner.ScreenWidth * 1/6, GameRunner.ScreenHeight * 1 / 6));
             switch(level)
             {
-                //Tutorial Briefing Text
+                //Basic Tutorial Briefing Text
                 case 0:
+                    numPages = 1;
+                    briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
+                    briefingImage = briefingImages[0];
+                    break;
+                //Tutorial Briefing Text
+                case 1:
                     numPages = 2;
                     briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
                     briefingImage = briefingImages[0];
@@ -125,17 +131,20 @@ namespace Midnight_Snack
                         briefingImage = briefingImages[4];
                     }
                     break;
-                case 1:
+                //Level 1 Briefing Text
+                case 2:
                     numPages = 1;
                     briefingText.SetMessage("The villagers have recruited a cleric to ward off vampires. Don't let divine interference get between you and dinner!");
                     briefingImage = briefingImages[1];
                     break;
-                case 2:
+                //Level 2 Briefing Text
+                case 3:
                     numPages = 1;
                     briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
                     briefingImage = briefingImages[2];
                     break;
-                case 3:
+                //Level 3 Briefing Text
+                case 4:
                     numPages = 1;
                     briefingText.SetMessage("All this vampiric activity has attracted vampire hunters. A smart vampire picks his fights wisely.");
                     briefingImage = briefingImages[3];

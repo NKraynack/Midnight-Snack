@@ -81,15 +81,16 @@ namespace Midnight_Snack
             levelSelectText.Add(titleText);
             levelSelectText.Add(startText);
             List<Text> levelSelectOptions = new List<Text>();
-            Text option1 = new Text("Tutorial", new Vector2(0, 0));
-            Text option2 = new Text("Level 1", new Vector2(0, 0));
-            Text option3 = new Text("Level 2", new Vector2(0, 0));
-            Text option4 = new Text("Level 3", new Vector2(0, 0));
-            option2.SetAvailable(true);
+            Text option1 = new Text("Basic Tutorial", new Vector2(0, 0));
+            Text option2 = new Text("Tutorial", new Vector2(0, 0));
+            Text option3 = new Text("Level 1", new Vector2(0, 0));
+            Text option4 = new Text("Level 2", new Vector2(0, 0));
+            Text option5 = new Text("Level 3", new Vector2(0, 0));
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
             levelSelectOptions.Add(option3);
             levelSelectOptions.Add(option4);
+            levelSelectOptions.Add(option5);
             Menu levelSelectMenu = new Menu(new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
@@ -214,7 +215,7 @@ namespace Midnight_Snack
                 //Level Complete Screen
                 case 3:
                     //Check if completed last level
-                    if(gameManager.GetCurrentLevel() == 3)
+                    if(gameManager.GetCurrentLevel() == 4)
                     {
                         gameManager.SetGameCompleted(true);
                     }
@@ -305,15 +306,18 @@ namespace Midnight_Snack
             switch (gameManager.GetCurrentLevel())
             {
                 case 0:
-                    levelFile = "tutorial";
+                    levelFile = "basic_tutorial";
                     break;
                 case 1:
-                    levelFile = "level1";
+                    levelFile = "tutorial";
                     break;
                 case 2:
-                    levelFile = "level2";
+                    levelFile = "level1";
                     break;
                 case 3:
+                    levelFile = "level2";
+                    break;
+                case 4:
                     levelFile = "level3";
                     break;
                 default:
@@ -508,12 +512,38 @@ namespace Midnight_Snack
                 reader.ReadStartElement();
                 for (int i = 0; i < num_hints; i++)
                 {
-                    int hintRow = Convert.ToInt32(reader.GetAttribute("row"));
-                    int hintCol = Convert.ToInt32(reader.GetAttribute("col"));
+                    bool beforeBlood = true;
+                    string b4Blood = reader.GetAttribute("beforeBlood");
+                    if(b4Blood.Equals("false"))
+                    {
+                        beforeBlood = false;
+                    }
+                    List<int> hintRows = new List<int>();
+                    List<int> hintCols = new List<int>();
+                    string hRows = reader.GetAttribute("rows");
+                    string hCols = reader.GetAttribute("cols");
+                    int numHintSpots = Convert.ToInt32(reader.GetAttribute("numSpots"));
+                    if (numHintSpots == 1)
+                    {
+                        hintRows.Add(Convert.ToInt32(hRows));
+                        hintCols.Add(Convert.ToInt32(hCols));
+                    }
+                    else
+                    {
+                        string[] hintRowCoords = hRows.Split(new char[] { ';' });
+                        string[] hintColCoords = hCols.Split(new char[] { ';' });
+
+                        for (int j = 0; j < numHintSpots; j++)
+                        {
+                            hintRows.Add(Convert.ToInt32(hintRowCoords[j]));
+                            hintCols.Add(Convert.ToInt32(hintColCoords[j]));
+                        }
+                    }
+
                     string hintText = reader.GetAttribute("text");
                     //output.AppendLine("Hint at: " + hintRow + " " + hintCol);
 
-                    Hint hint = new Hint(new Vector2(0, ScreenHeight - 200), 200, 200, hintRow, hintCol, hintText);
+                    Hint hint = new Hint(new Vector2(0, ScreenHeight - 200), 200, 200, beforeBlood, hintRows, hintCols, hintText);
                     hints.Add(hint);
 
                     reader.ReadToNextSibling("hint");

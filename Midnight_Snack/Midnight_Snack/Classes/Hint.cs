@@ -10,14 +10,16 @@ namespace Midnight_Snack
 {
     public class Hint : GameObject
     {
-        private int row, col;
+        private List<int> row, col;
         private Text hintText;
         private bool visible;
+        private bool displayBeforeBlood;    //Only display this hint before the player has gained blood
 
         Player player = Player.GetInstance();
 
-        public Hint(Vector2 pos, int width, int height, int row, int col, string text) : base(pos, width, height)
+        public Hint(Vector2 pos, int width, int height, bool beforeBlood, List<int> row, List<int> col, string text) : base(pos, width, height)
         {
+            displayBeforeBlood = beforeBlood;
             this.row = row;
             this.col = col;
 
@@ -35,10 +37,29 @@ namespace Midnight_Snack
 
         public void Update()
         {
-            //If player is standing on the proper tile, display hint
-            if (player.GetRow() == row && player.GetCol() == col)
+            bool playerAtHint = false;
+            for (int i = 0; i < row.Count; i++)
             {
-                visible = true;
+                //If player is standing on the proper tile, display hint
+                if (player.GetRow() == row[i] && player.GetCol() == col[i])
+                {
+                    playerAtHint = true;
+                }
+            }
+            if (playerAtHint)
+            {
+                if (displayBeforeBlood && !player.HasBlood())
+                {
+                    visible = true;
+                }
+                else if (!displayBeforeBlood && player.HasBlood())
+                {
+                    visible = true;
+                }
+                else
+                {
+                    visible = false;
+                }
             }
             else
             {

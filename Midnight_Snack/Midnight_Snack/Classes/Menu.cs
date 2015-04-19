@@ -68,31 +68,38 @@ namespace Midnight_Snack
                 //Load the level 
                 //gameManager.SetGameState(1);
             }
-            else if(action.Equals("Tutorial"))
+            else if(action.Equals("Basic Tutorial"))
+            {
+                //Show the Basic Tutorial's level briefing
+                gameManager.SetCurrentLevel(0);
+                gameManager.SetGameState(5);
+                //gameManager.SetGameState(1);
+            }
+            else if (action.Equals("Tutorial"))
             {
                 //Show the Tutorial's level briefing
-                gameManager.SetCurrentLevel(0);
+                gameManager.SetCurrentLevel(1);
                 gameManager.SetGameState(5);
                 //gameManager.SetGameState(1);
             }
             else if(action.Equals("Level 1"))
             {
                 //Load level 1
-                gameManager.SetCurrentLevel(1);
+                gameManager.SetCurrentLevel(2);
                 gameManager.SetGameState(5);
                  
             }
             else if (action.Equals("Level 2"))
             {
                 //Load level 2
-                gameManager.SetCurrentLevel(2);
+                gameManager.SetCurrentLevel(3);
                 gameManager.SetGameState(5);
 
             }
             else if (action.Equals("Level 3"))
             {
                 //Load level 3
-                gameManager.SetCurrentLevel(3);
+                gameManager.SetCurrentLevel(4);
                 gameManager.SetGameState(5);
 
             }
