@@ -225,6 +225,13 @@ namespace Midnight_Snack
                         //Open action menu again
                         gameManager.SetInActionMenu(true);
                     }
+                    else if (tile.Equals(player.GetCurrentMapTile()))
+                    {
+                        player.SetMovedThisTurn(false);
+                        player.DrawMoveRange(true);
+                        gameManager.SetMovingPlayer(false);
+                        gameManager.SetInActionMenu(true);
+                    }
                 }
             }
             //Player cancels out of move
