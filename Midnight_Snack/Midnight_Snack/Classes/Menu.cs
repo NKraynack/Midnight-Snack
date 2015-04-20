@@ -125,7 +125,7 @@ namespace Midnight_Snack
                 gameManager.ResetGameState();
                 //Go to next level
                 int nextLevel = gameManager.GetCurrentLevel() + 1;
-                if(nextLevel > 3)
+                if(nextLevel > 5)
                 {
                     nextLevel = 0;
                 }
