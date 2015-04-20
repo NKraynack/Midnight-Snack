@@ -82,7 +82,7 @@ namespace Midnight_Snack
                 gameManager.SetGameState(5);
                 //gameManager.SetGameState(1);
             }
-            else if (action.Equals("Tutorial"))
+            else if (action.Equals("Forms Tutorial"))
             {
                 //Show the Tutorial's level briefing
                 gameManager.SetCurrentLevel(2);

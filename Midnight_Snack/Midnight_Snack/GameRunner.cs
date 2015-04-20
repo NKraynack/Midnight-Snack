@@ -83,7 +83,7 @@ namespace Midnight_Snack
             List<Text> levelSelectOptions = new List<Text>();
             Text option1 = new Text("Basic Tutorial", new Vector2(0, 0));
             Text option2 = new Text("Enemy Tutorial", new Vector2(0, 0));
-            Text option3 = new Text("Tutorial", new Vector2(0, 0));
+            Text option3 = new Text("Forms Tutorial", new Vector2(0, 0));
             Text option4 = new Text("Level 1", new Vector2(0, 0));
             Text option5 = new Text("Level 2", new Vector2(0, 0));
             Text option6 = new Text("Level 3", new Vector2(0, 0));
@@ -314,7 +314,7 @@ namespace Midnight_Snack
                     levelFile = "enemy_tutorial";
                     break;
                 case 2:
-                    levelFile = "tutorial";
+                    levelFile = "forms_tutorial";
                     break;
                 case 3:
                     levelFile = "level1";

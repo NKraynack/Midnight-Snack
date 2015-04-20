@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<map rows="6" cols="10" startRow="5" startCol="0">
+  <turnLim limit="8"/>
+  <cursor width="100" height="100"/>
+  <villagers numVillagers="1" >
+    <villager width="100" height="100" row="1" col="8"/>
+  </villagers>
+  <obstacles numObs="29">
+    <obstacle row="2" col="9" type="wall_right_corner_up"/>
+    <obstacle row="1" col="9" type="wall_vertical_middle"/>
+    <obstacle row="0" col="9" type="wall_right_corner_down"/>
+    <obstacle row="0" col="8" type="wall_middle"/>
+    <obstacle row="0" col="7" type="wall_middle"/>
+    <obstacle row="0" col="6" type="wall_left_corner_down"/>
+    <obstacle row="1" col="6" type="wall_vertical_middle"/>
+    <obstacle row="2" col="6" type="wall_left_corner_up"/>
+    <obstacle row="2" col="7" type="wall_middle"/>
+    <obstacle row="2" col="8" type="wall_middle"/>
+    <obstacle row="3" col="9" type="spooky_tree"/>
+    <obstacle row="4" col="9" type="spooky_tree"/>
+    <obstacle row="5" col="8" type="spooky_tree"/>
+    <obstacle row="5" col="9" type="spooky_tree"/>
+    <obstacle row="0" col="0" type="spooky_tree"/>
+    <obstacle row="0" col="1" type="spooky_tree"/>
+    <obstacle row="0" col="2" type="spooky_tree"/>
+    <obstacle row="0" col="3" type="spooky_tree"/>
+    <obstacle row="0" col="4" type="spooky_tree"/>
+    <obstacle row="0" col="5" type="spooky_tree"/>
+    <obstacle row="1" col="0" type="spooky_tree"/>
+    <obstacle row="1" col="1" type="spooky_tree"/>
+    <obstacle row="1" col="2" type="spooky_tree"/>
+    <obstacle row="2" col="0" type="spooky_tree"/>
+    <obstacle row="2" col="1" type="spooky_tree"/>
+    <obstacle row="2" col="5" type="spooky_tree"/>
+    <obstacle row="3" col="0" type="spooky_tree"/>
+    <obstacle row="3" col="6" type="spooky_tree"/>
+    <obstacle row="3" col="8" type="spooky_tree"/>
+  </obstacles>
+  <enemies numEnemies="0">
+  </enemies>
+  <hints numHints="6">
+    <hint beforeBlood="true" numSpots="1" rows="5" cols="0" text="This villager is pretty far away.
+To reach it in time, use wolf form.
+Open the action menu, select 'Abilities', and 
+then choose 'Wolf Form'. 
+You'll notice you can move much farther now.
+
+Use wolf form to quickly reach the villager."/>
+    <hint beforeBlood="true" numSpots="4" rows="2;3;4;5" cols="2;3;4;5" text="At the start of your next turn you always
+revert back to your natural vampire form.
+If you want to keep using a form, you'll
+have to use it again at the start of your turn.
+
+Move towards the wall surrounding the villager."/>
+    <hint beforeBlood="true" numSpots="2" rows="1;3" cols="5;7" text="You can use mist form to move through 
+obstacles like walls and trees.
+Open the action menu, select 'Abilities', and 
+then choose 'Mist Form'. Once in mist form
+your movement is not blocked by obstacles.
+
+Use mist form to move through the wall to 
+reach the villager."/>
+    <hint beforeBlood="true" numSpots="1" rows="1" cols="7" text="Now that you're past the wall you can feed 
+on the villager."/>
+    <hint beforeBlood="false" numSpots="1" rows="1" cols="7" text="Now that you've got the blood, use mist form 
+once again to move through the wall."/>
+    <hint beforeBlood="false" numSpots="2" rows="1;3" cols="5;7" text="Use wolf form to quickly get back to your
+lair."/>
+  </hints>
+
+  <tiles numTiles="0">
+  </tiles>
+
+</map>

@@ -127,15 +127,11 @@ namespace Midnight_Snack
                     briefingText.SetMessage("Last night's feasting has put the guards on alert. You'll have to deal with any guards that try and get between you and dinner!");
                     briefingImage = briefingImages[0];
                     break;
-                //Tutorial Briefing Text
+                //Forms Tutorial Briefing Text
                 case 2:
-                    numPages = 2;
-                    briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
-                    briefingImage = briefingImages[0];
-                    if (currentPage == 2)
-                    {
-                        briefingImage = briefingImages[4];
-                    }
+                    numPages = 1;
+                    briefingText.SetMessage("Vampires have the ability to shapeshift into different forms with unique attributes and abilities. \n You'll need to make use of these shapeshifting powers to feed on a villager tonight!");
+                    briefingImage = briefingImages[4];
                     break;
                 //Level 1 Briefing Text
                 case 3:
