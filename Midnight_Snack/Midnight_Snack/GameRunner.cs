@@ -82,15 +82,17 @@ namespace Midnight_Snack
             levelSelectText.Add(startText);
             List<Text> levelSelectOptions = new List<Text>();
             Text option1 = new Text("Basic Tutorial", new Vector2(0, 0));
-            Text option2 = new Text("Tutorial", new Vector2(0, 0));
-            Text option3 = new Text("Level 1", new Vector2(0, 0));
-            Text option4 = new Text("Level 2", new Vector2(0, 0));
-            Text option5 = new Text("Level 3", new Vector2(0, 0));
+            Text option2 = new Text("Enemy Tutorial", new Vector2(0, 0));
+            Text option3 = new Text("Tutorial", new Vector2(0, 0));
+            Text option4 = new Text("Level 1", new Vector2(0, 0));
+            Text option5 = new Text("Level 2", new Vector2(0, 0));
+            Text option6 = new Text("Level 3", new Vector2(0, 0));
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
             levelSelectOptions.Add(option3);
             levelSelectOptions.Add(option4);
             levelSelectOptions.Add(option5);
+            levelSelectOptions.Add(option6);
             Menu levelSelectMenu = new Menu(new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
@@ -215,7 +217,7 @@ namespace Midnight_Snack
                 //Level Complete Screen
                 case 3:
                     //Check if completed last level
-                    if(gameManager.GetCurrentLevel() == 4)
+                    if(gameManager.GetCurrentLevel() == 5)
                     {
                         gameManager.SetGameCompleted(true);
                     }
@@ -309,15 +311,18 @@ namespace Midnight_Snack
                     levelFile = "basic_tutorial";
                     break;
                 case 1:
-                    levelFile = "tutorial";
+                    levelFile = "enemy_tutorial";
                     break;
                 case 2:
-                    levelFile = "level1";
+                    levelFile = "tutorial";
                     break;
                 case 3:
-                    levelFile = "level2";
+                    levelFile = "level1";
                     break;
                 case 4:
+                    levelFile = "level2";
+                    break;
+                case 5:
                     levelFile = "level3";
                     break;
                 default:

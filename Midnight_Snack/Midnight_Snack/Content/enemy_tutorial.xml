@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<map rows="4" cols="8" startRow="1" startCol="0">
+  <turnLim limit="10"/>
+  <cursor width="100" height="100"/>
+  <villagers numVillagers="1" >
+    <villager width="100" height="100" row="1" col="6"/>
+  </villagers>
+  <obstacles numObs="18">
+    <obstacle row="0" col="0" type="spooky_tree"/>
+    <obstacle row="3" col="0" type="spooky_tree"/>
+    <obstacle row="3" col="1" type="spooky_tree"/>
+    <obstacle row="3" col="2" type="spooky_tree"/>
+    <obstacle row="3" col="3" type="wall_left_corner_up"/>
+    <obstacle row="3" col="4" type="wall_middle"/>
+    <obstacle row="3" col="5" type="wall_middle"/>
+    <obstacle row="3" col="6" type="wall_middle"/>
+    <obstacle row="3" col="7" type="wall_right_corner_up"/>
+    <obstacle row="2" col="7" type="wall_vertical_middle"/>
+    <obstacle row="1" col="7" type="wall_vertical_middle"/>
+    <obstacle row="0" col="7" type="wall_right_corner_down"/>
+    <obstacle row="0" col="6" type="wall_middle"/>
+    <obstacle row="0" col="5" type="wall_middle"/>
+    <obstacle row="0" col="4" type="wall_middle"/>
+    <obstacle row="0" col="3" type="wall_left_end"/>
+    <obstacle row="2" col="0" type="spooky_tree"/>
+    <obstacle row="2" col="3" type="wall_vertical_middle"/>
+  </obstacles>
+  <enemies numEnemies="1">
+    <enemy type="guard" width="100" height="100" row="1" col="3" range="2" health="3" dest="1;3;1;3"/>
+  </enemies>
+  <hints numHints="5">
+    <hint beforeBlood="true" numSpots="1" rows="1" cols="0" text="That guard is blocking your route to the villager.
+To see an enemy's movement range and 
+attack power, move your cursor to it and 
+select it. The red tiles that appear indicate 
+where the enemy can move.
+
+Now move to a tile adjacent to the guard to get
+into position to attack."/>
+    <hint beforeBlood="true" numSpots="3" rows="0;1;2" cols="1;1;1" text="You're not quite close enough to attack the 
+guard yet.
+
+Move to a tile adjacent to the guard to get into 
+position to attack."/>
+    <hint beforeBlood="true" numSpots="3" rows="0;1;2" cols="2;2;2" text="You're now close enough to attack the guard.
+
+Open the action menu, choose 'Abilities', and 
+then select 'Attack'.
+Tiles that are within range of attack will light up.
+Select the guard's tile to attack him.
+
+If he dies from your attack, he will disappear."/>
+    <hint beforeBlood="true" numSpots="6" rows="1;1;1;2;2;2" cols="3;4;5;4;5;6" text="Now the way is clear to feed on the villager."/>
+    <hint beforeBlood="false" numSpots="3" rows="1;2;2" cols="5;5;6" text="Now that you have fed, make your way back to 
+the lair to complete this tutorial."/>
+  </hints>
+
+  <tiles numTiles="0">
+  </tiles>
+
+</map>

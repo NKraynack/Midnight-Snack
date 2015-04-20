@@ -63,57 +63,64 @@ namespace Midnight_Snack
 
         public virtual void PerformAction(string action)
         {
-            if(action.Equals("Start"))
+            if (action.Equals("Start"))
             {
                 //Load the level 
                 //gameManager.SetGameState(1);
             }
-            else if(action.Equals("Basic Tutorial"))
+            else if (action.Equals("Basic Tutorial"))
             {
                 //Show the Basic Tutorial's level briefing
                 gameManager.SetCurrentLevel(0);
                 gameManager.SetGameState(5);
                 //gameManager.SetGameState(1);
             }
-            else if (action.Equals("Tutorial"))
+            else if (action.Equals("Enemy Tutorial"))
             {
-                //Show the Tutorial's level briefing
+                //Show the Enemy Tutorial's level briefing
                 gameManager.SetCurrentLevel(1);
                 gameManager.SetGameState(5);
                 //gameManager.SetGameState(1);
             }
-            else if(action.Equals("Level 1"))
+            else if (action.Equals("Tutorial"))
+            {
+                //Show the Tutorial's level briefing
+                gameManager.SetCurrentLevel(2);
+                gameManager.SetGameState(5);
+                //gameManager.SetGameState(1);
+            }
+            else if (action.Equals("Level 1"))
             {
                 //Load level 1
-                gameManager.SetCurrentLevel(2);
+                gameManager.SetCurrentLevel(3);
                 gameManager.SetGameState(5);
                  
             }
             else if (action.Equals("Level 2"))
             {
                 //Load level 2
-                gameManager.SetCurrentLevel(3);
+                gameManager.SetCurrentLevel(4);
                 gameManager.SetGameState(5);
 
             }
             else if (action.Equals("Level 3"))
             {
                 //Load level 3
-                gameManager.SetCurrentLevel(4);
+                gameManager.SetCurrentLevel(5);
                 gameManager.SetGameState(5);
 
             }
-            else if(action.Equals("Try Again"))
+            else if (action.Equals("Try Again"))
             {
                 gameManager.ResetGameState();
                 gameManager.SetGameState(6);
             }
-            else if(action.Equals("Level Select"))
+            else if (action.Equals("Level Select"))
             {
                 gameManager.ResetGameState();
                 gameManager.SetGameState(0);
             }
-            else if(action.Equals("Next Level"))
+            else if (action.Equals("Next Level"))
             {
                 gameManager.ResetGameState();
                 //Go to next level
