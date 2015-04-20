@@ -372,6 +372,7 @@ namespace Midnight_Snack
                 }
                 //...open up action menu
                 gameManager.SetInActionMenu(true);
+                gameManager.SetMovingPlayer(false);
             }
             else if (controls.onPress(Keys.Space, Buttons.A) && !gameManager.IsMovingPlayer()
                 && tile.GetOccupant().GetType().IsSubclassOf(typeof(Enemy)))
