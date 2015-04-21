@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <map rows="7" cols="13" startRow="2" startCol="0">
-  <turnLim limit="8"/>
+  <turnLim limit="11"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="4" >
-    <villager width="100" height="100" row="2" col="11"/>
-    <villager width="100" height="100" row="2" col="7"/>
-    <villager width="100" height="100" row="0" col="9"/>
+    <villager width="100" height="100" row="1" col="10"/>
+    <villager width="100" height="100" row="4" col="6"/>
+    <villager width="100" height="100" row="0" col="7"/>
     <villager width="100" height="100" row="4" col="10"/>
   </villagers>
-  <obstacles numObs="25">
+  <obstacles numObs="36">
     <obstacle row="0" col="4" type="wall_vertical_middle"/>
+    <obstacle row="0" col="6" type="wall_vertical_middle"/>
+    <obstacle row="1" col="6" type="wall_left_corner_up"/>
+    <obstacle row="1" col="7" type="wall_right_end"/>
     <obstacle row="1" col="4" type="wall_vertical_middle"/>
     <obstacle row="2" col="4" type="wall_vertical_middle"/>
     <obstacle row="3" col="4" type="wall_vertical_middle"/>
@@ -24,8 +27,16 @@
     <obstacle row="5" col="4" type="wall_left_corner_up"/>
     <obstacle row="5" col="5" type="wall_middle"/>
     <obstacle row="5" col="6" type="wall_middle"/>
-    <obstacle row="5" col="7" type="wall_middle"/>
-    <obstacle row="5" col="9" type="wall_middle"/>
+    <obstacle row="5" col="7" type="wall_right_corner_up"/>
+    <obstacle row="4" col="7" type="wall_vertical_middle"/>
+    <obstacle row="3" col="7" type="wall_right_corner_down"/>
+    <obstacle row="3" col="6" type="wall_left_end"/>
+    <obstacle row="2" col="10" type="spooky_tree"/>
+    <obstacle row="1" col="9" type="wall_vertical_end_up"/>
+    <obstacle row="2" col="9" type="wall_vertical_middle"/>
+    <obstacle row="3" col="9" type="wall_vertical_middle"/>
+    <obstacle row="4" col="9" type="wall_vertical_middle"/>
+    <obstacle row="5" col="9" type="wall_left_corner_up"/>
     <obstacle row="5" col="10" type="wall_middle"/>
     <obstacle row="5" col="11" type="wall_middle"/>
     <obstacle row="5" col="12" type="wall_right_corner_up"/>
@@ -36,7 +47,7 @@
     <obstacle row="0" col="12" type="wall_vertical_middle"/>
   </obstacles>
   <enemies numEnemies="1">
-    <enemy type="vampire" width="100" height="100" row="2" col="8" range="3" health="9"/>
+    <enemy type="vampire" width="100" height="100" row="4" col="5" range="3" health="9"/>
   </enemies>
   <hints numHints="0">
   </hints>

@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map rows="7" cols="9" startRow="3" startCol="0">
-  <turnLim limit="7"/>
+<map rows="7" cols="9" startRow="5" startCol="0">
+  <turnLim limit="10"/>
   <cursor width="100" height="100"/>
   <villagers numVillagers="1" >
-    <villager width="100" height="100" row="3" col="7"/>
+    <villager width="100" height="100" row="1" col="7"/>
   </villagers>
-  <obstacles numObs="27">
+  <obstacles numObs="32">
+    <obstacle row="0" col="0" type="spooky_tree"/>
+    <obstacle row="0" col="1" type="spooky_tree"/>
     <obstacle row="0" col="4" type="wall_left_corner_down"/>
     <obstacle row="0" col="5" type="wall_middle"/>
     <obstacle row="0" col="6" type="wall_middle"/>
     <obstacle row="0" col="7" type="wall_middle"/>
     <obstacle row="0" col="8" type="wall_right_corner_down"/>
-    <obstacle row="2" col="0" type="wall_middle"/>
-    <obstacle row="2" col="1" type="wall_middle"/>
-    <obstacle row="2" col="2" type="wall_middle"/>
-    <obstacle row="2" col="3" type="wall_middle"/>
-    <obstacle row="4" col="0" type="wall_middle"/>
-    <obstacle row="4" col="1" type="wall_middle"/>
-    <obstacle row="4" col="2" type="wall_middle"/>
-    <obstacle row="4" col="3" type="wall_middle"/>
+    <obstacle row="1" col="0" type="spooky_tree"/>
+    <obstacle row="3" col="0" type="wall_middle"/>
+    <obstacle row="3" col="1" type="wall_middle"/>
+    <obstacle row="3" col="2" type="wall_middle"/>
+    <obstacle row="3" col="3" type="wall_middle"/>
+    <obstacle row="3" col="5" type="spooky_tree"/>
+    <obstacle row="5" col="7" type="spooky_tree"/>
+    <obstacle row="6" col="0" type="wall_middle"/>
+    <obstacle row="6" col="1" type="wall_middle"/>
+    <obstacle row="6" col="2" type="wall_middle"/>
+    <obstacle row="6" col="3" type="wall_middle"/>
     <obstacle row="1" col="8" type="wall_vertical_middle"/>
     <obstacle row="2" col="8" type="wall_vertical_middle"/>
     <obstacle row="3" col="8" type="wall_vertical_middle"/>
@@ -26,17 +31,18 @@
     <obstacle row="5" col="8" type="wall_vertical_middle"/>
     <obstacle row="6" col="8" type="wall_right_corner_up"/>
     <obstacle row="1" col="4" type="wall_vertical_middle"/>
-    <obstacle row="2" col="4" type="wall_right_corner_up"/>
-    <obstacle row="4" col="4" type="wall_right_corner_down"/>
-    <obstacle row="5" col="4" type="wall_vertical_middle"/>
-    <obstacle row="6" col="4" type="wall_left_corner_up"/>
+    <obstacle row="2" col="3" type="spooky_tree"/>
+    <obstacle row="2" col="4" type="wall_vertical_middle"/>
+    <obstacle row="3" col="4" type="wall_right_corner_up"/>
+    <obstacle row="6" col="4" type="wall_middle"/>
     <obstacle row="6" col="5" type="wall_middle"/>
     <obstacle row="6" col="6" type="wall_middle"/>
     <obstacle row="6" col="7" type="wall_middle"/>
   </obstacles>
-  <enemies numEnemies="2">
-    <enemy type="cleric" width="100" height="100" row="3" col="6" range="2" health="3"/>
-    <enemy type="guard" width="100" height="100" row="3" col="4" range="2" health="3" dest="3;4;3;2"/>
+  <enemies numEnemies="3">
+    <enemy type="cleric" width="100" height="100" row="1" col="6" range="2" health="3"/>
+    <enemy type="guard" width="100" height="100" row="4" col="4" range="2" health="3" dest="4;4;4;4"/>
+    <enemy type="guard" width="100" height="100" row="5" col="4" range="2" health="3" dest="5;4;5;4"/>
   </enemies>
   <hints numHints="0">
   </hints>

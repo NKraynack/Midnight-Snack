@@ -142,7 +142,7 @@ namespace Midnight_Snack
                 //Level 2 Briefing Text
                 case 4:
                     numPages = 1;
-                    briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all!");
+                    briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all! \nRemember: you only need to feed on one villager to get the blood you need!");
                     briefingImage = briefingImages[2];
                     break;
                 //Level 3 Briefing Text
