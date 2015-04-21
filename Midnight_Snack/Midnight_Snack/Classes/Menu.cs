@@ -110,6 +110,13 @@ namespace Midnight_Snack
                 gameManager.SetGameState(5);
 
             }
+            else if (action.Equals("Level 4"))
+            {
+                //Load level 4
+                gameManager.SetCurrentLevel(6);
+                gameManager.SetGameState(5);
+
+            }
             else if (action.Equals("Try Again"))
             {
                 gameManager.ResetGameState();
@@ -125,7 +132,7 @@ namespace Midnight_Snack
                 gameManager.ResetGameState();
                 //Go to next level
                 int nextLevel = gameManager.GetCurrentLevel() + 1;
-                if(nextLevel > 5)
+                if(nextLevel > 6)
                 {
                     nextLevel = 0;
                 }

@@ -87,12 +87,14 @@ namespace Midnight_Snack
             Text option4 = new Text("Level 1", new Vector2(0, 0));
             Text option5 = new Text("Level 2", new Vector2(0, 0));
             Text option6 = new Text("Level 3", new Vector2(0, 0));
+            Text option7 = new Text("Level 4", new Vector2(0, 0));
             levelSelectOptions.Add(option1);
             levelSelectOptions.Add(option2);
             levelSelectOptions.Add(option3);
             levelSelectOptions.Add(option4);
             levelSelectOptions.Add(option5);
             levelSelectOptions.Add(option6);
+            levelSelectOptions.Add(option7);
             Menu levelSelectMenu = new Menu(new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
 
@@ -217,7 +219,7 @@ namespace Midnight_Snack
                 //Level Complete Screen
                 case 3:
                     //Check if completed last level
-                    if(gameManager.GetCurrentLevel() == 5)
+                    if(gameManager.GetCurrentLevel() == 6)
                     {
                         gameManager.SetGameCompleted(true);
                     }
@@ -324,6 +326,9 @@ namespace Midnight_Snack
                     break;
                 case 5:
                     levelFile = "level3";
+                    break;
+                case 6:
+                    levelFile = "level4";
                     break;
                 default:
                     levelFile = null;

@@ -19,11 +19,22 @@ namespace Midnight_Snack
             : base(pos, width, height, row, col, range, health)
         {
             this.map_grid = map.GenerateMapGrid();
+
+            //If health is greater than 5, this hunter is a master hunter
+            if(maxHealth > 5)
+            {
+                strength = 4;
+            }
         }
 
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("vampire_hunter");
+            //If health is greater than 5, this hunter is a master hunter
+            if(maxHealth > 5)
+            {
+                texture = content.Load<Texture2D>("master_vampire_hunter");
+            }
             healthBar.LoadContent(content);
             stats.LoadContent(content);
         }

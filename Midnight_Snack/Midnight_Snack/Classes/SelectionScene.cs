@@ -151,6 +151,12 @@ namespace Midnight_Snack
                     briefingText.SetMessage("All this vampiric activity has attracted vampire hunters. A smart vampire picks his fights wisely.");
                     briefingImage = briefingImages[3];
                     break;
+                //Level 4 Briefing Text
+                case 6:
+                    numPages = 1;
+                    briefingText.SetMessage("The clerics and vampire hunters have teamed up under the leadership of a master vampire hunter! \nIt will take all your cunning to outwit this deadly alliance!");
+                    briefingImage = briefingImages[3];
+                    break;
                 default:
                     break;
 
