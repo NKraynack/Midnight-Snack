@@ -280,3 +280,5 @@ C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\tutorial_briefing.png
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\valid_move_lair_map_tile.png
 C:\Users\Joltbolt\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\valid_move_map_tile.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level_select_background.png
+C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\title.png

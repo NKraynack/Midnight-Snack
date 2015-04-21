@@ -75,10 +75,10 @@ namespace Midnight_Snack
 
 
             /**** Initialize Level Select Screen ****/
-            Text titleText = new Text("Midnight Snack", new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 4));
+            //Text titleText = new Text("Midnight Snack", new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 4));
             Text startText = new Text("Select a Level", new Vector2((ScreenWidth - 100) / 2, ScreenHeight * 2 / 5));
             List<Text> levelSelectText = new List<Text>();
-            levelSelectText.Add(titleText);
+            //levelSelectText.Add(titleText);
             levelSelectText.Add(startText);
             List<Text> levelSelectOptions = new List<Text>();
             Text option1 = new Text("Basic Tutorial", new Vector2(0, 0));
@@ -97,6 +97,7 @@ namespace Midnight_Snack
             levelSelectOptions.Add(option7);
             Menu levelSelectMenu = new Menu(new Vector2((ScreenWidth - 100) / 2, ScreenHeight / 2), 100, 100, levelSelectOptions);
             levelSelectScene = new SelectionScene(levelSelectText, levelSelectMenu);
+            levelSelectScene.SetLevelSelectScreen(true);
 
             /***** Initialize Level Briefing Screen ****/
             List<Text> levelBriefingText = new List<Text>();
