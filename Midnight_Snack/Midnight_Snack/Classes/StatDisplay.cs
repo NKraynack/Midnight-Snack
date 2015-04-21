@@ -45,7 +45,9 @@ namespace Midnight_Snack
 
         public void Update(MobileUnit unit)
         {
-            position = unit.GetPosition();
+            float positionX = unit.GetPosition().X;
+            float positionY = unit.GetPosition().Y;
+            position = new Vector2(positionX + 70, positionY);
             maxHealth = unit.GetMaxHealth();
             currentHealth = unit.GetCurrentHealth();
             attackStr = unit.GetStrength();

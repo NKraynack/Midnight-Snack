@@ -381,9 +381,11 @@ namespace Midnight_Snack
                 if (enemy_selected != null)
                 {
                     enemy_selected.DrawMoveRange(true);
+                    enemy_selected.DisplayStats(false);
                 }
                 enemy_selected = (Enemy)tile.GetOccupant();
                 enemy_selected.DrawMoveRange(false);
+                enemy_selected.DisplayStats(true);
 
             }
         }
