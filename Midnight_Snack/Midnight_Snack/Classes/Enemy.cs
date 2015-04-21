@@ -415,8 +415,12 @@ namespace Midnight_Snack
             //Target must still be alive
             if (target.IsAlive())
             {
-                //Update the target's health
-                if (player.GetForm() == "mist")
+                int targetHealth;
+                MapTile tile = map.GetTile(target.GetRow(), target.GetCol());
+                //check that target is in mist form and is player
+                if (player.GetForm() == "mist" 
+                        && target.GetRow() == player.GetRow() 
+                            && target.GetCol() == player.GetCol())
                 {
                     int tmpStrength = strength;
                     if (tmpStrength % 2 == 1)
@@ -428,27 +432,18 @@ namespace Midnight_Snack
                     {
                         tmpStrength /= 2;
                     }
-                    Console.WriteLine(tmpStrength);
-                    int targetHealth = target.GetCurrentHealth() - tmpStrength;
-                    Console.WriteLine("Player health is: " + Convert.ToString(targetHealth));
-                    target.SetCurrentHealth(targetHealth);
-                    //Updated map tile of target
-                    MapTile tile = map.GetTile(target.GetRow(), target.GetCol());
-                    tile.SetOccupant(target);
-                    //Update that unit has used an ability this turn
-                    this.SetUsedAbilityThisTurn(true);
+                    targetHealth = target.GetCurrentHealth() - tmpStrength;
                 }
                 else
                 {
-                    int targetHealth = target.GetCurrentHealth() - strength;
-                    target.SetCurrentHealth(targetHealth);
-                    //Updated map tile of target
-                    MapTile tile = map.GetTile(target.GetRow(), target.GetCol());
-                    tile.SetOccupant(target);
-                    //Update that unit has used an ability this turn
-                    this.SetUsedAbilityThisTurn(true);
+                    targetHealth = target.GetCurrentHealth() - strength;
                 }
-
+                //update target hp depending on who got attacked
+                target.SetCurrentHealth(targetHealth);
+                //Updated map tile of target
+                tile.SetOccupant(target);
+                //Update that unit has used an ability this turn
+                this.SetUsedAbilityThisTurn(true);
             }
         }
 
