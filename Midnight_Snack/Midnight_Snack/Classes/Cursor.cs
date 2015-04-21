@@ -375,7 +375,7 @@ namespace Midnight_Snack
                 gameManager.SetMovingPlayer(false);
             }
             else if (controls.onPress(Keys.Space, Buttons.A) && !gameManager.IsMovingPlayer()
-                && tile.GetOccupant().GetType().IsSubclassOf(typeof(Enemy)))
+                && tile.GetOccupant() != null && tile.GetOccupant().GetType().IsSubclassOf(typeof(Enemy)))
             {
                 //If chose new enemy undraw previous
                 if (enemy_selected != null)
