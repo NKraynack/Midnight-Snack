@@ -256,3 +256,10 @@ C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnigh
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\master_vampire_hunter.png
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level4.xml
 C:\Users\Nick 2012 Laptop\Documents\GitHub\Midnight-Snack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level4_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\enemy_tutorial.xml
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\forms_tutorial.xml
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\hint_box.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level4.xml
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\level4_briefing.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\master_vampire_hunter.png
+C:\Users\Dan\Desktop\Current School\cs 4730\midnightsnack\Midnight_Snack\Midnight_Snack\bin\WindowsGL\Debug\Content\basic_tutorial.xml
