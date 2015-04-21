@@ -43,10 +43,11 @@ namespace Midnight_Snack
 
             //Load all briefing images
             briefingImages.Add(content.Load<Texture2D>("tutorial_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("shapeshifting_briefing"));
             briefingImages.Add(content.Load<Texture2D>("level1_briefing"));
             briefingImages.Add(content.Load<Texture2D>("level2_briefing"));
             briefingImages.Add(content.Load<Texture2D>("level3_briefing"));
-            briefingImages.Add(content.Load<Texture2D>("shapeshifting_briefing"));
+            briefingImages.Add(content.Load<Texture2D>("level4_briefing"));
 
             //Load all text content
             for(int i = 0; i < text.Count; i++)
@@ -118,7 +119,7 @@ namespace Midnight_Snack
                 //Basic Tutorial Briefing Text
                 case 0:
                     numPages = 1;
-                    briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n The guards are unlikely to look kindly on your nocturnal activities, so deal with them as you see fit. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
+                    briefingText.SetMessage("You are one of the undead; a vampire! To sustain yourself you must feed on the blood of the living. \n Venture out into town and drink the blood of a slumbering villager. \n Just make sure to get back to your lair before sunrise, or you'll be turned to ash by the sun's harsh light!");
                     briefingImage = briefingImages[0];
                     break;
                 //Enemy Tutorial Briefing Text
@@ -131,31 +132,31 @@ namespace Midnight_Snack
                 case 2:
                     numPages = 1;
                     briefingText.SetMessage("Vampires have the ability to shapeshift into different forms with unique attributes and abilities. \n You'll need to make use of these shapeshifting powers to feed on a villager tonight!");
-                    briefingImage = briefingImages[4];
+                    briefingImage = briefingImages[1];
                     break;
                 //Level 1 Briefing Text
                 case 3:
                     numPages = 1;
                     briefingText.SetMessage("The villagers have recruited a cleric to ward off vampires. Don't let divine interference get between you and dinner!");
-                    briefingImage = briefingImages[1];
+                    briefingImage = briefingImages[2];
                     break;
                 //Level 2 Briefing Text
                 case 4:
                     numPages = 1;
-                    briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all! \nRemember: you only need to feed on one villager to get the blood you need!");
-                    briefingImage = briefingImages[2];
+                    briefingText.SetMessage("Oh no! A rival vampire is in town! Feed on a villager before your gluttonous rival drains them all! \nRemember: You only need to feed on one villager to get the blood you need!");
+                    briefingImage = briefingImages[3];
                     break;
                 //Level 3 Briefing Text
                 case 5:
                     numPages = 1;
                     briefingText.SetMessage("All this vampiric activity has attracted vampire hunters. A smart vampire picks his fights wisely.");
-                    briefingImage = briefingImages[3];
+                    briefingImage = briefingImages[4];
                     break;
                 //Level 4 Briefing Text
                 case 6:
                     numPages = 1;
                     briefingText.SetMessage("The clerics and vampire hunters have teamed up under the leadership of a master vampire hunter! \nIt will take all your cunning to outwit this deadly alliance!");
-                    briefingImage = briefingImages[3];
+                    briefingImage = briefingImages[5];
                     break;
                 default:
                     break;
