@@ -38,6 +38,7 @@ namespace Midnight_Snack
                 spriteBatch.Draw(texture, position, Color.White);
 
                 healthBar.Draw(spriteBatch);
+                //Don't display attack strength of clerics since they don't attack directly
                 if (this.GetType() != typeof(ClericEnemy))
                 {
                     attackStr.Draw(spriteBatch);
@@ -481,13 +482,11 @@ namespace Midnight_Snack
                             MapTile tile = map.GetTile(y, x);
                             if (undraw)
                             {
-                                tile.SetModifier("basic");
-                                tile.SetLit(false);
+                                tile.SetRedLit(false);
                             }
                             else if (!undraw)
                             {
-                                tile.SetModifier("enemy_move");
-                                tile.SetLit(true);
+                                tile.SetRedLit(true);
                             }
                             map.SetTile(y, x, tile);
                         }

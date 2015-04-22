@@ -14,6 +14,7 @@ namespace Midnight_Snack
         private bool passable;  //Is this tile passable
         private string modifier;    //The modifier on this tile (i.e. lair, consecrated, etc.)
         private bool lit;           //Is this tile lit up (by player move range)
+        private bool redLit;      //Is this tile lit up red (by enemy move range)
 
         Texture2D lair_texture;
         Texture2D consec_texture;
@@ -21,7 +22,7 @@ namespace Midnight_Snack
         Texture2D move_texture;
         Texture2D move_lair_texture;
         Texture2D move_garlic_texture;
-        Texture2D enemy_move_lair_texture;
+        Texture2D enemy_move_texture;
 
         public MapTile(int x, int y, int width, int height)
             : base(x, y, width, height)
@@ -30,6 +31,7 @@ namespace Midnight_Snack
             passable = true;
             modifier = "none";
             lit = false;
+            redLit = false;
         }
 
         public MapTile(Vector2 pos, int width, int height)
@@ -39,6 +41,7 @@ namespace Midnight_Snack
             passable = true;
             modifier = "none";
             lit = false;
+            redLit = false;
         }
 
         public override void LoadContent(ContentManager content)
@@ -50,7 +53,7 @@ namespace Midnight_Snack
             move_texture = content.Load<Texture2D>("valid_move_map_tile");
             move_lair_texture = content.Load<Texture2D>("valid_move_lair_map_tile");
             move_garlic_texture = content.Load<Texture2D>("valid_move_garlic_map_tile");
-            enemy_move_lair_texture = content.Load<Texture2D>("enemy_valid_move_map_tile");
+            enemy_move_texture = content.Load<Texture2D>("enemy_valid_move_map_tile");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -60,6 +63,10 @@ namespace Midnight_Snack
                 if (lit)
                 {
                     spriteBatch.Draw(move_lair_texture, position, Color.White);
+                }
+                else if (redLit)
+                {
+                    spriteBatch.Draw(enemy_move_texture, position, Color.White);
                 }
                 else
                 {
@@ -72,6 +79,10 @@ namespace Midnight_Snack
                 {
                     spriteBatch.Draw(move_texture, position, Color.White);
                 }
+                else if (redLit)
+                {
+                    spriteBatch.Draw(enemy_move_texture, position, Color.White);
+                }
                 else
                 {
                     spriteBatch.Draw(consec_texture, position, Color.White);
@@ -83,16 +94,9 @@ namespace Midnight_Snack
                 {
                     spriteBatch.Draw(move_garlic_texture, position, Color.White);
                 }
-                else
+                else if (redLit)
                 {
-                    spriteBatch.Draw(garlic_texture, position, Color.White);
-                }
-            }
-            else if (modifier.Equals("enemy_move"))
-            {
-                if (lit)
-                {
-                    spriteBatch.Draw(enemy_move_lair_texture, position, Color.White);
+                    spriteBatch.Draw(enemy_move_texture, position, Color.White);
                 }
                 else
                 {
@@ -104,6 +108,10 @@ namespace Midnight_Snack
                 if (lit)
                 {
                     spriteBatch.Draw(move_texture, position, Color.White);
+                }
+                else if (redLit)
+                {
+                    spriteBatch.Draw(enemy_move_texture, position, Color.White);
                 }
                 else
                 {
@@ -151,6 +159,16 @@ namespace Midnight_Snack
         public void SetLit(bool b)
         {
             lit = b;
+        }
+
+        public bool IsRedLit()
+        {
+            return redLit;
+        }
+
+        public void SetRedLit(bool b)
+        {
+            redLit = b;
         }
     }
 }
