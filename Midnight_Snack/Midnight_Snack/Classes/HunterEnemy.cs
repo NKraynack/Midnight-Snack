@@ -24,6 +24,7 @@ namespace Midnight_Snack
             if(maxHealth > 5)
             {
                 strength = 4;
+                attackStr.SetMessage("Strength: " + strength);
             }
         }
 
