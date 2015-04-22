@@ -25,13 +25,13 @@ namespace Midnight_Snack
         {
             texture = content.Load<Texture2D>("vampire_enemy");
             healthBar.LoadContent(content);
-            stats.LoadContent(content);
+            attackStr.LoadContent(content);
         }
 
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
-            stats.Update(this);
+            attackStr.SetPosition(new Vector2(position.X, position.Y + 75));
 
             if (currentHealth <= 0)
             {

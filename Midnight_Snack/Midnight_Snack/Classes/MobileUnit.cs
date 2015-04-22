@@ -19,7 +19,7 @@ namespace Midnight_Snack
         protected bool usedAbilityThisTurn;   //Has the unit used an ability this turn?
         protected bool alive; //Is the unit alive?
         public HealthBar healthBar; //The unit's health bar
-        public StatDisplay stats;   //The unit's stats
+        public Text attackStr;   //The unit's stats
 
         Map map = Map.GetInstance();
 
@@ -34,7 +34,8 @@ namespace Midnight_Snack
             alive = true;
             unitsTurn = false;
             healthBar = new HealthBar(new Vector2(position.X, position.Y - 10), maxHealth);
-            stats = new StatDisplay(new Vector2(position.X + 20, position.Y - 20));
+            attackStr = new Text("Strength: " + strength, new Vector2(position.X, position.Y + 75));
+            attackStr.SetVisible(false);
         }
 
         //Moves the unit to the given position
@@ -92,9 +93,9 @@ namespace Midnight_Snack
             strength = str;
         }
 
-        public void DisplayStats(bool b)
+        public void DisplayAttackStr(bool b)
         {
-            stats.SetVisible(b);
+            attackStr.SetVisible(b);
         }
 
         public int GetMoveRange()
@@ -155,7 +156,7 @@ namespace Midnight_Snack
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
-            stats.Update(this);
+            attackStr.SetPosition(new Vector2(position.X, position.Y - 20));
 
             if(currentHealth <= 0)
             {
@@ -166,7 +167,7 @@ namespace Midnight_Snack
         public override void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);
-            stats.Draw(spriteBatch);
+            attackStr.Draw(spriteBatch);
         }
 
         public virtual void Attack(MobileUnit target)

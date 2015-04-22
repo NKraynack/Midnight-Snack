@@ -46,7 +46,7 @@ namespace Midnight_Snack
             wolfTexture = content.Load<Texture2D>("wolf");
             mistTexture = content.Load<Texture2D>("mist");
             healthBar.LoadContent(content);
-            stats.LoadContent(content);
+            attackStr.LoadContent(content);
         }
 
         public override void Update()
@@ -97,7 +97,7 @@ namespace Midnight_Snack
         public override void Draw(SpriteBatch spriteBatch)
         {
             healthBar.Draw(spriteBatch);
-            stats.Draw(spriteBatch);
+            attackStr.Draw(spriteBatch);
 
             Color spriteColor = Color.White;
             //Tinge the player red if they have blood

@@ -365,6 +365,11 @@ namespace Midnight_Snack
             if (controls.onPress(Keys.Space, Buttons.A)
                 && cursorRow == player.GetRow() && cursorCol == player.GetCol())
             {
+                //Undraw attack strength
+                if (enemy_selected != null)
+                {
+                    enemy_selected.DisplayAttackStr(false);
+                }
                 //Undraw move range
                 if (enemy_selected != null)
                 {
@@ -381,11 +386,11 @@ namespace Midnight_Snack
                 if (enemy_selected != null)
                 {
                     enemy_selected.DrawMoveRange(true);
-                    enemy_selected.DisplayStats(false);
+                    enemy_selected.DisplayAttackStr(false);
                 }
                 enemy_selected = (Enemy)tile.GetOccupant();
                 enemy_selected.DrawMoveRange(false);
-                enemy_selected.DisplayStats(true);
+                enemy_selected.DisplayAttackStr(true);
 
             }
         }

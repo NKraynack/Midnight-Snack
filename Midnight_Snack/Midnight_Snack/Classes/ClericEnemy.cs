@@ -28,13 +28,15 @@ namespace Midnight_Snack
         {
             texture = content.Load<Texture2D>("cleric");
             healthBar.LoadContent(content);
-            stats.LoadContent(content);
+            attackStr.LoadContent(content);
         }
 
         public override void Update()
         {
             healthBar.Update(position, currentHealth);
-            stats.Update(this);
+            attackStr.SetPosition(new Vector2(position.X, position.Y + 75));
+            //Don't display attack strength on clerics since they can't attack
+            attackStr.SetVisible(false);
 
             if (currentHealth <= 0)
             {

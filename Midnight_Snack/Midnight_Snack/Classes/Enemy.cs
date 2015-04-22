@@ -28,7 +28,7 @@ namespace Midnight_Snack
         {
             texture = content.Load<Texture2D>("town_guard");
             healthBar.LoadContent(content);
-            stats.LoadContent(content);
+            attackStr.LoadContent(content);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -38,7 +38,7 @@ namespace Midnight_Snack
                 spriteBatch.Draw(texture, position, Color.White);
 
                 healthBar.Draw(spriteBatch);
-                stats.Draw(spriteBatch);
+                attackStr.Draw(spriteBatch);
             }
         }
 
