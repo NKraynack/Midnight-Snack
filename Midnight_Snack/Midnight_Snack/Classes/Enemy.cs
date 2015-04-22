@@ -38,7 +38,10 @@ namespace Midnight_Snack
                 spriteBatch.Draw(texture, position, Color.White);
 
                 healthBar.Draw(spriteBatch);
-                attackStr.Draw(spriteBatch);
+                if (this.GetType() != typeof(ClericEnemy))
+                {
+                    attackStr.Draw(spriteBatch);
+                }
             }
         }
 
