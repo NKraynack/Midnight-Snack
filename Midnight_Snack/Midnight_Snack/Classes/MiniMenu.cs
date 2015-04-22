@@ -119,6 +119,7 @@ namespace Midnight_Snack
                 if (!player.HasUsedAbilityThisTurn())
                 {
                     gameManager.SetInAbilitiesMenu(true);
+                    player.DrawMoveRange(true);
 
                     /*
                     gameManager.SetChoosingAbilityTarget(true);
@@ -175,6 +176,7 @@ namespace Midnight_Snack
 
                 //Move selector back to top of menu
                 selector.SetRow(0);
+                player.DrawMoveRange(true);
             }
         }
 
