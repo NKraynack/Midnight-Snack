@@ -51,6 +51,7 @@ namespace Midnight_Snack
             images.Add(content.Load<Texture2D>("level3_briefing"));
             images.Add(content.Load<Texture2D>("level4_briefing"));
             images.Add(content.Load<Texture2D>("title"));
+            images.Add(content.Load<Texture2D>("guard_briefing"));
 
             //Load all text content
             for(int i = 0; i < text.Count; i++)
@@ -141,7 +142,7 @@ namespace Midnight_Snack
                 case 1:
                     numPages = 1;
                     briefingText.SetMessage("Last night's feasting has put the guards on alert. You'll have to deal with any guards that try and get between you and dinner!");
-                    briefingImage = images[0];
+                    briefingImage = images[7];
                     break;
                 //Forms Tutorial Briefing Text
                 case 2:
