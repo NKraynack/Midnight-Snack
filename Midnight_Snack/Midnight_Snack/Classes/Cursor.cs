@@ -210,8 +210,9 @@ namespace Midnight_Snack
                     MapTile tile = map.GetTile(cursorRow, cursorCol);
                     //If player is in mist form let them move to any unoccupied and valid tile in range
                     //Otherwise make sure there is also a valid path to the tile
-                    if (tile.GetOccupant() == null && tile.IsPassable() && (NoObstacles(cursorCol, cursorRow) || player.GetForm().Equals("mist")))
+                    if (tile.GetOccupant() == null && tile.IsPassable() && tile.IsLit() && (NoObstacles(cursorCol, cursorRow) || player.GetForm().Equals("mist")))
                     {
+                        //Undraw the move range
                         player.DrawMoveRange(true);
                         //Remove player from old map tile
                         map.GetTile(player.GetRow(), player.GetCol()).SetOccupant(null);
